@@ -1,0 +1,15 @@
+Coordenação
+- Excluir usuário (rota: /id_professor/, /id_aluno/)
+- Alocar aluno professor de turma (rota: )
+
+Professor
+- Ver minhas turmas (rota: )
+
+
+Aluno
+- Ver minha turma (rota: )
+
+XXX - Atualizar meus dados (rota: )
+XXX - Adicionar usuário (rota: /add_professor, /add_aluno)
+XXX - Ver meus dados
+XXX - Suspender aluno
