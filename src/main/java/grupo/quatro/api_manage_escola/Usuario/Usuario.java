@@ -1,25 +1,35 @@
 package grupo.quatro.api_manage_escola.Usuario;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import grupo.quatro.api_manage_escola.Professor.Professor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.math.BigInteger;
+
 @Getter
 @NoArgsConstructor
 @MappedSuperclass
 public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected BigInteger id;
+
     private String nome;
     private String dataDeNascimento;
-    private String cpf;
+    private BigInteger cpf;
     private int diaDePagamento;
 
-    public Usuario(String nome, String cpf, String dataDeNascimento, int diaDePagamento) {
+    public Usuario(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento) {
         this.nome = nome;
         this.cpf = cpf;
         this.diaDePagamento = diaDePagamento;
         this.dataDeNascimento = dataDeNascimento;
+        this.id = cpf;
+    }
+
+    public Usuario(Professor professor) {
     }
 }
 

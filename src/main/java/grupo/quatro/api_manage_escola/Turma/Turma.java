@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
 import java.util.Set;
 
-@Table(name = "turmas")
 @Entity(name = "Turma")
 @Getter
 @Setter
@@ -21,7 +21,8 @@ public class Turma {
     private int anoEscolar;
 
     @Id
-    private String id = letra.concat(Integer.toString(anoEscolar));
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private BigInteger id;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private Set<Aluno> alunos;

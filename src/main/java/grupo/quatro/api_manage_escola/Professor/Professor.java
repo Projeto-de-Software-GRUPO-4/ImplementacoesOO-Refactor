@@ -8,20 +8,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 
-@Table(name="professores")
-@Entity(name="Professor")
-//@AttributeOverride(name="id", column = @Column(name="id"))
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity
+//@Table(name="professores")
+//@Entity(name="Professor")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Professor extends Usuario {
 
-    @Id
-    private String id;
+//    @Id
+//    private String id;
 
     private String areaEnsino;
 
@@ -33,12 +34,12 @@ public class Professor extends Usuario {
     @ManyToMany(mappedBy = "professores")
     Set<Turma> turmas;
     public Professor(DadosCadastroProfessor dados) {
-        super(dados.nome(), dados.cpf(), dados.dataDeNascimento(), dados.diaDePagamento());
+        super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
         this.areaEnsino = dados.areaEnsino();
         this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
         this.salarioHora = dados.salarioHora();
         this.turmas = new HashSet<Turma>();
-        this.id = dados.cpf();
+        this.id = new BigInteger(dados.cpf());
     }
 
 }
