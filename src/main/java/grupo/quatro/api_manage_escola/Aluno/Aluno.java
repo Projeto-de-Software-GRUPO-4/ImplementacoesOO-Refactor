@@ -16,7 +16,7 @@ import java.util.HashSet;
 @Setter
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@AttributeOverride(name="id", column = @Column(name="numeroDeMatricula"))
+//@AttributeOverride(name="id", column = @Column(name="numeroDeMatricula"))
 public class Aluno extends Usuario {
 
     @Id
@@ -31,11 +31,9 @@ public class Aluno extends Usuario {
     private Responsavel responsavel;
     private int anoEscolar;
 
-    public Aluno(String nome, String cpf, String dataDeNascimento, int diaDePagamento,
-                 long numeroDeMatricula, Responsavel responsavel, int anoEscolar) {
-        super(nome, cpf, dataDeNascimento, diaDePagamento);
-        this.numeroDeMatricula = numeroDeMatricula;
-        this.responsavel = responsavel;
-        this.anoEscolar = anoEscolar;
+    public Aluno(DadosCadastroAluno dados) {
+        super(dados.nome(), dados.cpf(), dados.dataDeNascimento(), dados.diaDePagamento());
+        this.responsavel = new Responsavel(dados.responsavel());
+        this.anoEscolar = dados.anoEscolar();
     }
 }

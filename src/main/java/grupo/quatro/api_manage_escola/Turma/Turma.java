@@ -17,10 +17,11 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Turma {
+    private String letra;
+    private int anoEscolar;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private String id = letra.concat(Integer.toString(anoEscolar));
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private Set<Aluno> alunos;

@@ -14,4 +14,10 @@ public class Responsavel {
     private String telefoneResponsavel;
     private String cpfResponsavel;
 
+    public Responsavel(DadosResponsavel dados) {
+        this.nomeResponsavel = dados.nome();
+        this.telefoneResponsavel = dados.telefone();
+        this.cpfResponsavel = dados.cpf();
+    }
+
 }

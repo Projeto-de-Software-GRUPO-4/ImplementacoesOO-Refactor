@@ -8,6 +8,8 @@ public record DadosCadastroProfessor(
         @NotNull
         @NotBlank
         String nome,
+        @NotNull
+        @NotBlank
         String dataDeNascimento,
         @NotNull
         @Pattern(regexp = "\\d{11}")

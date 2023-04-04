@@ -4,6 +4,7 @@ import grupo.quatro.api_manage_escola.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Professor.Professor;
 import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
 import grupo.quatro.api_manage_escola.Turma.Turma;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +25,7 @@ public class ProfessorController {
 
     @PostMapping
     @Transactional
-    public void cadastro(@RequestBody DadosCadastroProfessor dados) {
-
-//        Set<Turma> emptySet = new HashSet<Turma>();
+    public void cadastro(@RequestBody @Valid DadosCadastroProfessor dados) {
 
         repository.save(new Professor(dados));
 
