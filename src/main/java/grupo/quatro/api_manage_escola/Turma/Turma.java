@@ -21,7 +21,7 @@ public class Turma {
     private int anoEscolar;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
@@ -34,5 +34,10 @@ public class Turma {
                     inverseJoinColumns = @JoinColumn(name = "professor_id")
             )
     Set<Professor> professores;
+
+    public Turma(DadosCadastroTurma dados) {
+        this.anoEscolar = dados.anoEscolar();
+        this.letra = dados.letra();
+    }
 
 }

@@ -8,7 +8,7 @@ public record DadosCadastroTurma(
         int anoEscolar,
 
         @NotNull
-        @Pattern(regexp = "\\")
+        @Pattern(regexp = "^[A-Z]$")
         String letra
 ) {
 }

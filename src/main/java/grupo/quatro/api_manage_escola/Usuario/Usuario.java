@@ -16,10 +16,10 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected BigInteger id;
 
-    private String nome;
-    private String dataDeNascimento;
-    private BigInteger cpf;
-    private int diaDePagamento;
+    protected String nome;
+    protected String dataDeNascimento;
+    protected BigInteger cpf;
+    protected int diaDePagamento;
 
     public Usuario(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento) {
         this.nome = nome;

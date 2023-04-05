@@ -3,6 +3,8 @@ package grupo.quatro.api_manage_escola.Professor;
 import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.Usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -40,6 +42,25 @@ public class Professor extends Usuario {
         this.salarioHora = dados.salarioHora();
         this.turmas = new HashSet<Turma>();
         this.id = new BigInteger(dados.cpf());
+    }
+
+//    @NotNull
+//    BigInteger id,
+//
+//    String nome,
+//
+//    String areaEnsino,
+//
+//    int diaDePagamento,
+//    int cargaHorariaDiaria,
+//    double salarioHora
+
+    public void updateInfo(DadosAtualizacaoProfessor dados) {
+        if (dados.nome() != null) super.nome = dados.nome();
+        if (dados.areaEnsino() != null) this.areaEnsino = dados.areaEnsino();
+        if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
+        if (dados.cargaHorariaDiaria() != 0) this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
+        if (dados.salarioHora() != 0) this.salarioHora = dados.salarioHora();
     }
 
 }

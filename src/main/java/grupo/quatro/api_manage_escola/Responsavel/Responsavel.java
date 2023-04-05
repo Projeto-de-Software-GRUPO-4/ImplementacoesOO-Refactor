@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Responsavel;
 
+import grupo.quatro.api_manage_escola.Aluno.DadosCadastroAluno;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,13 @@ public class Responsavel {
         this.nomeResponsavel = dados.nome();
         this.telefoneResponsavel = dados.telefone();
         this.cpfResponsavel = dados.cpf();
+    }
+
+    public void updateInfo(DadosResponsavel dados) {
+        if (dados.nome() != null) this.nomeResponsavel = dados.nome();
+        if (dados.cpf() != null) this.cpfResponsavel = dados.cpf();
+        if (dados.telefone() != null) this.telefoneResponsavel = dados.telefone();
+
     }
 
 }
