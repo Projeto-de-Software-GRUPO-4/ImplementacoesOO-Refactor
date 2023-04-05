@@ -21,7 +21,10 @@ public class Usuario {
     protected BigInteger cpf;
     protected int diaDePagamento;
 
+    protected boolean active;
+
     public Usuario(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento) {
+        this.active = true;
         this.nome = nome;
         this.cpf = cpf;
         this.diaDePagamento = diaDePagamento;
@@ -30,6 +33,10 @@ public class Usuario {
     }
 
     public Usuario(Professor professor) {
+    }
+
+    public void excluir() {
+        this.active = false;
     }
 }
 

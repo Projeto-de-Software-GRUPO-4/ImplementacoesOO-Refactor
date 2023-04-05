@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -39,6 +40,13 @@ public class ProfessorController {
     public void atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
         Professor professor = repository.getReferenceById(dados.id());
         professor.updateInfo(dados);
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deletar(@PathVariable BigInteger id) {
+        Professor professor = repository.getReferenceById(id);
+        professor.excluir();
     }
 
 }

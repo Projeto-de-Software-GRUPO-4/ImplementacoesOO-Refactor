@@ -29,6 +29,8 @@ public class Aluno extends Usuario {
     private Responsavel responsavel;
     private int anoEscolar;
 
+    private boolean suspended;
+
     public Aluno(DadosCadastroAluno dados) {
         super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
         this.responsavel = new Responsavel(dados.responsavel());
@@ -39,6 +41,10 @@ public class Aluno extends Usuario {
         if (dados.nome() != null) super.nome = dados.nome();
         if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
         if (dados.responsavel() != null) this.responsavel.updateInfo(dados.responsavel());
+    }
+
+    public void suspender() {
+        this.suspended = !this.suspended;
     }
 
 

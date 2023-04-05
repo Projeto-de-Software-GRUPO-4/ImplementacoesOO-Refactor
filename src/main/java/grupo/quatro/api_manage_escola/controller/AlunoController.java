@@ -41,9 +41,17 @@ public class AlunoController {
         aluno.updateInfo(dados);
     }
 
+    @PutMapping("/{id}/status_suspensao")
+    @Transactional
+    public void suspender_desuspender(@PathVariable BigInteger id) {
+        Aluno aluno = alunoRepository.getReferenceById(id);
+        aluno.suspender();
+    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
-
+        Aluno aluno = alunoRepository.getReferenceById(id);
+        aluno.excluir();
     }
 }

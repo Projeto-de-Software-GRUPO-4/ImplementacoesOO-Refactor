@@ -27,7 +27,10 @@ public class Turma {
     @OneToMany(mappedBy = "turma", cascade = CascadeType.ALL)
     private Set<Aluno> alunos;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                CascadeType.PERSIST, CascadeType.MERGE
+            })
             @JoinTable(
                     name="turma_professor",
                     joinColumns = @JoinColumn(name = "turma_id"),
