@@ -2,10 +2,7 @@ package grupo.quatro.api_manage_escola.controller;
 
 import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.Aluno.DadosCadastroAluno;
-import grupo.quatro.api_manage_escola.Professor.DadosAtualizacaoProfessor;
-import grupo.quatro.api_manage_escola.Professor.DadosCadastroProfessor;
-import grupo.quatro.api_manage_escola.Professor.Professor;
-import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
+import grupo.quatro.api_manage_escola.Professor.*;
 import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -40,6 +38,11 @@ public class ProfessorController {
     public void atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
         Professor professor = repository.getReferenceById(dados.id());
         professor.updateInfo(dados);
+    }
+
+    @GetMapping
+    public List<DadosListagemProfessor> listar() {
+        return repository.findAll().stream().map(DadosListagemProfessor::new).toList();
     }
 
     @DeleteMapping("/{id}")

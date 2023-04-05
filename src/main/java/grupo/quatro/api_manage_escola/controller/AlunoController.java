@@ -33,6 +33,11 @@ public class AlunoController {
         usuarioCredentialsRepository.save(new UsuarioCredentials(aluno.getId().toString(), dados.senha(), dados.userType()));
 
     }
+    
+    @GetMapping
+    public List<DadosListagemAluno> listar() {
+        return alunoRepository.findAll().stream().map(DadosListagemAluno::new).toList();
+    }
 
     @PutMapping
     @Transactional

@@ -4,15 +4,14 @@ import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Professor.Professor;
 import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
-import grupo.quatro.api_manage_escola.Turma.DadosCadastroTurma;
-import grupo.quatro.api_manage_escola.Turma.DadosLinkarProfessorTurma;
-import grupo.quatro.api_manage_escola.Turma.Turma;
-import grupo.quatro.api_manage_escola.Turma.TurmaRepository;
+import grupo.quatro.api_manage_escola.Turma.*;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/turma")
@@ -30,6 +29,16 @@ public class TurmaController {
         Turma turma = turmaRepository.save(new Turma(dados));
     }
 
+    @GetMapping
+    public List<DadosListagemTurma> listar() {
+        return turmaRepository.findAll().stream().map(DadosListagemTurma::new).toList();
+    }
+
+    //    @PostMapping("/adicionar_professor")
+//    @Transactional
+//    void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
+//
+//    }
     @PostMapping("/adicionar_professor")
     @Transactional
     void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
