@@ -2,6 +2,8 @@ package grupo.quatro.api_manage_escola.controller;
 
 import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.Aluno.AlunoRepository;
+import grupo.quatro.api_manage_escola.Aluno.DadosListagemAluno;
+import grupo.quatro.api_manage_escola.Aluno.DadosListagemAlunoLogin;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import jakarta.validation.Valid;
@@ -22,16 +24,17 @@ public class LogInAlunoController extends LogInController {
     AlunoRepository alunoRepository;
 
     @PostMapping
-    public Optional<Aluno> login(@Valid @RequestBody DadosLogin dados) {
+    public DadosListagemAlunoLogin login(@Valid @RequestBody DadosLogin dados) {
         Optional<UsuarioCredentials> credentialsOptional = credentialsRepository.findById(dados.id());
 
-        Optional<Aluno> returnObj = Optional.empty();
+        DadosListagemAlunoLogin returnObj = null;
 
         if (credentialsOptional.isPresent()) {
             UsuarioCredentials credentials = credentialsOptional.get();
 
             if (credentials.getSenha().equals(dados.senha())) {
-                returnObj = alunoRepository.findById(new BigInteger(credentials.getId()));
+                Aluno aluno = alunoRepository.findById(new BigInteger(credentials.getId())).orElse(null);
+                returnObj = new DadosListagemAlunoLogin(aluno);
             }
 
         }

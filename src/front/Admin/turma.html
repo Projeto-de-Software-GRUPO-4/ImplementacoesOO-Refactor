@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos turma</title>
+    <link rel="stylesheet" href="direct.css">
+</head>
+<body>
+    <div class="container" id="main">
+        <h1>Seleção de turma</h1>
+        <fieldset>
+            <legend>Nome da turma: </legend>
+            <input id="turma" type="text" placeholder="Digite o nome da turma">
+            <a id="link" href="mostrar_alunos.html">
+                <input id="botao" type="button" value="Próximo" onclick="apertado()">
+            </a>
+        </fieldset>
+    </div>
+
+    <script>
+        var tipo = "";
+        tipo = localStorage.getItem("tipo");
+
+        function apertado(){
+            var turma = document.getElementById("turma").value;
+            localStorage.setItem("turmaDigitada", turma);
+            alert("Falta validar se a turma existe");
+            
+            if(tipo == "admin"){
+                window.location.href = "mostrar_alunos.html";
+            }else if(tipo == "professor"){
+                window.location.href = "dar_nota.html";
+            }
+        }
+    </script>
+</body>
+</html>

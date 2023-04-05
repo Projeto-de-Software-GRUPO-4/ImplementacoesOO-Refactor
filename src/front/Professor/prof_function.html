@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor</title>
+    <link rel="stylesheet" href="../Geral/Styles/function.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a id="link" href="" onclick="home_home()">Home</a></li>
+                <li><a id="link" href="perfil_prof.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="caixa" class="container">
+            <h1 id="titulo">Seleção de operação</h1>
+            <select name="funcao" id="funcao">
+                <option value="">--- Selecione uma operação ---</option>
+                <option value="alocado">Ver as turmas para qual está alocado</option>
+                <option value="baixar">Baixar/mostrar frequencia</option>
+                <!-- <option value="remover">Fazer chamada</option> -->
+                <option value="registrar">Registrar ocorrência</option>
+                <option value="atribuir">Atribuir nota</option>
+            </select>
+            <input type="button" id="next" value="Avançar" onclick="clicou()">
+        </div>
+    </main>
+
+    <script>
+        function clicou(){
+            const selectElement = document.getElementById('funcao');
+            const selectValue = selectElement.value;
+            if(selectValue === "alocado"){
+                alert("Falta implementar o back para mostrar a tabela de turmas!");
+            }else if(selectValue === "baixar"){
+                alert("Falta implementar o back");
+            }else if(selectValue === "registrar"){
+                window.location.href = "registrar.html";
+            }else if(selectValue === "atribuir"){
+                localStorage.setItem("tipo", "professor");
+                alert("Falta validar se a turma existe");
+                window.location.href= "turma.html";
+            }else if(selectValue === ""){
+                alert("Selecione uma opcao!");
+            }
+        }
+
+        function home_home(){
+            alert("Você já está na home!");
+        }
+    </script>
+</body>
+</html>

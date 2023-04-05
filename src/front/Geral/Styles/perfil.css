@@ -1,0 +1,132 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    margin: 0;
+}
+
+header{
+	background-color: #f5f5f5;
+	padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	font-size: 20px;
+	justify-content: space-around;
+}
+
+main{
+    margin-top: 150px;
+    padding: 20px;
+}
+
+fieldset#caixa{
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+}
+
+a#link{
+    text-decoration: none;
+    color: black;
+}
+
+.container#main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    border-radius: 30px 10px;
+    background-color: #f5f5f5;
+    width: 500px;
+    margin: 0px auto;
+}
+
+fieldset{
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#nome, #cpf, #responsavel1, #responsavel2, #num_res1, #num_res2, #telefone{
+    width: 400px;
+    text-align: center;
+}
+
+input{
+    border-radius: 7px;
+    border-width: 1px;
+    margin-top: 10px;
+    height: 25px;
+}
+
+#data{
+    width: 200px;
+}
+
+#serie{
+    text-align: center;
+    width: 40px;
+}
+
+#mensalidade{
+    text-align: center;
+}
+
+input#mensalidade{
+    width: 100px;
+}
+
+input#vencimento{
+    width: 40px;
+    text-align: center;
+}
+
+input#enviar{
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+input#enviar{
+    background-color: rgb(74, 74, 240);
+    color: white;
+    border-color: transparent;
+    width: 70px;
+    height: 30px;
+    height: 30px;
+    width: 100px;
+}
+
+input#enviar:hover{
+    cursor: pointer;
+    background-color: rgb(68, 128, 48);
+}
+
+input#senha, input#nova, input#repita{
+    text-align: center;
+}
+
+button#mostrar{
+    border-color: transparent;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+fieldset#senha{
+    display: flex;
+    flex-direction: column;
+}

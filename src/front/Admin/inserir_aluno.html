@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir aluno</title>
+    <link rel="stylesheet" href="../Geral/Styles/inserir.css">
+</head>
+<body>
+    <div class="container" id="main">
+        <h1>Insira os dados do aluno</h1>
+        <fieldset id="nome">
+            <legend>Nome: </legend>
+            <input type="text" name="nome" id="nome" placeholder="Nome do(a) aluno(a)">
+        </fieldset>
+        <fieldset id="cpf">
+            <legend>CPF: </legend>
+            <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) aluno(a)">
+        </fieldset>
+        <fieldset id="nasc">
+            <legend>Data de nascimento: </legend>
+            <input type="date" name="nasc" id="nasc">
+        </fieldset>
+        <fieldset id="responsavel1">
+            <legend>Nome do(a) responsavel: </legend>
+            <input type="text" name="responsavel1" id="responsavel1" placeholder="Nome do(a) responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset iid="responsavel2">
+            <legend>Nome do(a) segundo(a) responsavel: </legend>
+            <input type="text" name="responsavel2" id="responsavel2" placeholder="Nome do(a) segundo responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="num_res1">
+            <legend>Telefone do(a) responsavel: </legend>
+            <input type="tel" name="num_res1" id="num_res1" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="num_res2">
+            <legend>Telefone do(a) segundo(a) responsavel: </legend>
+            <input type="tel" name="num_res2" id="num_res2" placeholder="Numero do(a) segundo(a) responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="ensino">
+            <legend>Ensino: </legend>
+            <input type="radio" name="ensino" id="ensino" value="infantil">Infantil
+            <input type="radio" name="ensino" id="ensino" value="fundamental">fundamental
+            <input type="radio" name="ensino" id="ensino" value="medio">Medio
+        </fieldset>
+        <fieldset iid="serie">
+            <legend>Serie: </legend>
+            <input type="number" name="serie" id="serie" placeholder="">
+        </fieldset>
+        <fieldset id="turno">
+            <legend>Turno: </legend>
+            <input type="radio" name="turno" id="turno" value="matutino">Matutino
+            <input type="radio" name="turno" id="turno" value="vespertino">Vespertino
+            <input type="radio" name="turno" id="turno" value="diurno">Diurno
+        </fieldset>
+        <fieldset id="mensalidade">
+            <legend>Mensalidade: </legend>
+            <span class="rs">R$</span>
+            <input type="number" name="mensalidade" id="mensalidade" placeholder="Valor">
+        </fieldset>
+        <fieldset id="vencimento">
+            <legend>Vencimento das faturas:</legend>
+            <span>Dia:</span>
+            <input type="number" name="vencimento" id="vencimento" placeholder="Ex: 12">
+        </fieldset>
+        <fieldset id="senha">
+            <legend>Senha: </legend>
+            <input type="password" name="senha" id="senha" placeholder="Senha">
+            <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+        </fieldset>
+
+        <input type="button" value="Salvar" id="enviar">
+    </div>
+    <script src="../Geral/Scripts/script.js"></script>
+</body>
+</html>

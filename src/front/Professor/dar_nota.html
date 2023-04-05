@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dar_nota.css">
+</head>
+<body>
+    <div id="caixa" class="container">
+        <h1>Turma {turma}</h1>
+        <table>
+            <tr class="top">
+                <td>Matrícula</td>
+                <td class="info">Nome</td>
+                <td class="notas">1º Bimestre</td>
+                <td class="notas">2º Bimestre</td>
+                <td class="notas">3º Bimestre</td>
+                <td class="notas">4º Bimestre</td>
+            </tr>
+            <tr>
+                <td>111111</td>
+                <td class="info">Aluno Name</td>
+                <td><input type="number" name="1bim" id="_1bim" class="notas"></td>
+                <td><input type="number" name="2bim" id="_2bim" class="notas"></td>
+                <td><input type="number" name="3bim" id="_3bim" class="notas"></td>
+                <td><input type="number" name="4bim" id="_4bim" class="notas"></td>
+            </tr>
+        </table>
+
+        <input type="button" value="Feito" id="botao" onclick="apertou()">
+    </div>
+
+    <script>
+        var turmaDigitada = localStorage.getItem("turmaDigitada");
+        document.title = turmaDigitada;
+
+        function apertou(){
+            var _1bim = document.getElementById("_1bim").value;
+            var _2bim = document.getElementById("_2bim").value;
+            var _3bim = document.getElementById("_3bim").value;
+            var _4bim = document.getElementById("_4bim").value;
+
+            if(_1bim > 10 || _1bim < 0 || _2bim > 10 || _2bim < 0 || _3bim > 10 || _3bim < 0 || _4bim > 10 || _4bim < 0){
+                alert("Há alguma nota invalida!");
+            }
+        }
+    </script>
+</body>
+</html>

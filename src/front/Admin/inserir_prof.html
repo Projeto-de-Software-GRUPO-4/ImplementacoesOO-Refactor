@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir professor</title>
+    <link rel="stylesheet" href="../Geral/Styles/inserir.css">
+</head>
+<body>
+    <div class="container" id="main">
+        <h1>Insira os dados do professor</h1>
+        <fieldset id="nome">
+            <legend>Nome: </legend>
+            <input type="text" name="nome" id="nome" placeholder="Nome do(a) professor(a)">
+        </fieldset>
+        <fieldset id="cpf">
+            <legend>CPF: </legend>
+            <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) professor(a)">
+        </fieldset>
+        <fieldset id="nasc">
+            <legend>Data de nascimento: </legend>
+            <input type="date" name="nasc" id="nasc">
+        </fieldset>
+        <fieldset id="telefone">
+            <legend>Telefone: </legend>
+            <input type="tel" name="telefone" id="telefone" placeholder="Numero de telefone">
+        </fieldset>
+        <fieldset id="mensalidade">
+            <legend>Salário: </legend>
+            <span class="rs">R$</span>
+            <input type="number" name="mensalidade" id="mensalidade" placeholder="Valor">
+        </fieldset>
+        <fieldset id="vencimento">
+            <legend>Data de pagamento:</legend>
+            <span>Dia:</span>
+            <input type="number" name="vencimento" id="vencimento" placeholder="Ex: 12">
+        </fieldset>
+        <fieldset id="password">
+            <legend>Senha: </legend>
+            <input type="password" name="senha" id="senha" placeholder="Senha">
+            <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+        </fieldset>
+
+        <input type="button" value="Salvar" id="enviar" onclick="mostrarSenha()">
+    </div>
+
+    <script src="../Geral/Scripts/script.js"></script>
+</body>
+</html>

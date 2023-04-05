@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="mostrar_alunos.css">
+</head>
+<body>
+    <div id="caixa" class="container">
+        <h1>Turma {turma}</h1>
+        <table>
+            <tr class="top">
+                <td>Matrícula</td>
+                <td class="info">Nome</td>
+            </tr>
+            <tr>
+                <td>111111</td>
+                <td class="info">aluno name</td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var turmaDigitada = localStorage.getItem("turmaDigitada");
+        document.title = turmaDigitada;
+    </script>
+</body>
+</html>

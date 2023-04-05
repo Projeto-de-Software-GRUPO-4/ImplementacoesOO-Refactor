@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link rel="stylesheet" href="../Geral/Styles/style.css">
+
+</head>
+<body>
+    <div class="container" id="user">
+        <h1 id="titulo">Página de login</h1>
+        <div class="container" id="dados">
+            N. matricula: <input type="number" name="cpf" id="cpf" placeholder="Digite seu número de matrícula"><br>
+            Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
+            <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+        </div>
+        <input type="button" value="Acessar" id="botao">
+        <p id="mensagem">(Somente para alunos)</p>
+    </div>
+
+    <script>
+        function mostrarSenha(){
+            var senhaInput = document.getElementById("senha");
+            if(senhaInput.type === "password"){
+                senhaInput.type = "text";
+            }else{
+                senhaInput.type = "password";
+            }
+        }
+
+        async function logar() {
+            let id = document.getElementById("cpf").value;
+            let senha = document.getElementById("senha").value;
+
+            let data = {
+                id,
+                senha 
+            }
+            
+            const response = await fetch("http://localhost:8080/login/aluno", {
+                method: "POST", // *GET, POST, PUT, DELETE, etc.
+                mode: "cors", // no-cors, *cors, same-origin
+                headers: {
+                credentials: "same-origin", // include, *same-origin, omit
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            }
+            )
+            const json = await response.json();
+            
+            if (json !== null) {
+                // window.location.replace("http://192.168.1.10:5500/aluno.html");
+            }
+
+        }
+    </script>
+</body>
+</html>

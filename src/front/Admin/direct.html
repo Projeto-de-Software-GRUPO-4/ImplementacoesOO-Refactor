@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento</title>
+    <link rel="stylesheet" href="direct.css">
+</head>
+<body>
+    <div class="container" id="main">
+        <h1>Gerenciamento de usuários</h1>
+        <fieldset>
+            <legend>CPF do usuário: </legend>
+            <input id="cpf" type="number" placeholder="Digite o CPF do usuário">
+            <a id="link" href="">
+                <input id="botao" type="button" value="Próximo" onclick="apertado()">
+            </a>
+        </fieldset>
+    </div>
+
+    <script>
+        const selectValue = localStorage.getItem('selectValue');
+        const linkElement = document.getElementById("link");
+        
+        function apertado(){
+            if(selectValue === 'excluir'){
+                alert("Falta implementar o back para excluir!");
+                alert("user excluido com sucesso (futuro)");
+            }else if(selectValue === 'suspender'){
+                alert("Falta implementar o back para suspender!");
+                alert("Aluno suspenso com sucesso (futuro)");
+            }else if(selectValue === 'expulsar'){
+                alert("Falta implementar o back para expulsar aluno!");
+                alert("Aluno expulso com sucesso (futuro)");
+            }
+        }
+
+    </script>
+</body>
+</html>

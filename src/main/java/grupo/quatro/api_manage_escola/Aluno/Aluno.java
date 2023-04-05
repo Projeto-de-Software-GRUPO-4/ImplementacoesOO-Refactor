@@ -22,7 +22,7 @@ import java.util.HashSet;
 public class Aluno extends Usuario {
 
     @ManyToOne
-    @JoinColumn(name="turma_id", insertable = false, updatable = false)
+    @JoinColumn(name="turma_id", insertable = false, updatable = true)
     private Turma turma;
 
     @Embedded
@@ -31,6 +31,9 @@ public class Aluno extends Usuario {
 
     private boolean suspended;
 
+    public BigInteger getTurmaId() {
+        return turma.getId();
+    }
     public Aluno(DadosCadastroAluno dados) {
         super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
         this.responsavel = new Responsavel(dados.responsavel());

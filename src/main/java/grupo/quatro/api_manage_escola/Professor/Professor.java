@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.math.BigInteger;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -42,6 +43,10 @@ public class Professor extends Usuario {
         this.salarioHora = dados.salarioHora();
         this.turmas = new HashSet<Turma>();
         this.id = new BigInteger(dados.cpf());
+    }
+
+    public List<BigInteger> getTurmasId() {
+        return turmas.stream().map(turma -> turma.getId()).toList();
     }
 
 //    @NotNull

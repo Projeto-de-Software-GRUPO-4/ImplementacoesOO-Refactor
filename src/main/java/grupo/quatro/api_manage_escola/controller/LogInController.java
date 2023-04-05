@@ -24,7 +24,7 @@ public abstract class LogInController <T> {
 
     @Autowired
     UsuarioRepository usuarioRepository;
-    public abstract Optional<T> login(@Valid @RequestBody DadosLogin dados);
+    public abstract T login(@Valid @RequestBody DadosLogin dados);
 
 //    @Autowired
 //    ProfessorRepository professorRepository;

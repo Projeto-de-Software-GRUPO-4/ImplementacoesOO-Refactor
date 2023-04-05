@@ -2,6 +2,7 @@ package grupo.quatro.api_manage_escola.controller;
 
 import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
+import grupo.quatro.api_manage_escola.Professor.DadosListagemProfessorLogin;
 import grupo.quatro.api_manage_escola.Professor.Professor;
 import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
@@ -23,18 +24,18 @@ public class LogInProfessorController extends LogInController {
     ProfessorRepository professorRepository;
 
     @PostMapping
-    public Optional<Professor> login(@Valid @RequestBody DadosLogin dados) {
+    public DadosListagemProfessorLogin login(@Valid @RequestBody DadosLogin dados) {
         Optional<UsuarioCredentials> credentialsOptional = credentialsRepository.findById(dados.id());
 
-        Optional<Professor> returnObj = Optional.empty();
+        DadosListagemProfessorLogin returnObj = null;
 
         if (credentialsOptional.isPresent()) {
 
             UsuarioCredentials credentials = credentialsOptional.get();
 
             if (credentials.getSenha().equals(dados.senha())) {
-                returnObj = professorRepository.findByCpf(dados.id());
-
+                Professor professor = professorRepository.findByCpf(dados.id()).orElse(null);
+                returnObj = new DadosListagemProfessorLogin(professor);
             }
 
         }

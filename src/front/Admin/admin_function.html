@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="../Geral/Styles/function.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li><a id="link" href="" onclick="home_home()">Home</a></li>
+                <li><a id="link" href="perfil_admin.html">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="caixa" class="container">
+            <fieldset id="caixa">
+                <legend><h1 id="titulo">O que deseja fazer hoje? </h1></legend>
+                <select name="funcao" id="funcao">
+                    <option value="">--- Selecione uma operação ---</option>
+                    <option value="inserir">Inserir usuário</option>
+                    <option value="excluir">Excluir usuário</option>
+                    <option value="alterar">Alterar dados do usuário</option>
+                    <option value="suspender">Suspender aluno</option>
+                    <option value="mostrar_turma">Mostrar alunos de uma turma</option>
+                    <option value="expulsar">Expulsar aluno</option>
+                </select>
+                <input type="button" id="next" value="Avançar" onclick="funcao()">
+            </fieldset>
+        </div>
+    </main>
+
+    <script>
+        const buttomElement = document.getElementById('next');
+        
+        function home_home(){
+            alert("Você já está na home!");
+        }
+        
+        function funcao(){
+            const selectElement = document.getElementById('funcao');
+            const selectValue = selectElement.value;
+
+            localStorage.setItem('selectValue', selectValue);
+
+            if(selectValue === 'inserir'){
+                window.location.href ='inserir_user.html';
+            }else if(selectValue === 'alterar'){
+                alert("Falta mostrar os dados atuais nos campos!");
+                window.location.href = 'direct.html';
+            }else if(selectValue === 'mostrar_turma'){
+                localStorage.setItem("tipo", "admin");
+                window.location.href = 'turma.html';
+            }else if(selectValue === ""){
+                alert("Selecione uma opcao!")
+            }else{
+                window.location.href = 'direct.html';
+            }
+        }
+    </script>
+</body>
+</html>

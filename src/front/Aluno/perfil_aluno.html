@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir aluno</title>
+    <link rel="stylesheet" href="../Geral/Styles/perfil.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a id="link" href="aluno_function.html">Home</a></li>
+                <li><a id="link" href="" onclick="perfil()">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container" id="main">
+            <h1>Insira os dados do aluno</h1>
+            <fieldset id="name">
+                <legend>Nome: </legend>
+                <input type="text" name="nome" id="nome" placeholder="Nome do(a) aluno(a)">
+            </fieldset>
+            <fieldset id="password">
+                <legend>Senha: </legend>
+                <div>
+                    <input type="password" name="senha" id="senha" placeholder="Senha atual">
+                    <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+                </div>
+                <div>
+                    <input type="password" name="nova" id="nova" placeholder="Nova senha">
+                    <button type="button" id="mostrar" onclick="mostrarNova()">&#x1F441</button>
+                </div>
+                <div>
+                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha">
+                    <button type="button" id="mostrar" onclick="mostrarRepita()">&#x1F441</button>
+                </div>
+            </fieldset>
+    
+            <input type="button" value="Salvar" id="enviar">
+        </div>
+    </main>
+
+    <script src="../Geral/Scripts/script.js"></script>
+    <script>
+        document.getElementById("nome").value = "Nome do aluno"
+    </script>
+</body>
+</html>

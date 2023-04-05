@@ -1,0 +1,57 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container#main{
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    width: 500px;
+    height: auto;
+    border-radius: 30px 10px;
+    margin: 0px auto;
+    align-items: center;
+    align-content: center;
+}
+
+fieldset{
+    display: flex;
+    width: 350px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea#ocorrencia{
+    width: 300px;
+    height: 200px;
+    resize: none;
+    border-radius: 10px;
+    text-align: center;
+    border-width: 1px;
+}
+
+input#enviar{
+    background-color: rgb(74, 74, 240);
+    color: white;
+    border-color: transparent;
+    width: 100px;
+    height: 30px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    margin-top: 20px;
+}
+
+input#enviar:hover{
+    cursor: pointer;
+    background-color: rgb(68, 128, 48);
+}
+
+textarea#dados{
+    width: 300px;
+    height: 50px;
+    resize: none;
+    border-radius: 10px;
+    text-align: center;
+    border-width: 1px;
+}
