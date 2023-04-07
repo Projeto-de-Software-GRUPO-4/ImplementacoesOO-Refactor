@@ -15,20 +15,12 @@
             Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </div>
-        <input type="button" value="Acessar" id="botao">
+        <input type="button" value="Acessar" id="botao" onclick="errado()">
         <p id="mensagem">(Somente para administradores)</p>
+        <div class="error" id="error"></div>
     </div>
 
 
-    <script>
-        function mostrarSenha(){
-            var senhaInput = document.getElementById("senha");
-            if(senhaInput.type === "password"){
-                senhaInput.type = "text";
-            }else{
-                senhaInput.type = "password";
-            }
-        }
-    </script>
+    <script src="../Geral/Scripts/script.js"></script>
 </body>
 </html>

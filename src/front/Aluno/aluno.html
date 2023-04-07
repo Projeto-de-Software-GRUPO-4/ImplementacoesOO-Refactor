@@ -11,24 +11,18 @@
     <div class="container" id="user">
         <h1 id="titulo">Página de login</h1>
         <div class="container" id="dados">
-            N. matricula: <input type="number" name="cpf" id="cpf" placeholder="Digite seu número de matrícula"><br>
+            CPF: <input type="number" name="cpf" id="cpf" placeholder="Digite seu CPF"><br>
             Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </div>
-        <input type="button" value="Acessar" id="botao">
+        <input type="button" value="Acessar" id="botao" onclick="errado()">
         <p id="mensagem">(Somente para alunos)</p>
+        <div class="error" id="error"></div>
     </div>
 
-    <script>
-        function mostrarSenha(){
-            var senhaInput = document.getElementById("senha");
-            if(senhaInput.type === "password"){
-                senhaInput.type = "text";
-            }else{
-                senhaInput.type = "password";
-            }
-        }
 
+    <script src="../Geral/Scripts/script.js"></script>
+    <script>
         async function logar() {
             let id = document.getElementById("cpf").value;
             let senha = document.getElementById("senha").value;
