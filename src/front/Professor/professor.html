@@ -15,19 +15,13 @@
             Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </div>
-        <input type="button" onclick="logar()" value="Acessar" id="botao" style="cursor: pointer;">
+        <input type="button" onclick="logar()" value="Acessar" id="botao" style="cursor: pointer;" onclick="errado()">
         <p id="mensagem">(Somente para professores)</p>
+        <div class="error" id="error"></div>
     </div>
 
+    <script src="../Geral/Scripts/script.js"></script>
     <script>
-        function mostrarSenha(){
-            var senhaInput = document.getElementById("senha");
-            if(senhaInput.type === "password"){
-                senhaInput.type = "text";
-            }else{
-                senhaInput.type = "password";
-            }
-        }
 
         async function logar() {
             let id = document.getElementById("cpf").value;

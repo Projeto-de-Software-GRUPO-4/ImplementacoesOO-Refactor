@@ -1,3 +1,7 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .container#user{
     background-color: #f5f5f5;
     border-radius: 30px 10px;
@@ -8,7 +12,7 @@
     height: 5cm;
     margin: 0 auto;
     width: 600px;
-    height: 300px;
+    height: 250px;
     flex-direction: column;
 }
 
@@ -18,9 +22,17 @@ input#botao{
     width: 75px;
     height: 30px;
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
     margin: 20px 90px;
     border-color: transparent;
+}
+
+input#botao:hover{
+    background-color: rgb(68, 128, 48);
+    cursor: pointer;
+}
+
+button#mostrar:hover{
+    cursor: pointer;
 }
 
 input[type=number]::-webkit-inner-spin-button, 
@@ -29,26 +41,25 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 input#cpf{
+    text-align: center;
     margin: 5px 14px;
     border-radius: 5px;
     border-color: transparent;
 }
 
 input#senha{
+    text-align: center;
     border-color: transparent;
     border-radius: 5px;
 }
 
 h1#titulo{
-    font-family: Arial, Helvetica, sans-serif;
     margin-top: -10px;
-    color: blue;
 }
 
 .container#dados{
     align-items: center;
     justify-content: center;
-    font-family: Arial, Helvetica, sans-serif;
     margin: 0 auto;
 }
 
@@ -60,6 +71,15 @@ button#mostrar{
 
 p#mensagem{
     margin: -10px;
-    font-family: Arial, Helvetica, sans-serif;
     margin: 0px auto;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.error{
+    color: red;
 }
