@@ -1,9 +1,12 @@
 package grupo.quatro.api_manage_escola.Aluno;
 
+import grupo.quatro.api_manage_escola.Turma.DadosListagemTurma;
+
 import java.math.BigInteger;
+import java.util.Optional;
 
 public record DadosListagemAlunoLogin(
-        BigInteger id, String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento, int anoEscolar, BigInteger turma_id
+        BigInteger id, String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento, int anoEscolar, DadosListagemTurma turma
 ) {
 
     public DadosListagemAlunoLogin(Aluno aluno) {

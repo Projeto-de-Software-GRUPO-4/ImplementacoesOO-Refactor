@@ -1,8 +1,7 @@
-package grupo.quatro.api_manage_escola.controller;
+package grupo.quatro.api_manage_escola.Controllers;
 
 import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.Aluno.AlunoRepository;
-import grupo.quatro.api_manage_escola.Aluno.DadosListagemAluno;
 import grupo.quatro.api_manage_escola.Aluno.DadosListagemAlunoLogin;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;

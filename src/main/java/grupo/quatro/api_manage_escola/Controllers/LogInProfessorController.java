@@ -1,6 +1,5 @@
-package grupo.quatro.api_manage_escola.controller;
+package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.Aluno;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Professor.DadosListagemProfessorLogin;
 import grupo.quatro.api_manage_escola.Professor.Professor;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigInteger;
 import java.util.Optional;
 
 @RestController

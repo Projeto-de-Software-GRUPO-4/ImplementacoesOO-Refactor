@@ -1,0 +1,12 @@
+INSERT INTO materia (titulo) value ('Português');
+INSERT INTO materia (titulo) value ('Matemática');
+INSERT INTO materia (titulo) value ('Artes');
+INSERT INTO materia (titulo) value ('Inglês');
+INSERT INTO materia  (titulo)value ('Educação Física');
+INSERT INTO materia (titulo)value  ('Filosofia');
+INSERT INTO materia(titulo) value  ('Sociologia');
+INSERT INTO materia (titulo) value ('Física');
+INSERT INTO materia (titulo) value ('Química');
+INSERT INTO materia (titulo) value  ('Biologia');
+INSERT INTO materia (titulo) value ('Geografia');
+INSERT INTO materia (titulo) value ('História');

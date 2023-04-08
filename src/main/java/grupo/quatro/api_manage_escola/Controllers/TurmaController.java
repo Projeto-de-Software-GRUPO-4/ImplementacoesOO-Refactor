@@ -1,11 +1,8 @@
-package grupo.quatro.api_manage_escola.controller;
+package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.Aluno;
-import grupo.quatro.api_manage_escola.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Professor.Professor;
 import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
 import grupo.quatro.api_manage_escola.Turma.*;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

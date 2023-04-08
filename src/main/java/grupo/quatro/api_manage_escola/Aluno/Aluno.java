@@ -1,8 +1,11 @@
 package grupo.quatro.api_manage_escola.Aluno;
 
+import grupo.quatro.api_manage_escola.Boletim.Boletim;
+import grupo.quatro.api_manage_escola.Ocorrencia.Ocorrencia;
 import grupo.quatro.api_manage_escola.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Responsavel.Responsavel;
+import grupo.quatro.api_manage_escola.Turma.DadosListagemTurma;
 import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.Usuario.Usuario;
 import jakarta.persistence.*;
@@ -11,6 +14,8 @@ import lombok.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
@@ -31,9 +36,14 @@ public class Aluno extends Usuario {
 
     private boolean suspended;
 
-    public BigInteger getTurmaId() {
-        return turma.getId();
-    }
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "boletim_id", referencedColumnName = "id")
+    private Boletim boletim;
+
+
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
+    private Set<Ocorrencia> ocorrencias;
+
     public Aluno(DadosCadastroAluno dados) {
         super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
         this.responsavel = new Responsavel(dados.responsavel());
@@ -44,6 +54,10 @@ public class Aluno extends Usuario {
         if (dados.nome() != null) super.nome = dados.nome();
         if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
         if (dados.responsavel() != null) this.responsavel.updateInfo(dados.responsavel());
+    }
+
+    public DadosListagemTurma getTurmaId() {
+        return new DadosListagemTurma(turma.getId(), turma.getAnoEscolar(), turma.getLetra());
     }
 
     public void suspender() {

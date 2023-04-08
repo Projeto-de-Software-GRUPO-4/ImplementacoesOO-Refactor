@@ -1,21 +1,11 @@
-package grupo.quatro.api_manage_escola.controller;
+package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.Aluno;
-import grupo.quatro.api_manage_escola.Aluno.AlunoRepository;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
-import grupo.quatro.api_manage_escola.LogIn.Login;
-import grupo.quatro.api_manage_escola.Professor.Professor;
-import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
-import grupo.quatro.api_manage_escola.UserType.UserType;
-import grupo.quatro.api_manage_escola.Usuario.Usuario;
 import grupo.quatro.api_manage_escola.Usuario.UsuarioRepository;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 public abstract class LogInController <T> {
 

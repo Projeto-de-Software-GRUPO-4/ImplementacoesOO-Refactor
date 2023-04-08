@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Professor;
 
+import grupo.quatro.api_manage_escola.Turma.DadosListagemTurma;
 import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.Usuario.Usuario;
 import jakarta.persistence.*;
@@ -45,8 +46,8 @@ public class Professor extends Usuario {
         this.id = new BigInteger(dados.cpf());
     }
 
-    public List<BigInteger> getTurmasId() {
-        return turmas.stream().map(turma -> turma.getId()).toList();
+    public List<DadosListagemTurma> getTurmasId() {
+        return turmas.stream().map(turma -> new DadosListagemTurma(turma)).toList();
     }
 
 //    @NotNull

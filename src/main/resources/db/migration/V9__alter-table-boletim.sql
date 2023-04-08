@@ -1,0 +1,1 @@
+ALTER TABLE boletim ADD nota double not null;

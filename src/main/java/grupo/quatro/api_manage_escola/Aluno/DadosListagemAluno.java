@@ -17,5 +17,9 @@ public record DadosListagemAluno(BigInteger id, String nome, BigInteger cpf, Str
 
     public DadosListagemAluno(DadosListagemAluno dados) {
         this(dados.id(),dados.nome(), dados.cpf(), dados.dataDeNascimento(), dados.diaDePagamento(), dados.anoEscolar());
+    };
+
+    public DadosListagemAluno(Aluno aluno) {
+        this(aluno.getId(), aluno.getNome(), aluno.getCpf(), aluno.getDataDeNascimento(), aluno.getDiaDePagamento(), aluno.getAnoEscolar());
     }
 }

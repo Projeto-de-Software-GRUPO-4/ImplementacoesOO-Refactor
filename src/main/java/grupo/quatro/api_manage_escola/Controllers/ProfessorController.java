@@ -1,9 +1,6 @@
-package grupo.quatro.api_manage_escola.controller;
+package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.Aluno;
-import grupo.quatro.api_manage_escola.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Professor.*;
-import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
 import jakarta.validation.Valid;
@@ -12,10 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
 
 @RestController
 @RequestMapping("/professor")
