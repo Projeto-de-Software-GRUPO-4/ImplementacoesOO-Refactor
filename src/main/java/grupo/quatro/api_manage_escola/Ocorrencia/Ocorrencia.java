@@ -23,6 +23,7 @@ import java.math.BigInteger;
 public class Ocorrencia {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private BigInteger id;
 
     private String descricao;
@@ -32,6 +33,11 @@ public class Ocorrencia {
     @ManyToOne
     @JoinColumn(name="aluno_id", insertable = false, updatable = false)
     private Aluno aluno;
+
+    public Ocorrencia(DadosRegistrarOcorrencia ocorrencia) {
+        this.descricao = ocorrencia.descricao();
+        this.aluno_id = ocorrencia.id_aluno();
+    }
 
 
 }

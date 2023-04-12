@@ -36,9 +36,8 @@ public class Aluno extends Usuario {
 
     private boolean suspended;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "boletim_id", referencedColumnName = "id")
-    private Boletim boletim;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
+    private Set<Boletim> boletim;
 
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)

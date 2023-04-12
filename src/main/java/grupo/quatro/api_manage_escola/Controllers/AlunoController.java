@@ -2,6 +2,8 @@ package grupo.quatro.api_manage_escola.Controllers;
 
 
 import grupo.quatro.api_manage_escola.Aluno.*;
+import grupo.quatro.api_manage_escola.Ocorrencia.DadosRegistrarOcorrencia;
+import grupo.quatro.api_manage_escola.Ocorrencia.Ocorrencia;
 import grupo.quatro.api_manage_escola.Turma.Turma;
 import grupo.quatro.api_manage_escola.Turma.TurmaRepository;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
@@ -58,6 +60,15 @@ public class AlunoController {
         aluno.suspender();
     }
 
+//    @PostMapping("/registrar_ocorrencia")
+//    @Transactional
+//    public void registrarOcorrencia(DadosRegistrarOcorrencia dados) {
+//        Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
+//        System.out.println(aluno.getNome());
+//        aluno.getOcorrencias().add(new Ocorrencia(dados));
+//        alunoRepository.save(aluno);
+//    }
+
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
@@ -67,7 +78,7 @@ public class AlunoController {
 
     @PutMapping("/matricular_turma")
     @Transactional
-    void alocarProfessor(@RequestBody @Valid DadosLinkarAlunoTurma dados) {
+    void matricular_turma(@RequestBody @Valid DadosLinkarAlunoTurma dados) {
         Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
         Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
         aluno.setTurma(turma);
