@@ -33,6 +33,7 @@
                 </select>
                 <input type="button" id="next" value="Avançar" onclick="funcao()">
             </fieldset>
+            <div class="error"><p id="error"></p></div>
         </div>
     </main>
 
@@ -40,7 +41,7 @@
         const buttomElement = document.getElementById('next');
         
         function home_home(){
-            alert("Você já está na home!");
+            alert("Você está na home!");
         }
         
         function funcao(){
@@ -50,15 +51,16 @@
             localStorage.setItem('selectValue', selectValue);
 
             if(selectValue === 'inserir'){
-                window.location.href ='inserir_user.html';
+                localStorage.setItem("escolha", "inserir");
+                window.location.href = 'tipo_user.html';
             }else if(selectValue === 'alterar'){
-                alert("Falta mostrar os dados atuais nos campos!");
-                window.location.href = 'direct.html';
+                localStorage.setItem("escolha", "alterar");
+                window.location.href = 'tipo_user.html';
             }else if(selectValue === 'mostrar_turma'){
                 localStorage.setItem("tipo", "admin");
                 window.location.href = 'turma.html';
             }else if(selectValue === ""){
-                alert("Selecione uma opcao!")
+                document.getElementById('error').textContent = "Selecione uma opção!";
             }else{
                 window.location.href = 'direct.html';
             }

@@ -8,11 +8,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10cm;
-    height: 5cm;
     margin: 0 auto;
     width: 600px;
-    height: 250px;
+    height: auto;
     flex-direction: column;
 }
 
@@ -53,10 +51,6 @@ input#senha{
     border-radius: 5px;
 }
 
-h1#titulo{
-    margin-top: -10px;
-}
-
 .container#dados{
     align-items: center;
     justify-content: center;
@@ -70,8 +64,8 @@ button#mostrar{
 }
 
 p#mensagem{
-    margin: -10px;
     margin: 0px auto;
+    margin-bottom: 10px;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -82,4 +76,5 @@ input[type=number]::-webkit-inner-spin-button {
 
 .error{
     color: red;
+    margin-bottom: 10px;
 }

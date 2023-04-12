@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Usuario</title>
+    <link rel="stylesheet" href="tipo_user.css">
+</head>
+<body>
+    <div class="container" id="caixa">
+        <h1 id="titulo"></h1>
+        <fieldset id="set">
+            <legend id="edit"></legend>
+            <input type="button" value="Professor" id="botao" onclick="oque(this.value)">
+            <input type="button" value="Aluno" id="botao" onclick="oque(this.value)">
+        </fieldset>
+    </div>
+
+    <script>
+        const escolha = localStorage.getItem('escolha');
+
+        if(escolha === "inserir"){
+            document.title = "Inserir usuário";
+            document.getElementById('titulo').textContent = "Inserir usuário";
+            document.getElementById('edit').textContent = "Que tipo de usuário deseja inserir?";
+        }else{
+            document.title = "Alterar dados";
+            document.getElementById('titulo').textContent = "Alterar dados de usuário";
+            document.getElementById('edit').textContent = "De que tipo de usuário deseja editar os dados?";
+        }
+
+        function oque(tipo){
+            if(tipo === "Professor" && escolha == "inserir"){
+                window.location.href = 'inserir_prof.html';
+            }else if(tipo === "Aluno" && escolha == "inserir"){
+                window.location.href = 'inserir_aluno.html';
+            }else if(tipo === "Professor" && escolha == "alterar"){
+                window.location.href = 'edit_prof.html';
+            }else{
+                window.location.href = 'edit_aluno.html';
+            }
+        }
+    </script>
+</body>
+</html>

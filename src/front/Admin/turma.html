@@ -13,9 +13,8 @@
         <fieldset>
             <legend>Nome da turma: </legend>
             <input id="turma" type="text" placeholder="Digite o nome da turma">
-            <a id="link" href="mostrar_alunos.html">
-                <input id="botao" type="button" value="Próximo" onclick="apertado()">
-            </a>
+            <input id="botao" type="button" value="Próximo" onclick="apertado()">
+            <div class="error"><p id="error"></p></div>
         </fieldset>
     </div>
 
@@ -25,13 +24,18 @@
 
         function apertado(){
             var turma = document.getElementById("turma").value;
+            
+            if(turma === ""){
+                document.getElementById('error').textContent = "O campo turma é obrigatório!";
+                return;
+            }
+            
             localStorage.setItem("turmaDigitada", turma);
             alert("Falta validar se a turma existe");
-            
             if(tipo == "admin"){
                 window.location.href = "mostrar_alunos.html";
             }else if(tipo == "professor"){
-                window.location.href = "dar_nota.html";
+                window.location.href = "../Professor/dar_nota.html";
             }
         }
     </script>

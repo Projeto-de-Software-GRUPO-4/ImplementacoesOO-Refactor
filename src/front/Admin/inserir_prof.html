@@ -14,7 +14,7 @@
             <legend>Nome: </legend>
             <input type="text" name="nome" id="nome" placeholder="Nome do(a) professor(a)">
         </fieldset>
-        <fieldset id="cpf">
+        <fieldset id="_cpf">
             <legend>CPF: </legend>
             <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) professor(a)">
         </fieldset>
@@ -24,7 +24,7 @@
         </fieldset>
         <fieldset id="telefone">
             <legend>Telefone: </legend>
-            <input type="tel" name="telefone" id="telefone" placeholder="Numero de telefone">
+            <input type="number" name="telefone" id="telefone" placeholder="Numero de telefone">
         </fieldset>
         <fieldset id="mensalidade">
             <legend>Salário: </legend>
@@ -42,9 +42,31 @@
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </fieldset>
 
-        <input type="button" value="Salvar" id="enviar" onclick="mostrarSenha()">
+        <input type="button" value="Salvar" id="enviar" onclick="enviar()">
+        <div class="error"><p id="error"></p></div>
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
+    <script>
+        function enviar(){
+            var inputs = document.querySelectorAll("input");
+            var cpf = document.getElementById("cpf").value;
+            
+            for(var i = 0; i < inputs.length; i++){
+                if(inputs[i].value === ""){
+                    document.getElementById('error').textContent = "Preencha todos os campos!";
+                    return;
+                }
+            }
+
+            if(isvalid(cpf) === false){
+                document.getElementById('error').textContent = "Digite um CPF válido";
+                return;
+            }
+
+            alert("Cadastro efetuado com sucesso! (FALTA O BACK!)");
+            window.location.href = "admin_function.html";
+        }
+    </script>
 </body>
 </html>

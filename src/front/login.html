@@ -21,5 +21,22 @@
 
 
     <script src="Geral/Scripts/script.js"></script>
+    <script>
+        function errado(){
+            const error = document.getElementById('error');
+            var cpf = document.getElementById('cpf').value;
+            var senha = document.getElementById('senha').value;
+
+            if(cpf === ""){
+                error.textContent = "O campo de CPF é obrigatório!";
+            }else if(senha === ""){
+                error.textContent = "O campo de senha é obrigatório!";
+            }else{
+                error.textContent = "Senha incorreta! (falta verificar no DB)";
+                alert("A rota depende do retorno do DB, mas como exemplo sera usada a rota para admin!");
+                window.location.href = 'Admin/admin_function.html';
+            }
+        }
+    </script>
 </body>
 </html>

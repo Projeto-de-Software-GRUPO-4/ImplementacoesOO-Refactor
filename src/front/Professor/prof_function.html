@@ -29,6 +29,7 @@
                 <option value="atribuir">Atribuir nota</option>
             </select>
             <input type="button" id="next" value="Avançar" onclick="clicou()">
+            <div class="error"><p id="error"></p></div>
         </div>
     </main>
 
@@ -45,9 +46,9 @@
             }else if(selectValue === "atribuir"){
                 localStorage.setItem("tipo", "professor");
                 alert("Falta validar se a turma existe");
-                window.location.href= "turma.html";
+                window.location.href= "../Admin/turma.html";
             }else if(selectValue === ""){
-                alert("Selecione uma opcao!");
+                document.getElementById("error").textContent = "Selecione uma operação!";
             }
         }
 
