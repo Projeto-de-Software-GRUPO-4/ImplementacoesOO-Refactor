@@ -15,7 +15,7 @@
             Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </div>
-        <input type="button" value="Acessar" id="botao" onclick="errado()">
+        <input type="button" value="Acessar" id="botao" onclick="logar()">
         <p id="mensagem">(Somente para alunos)</p>
         <div class="error" id="error"></div>
     </div>
@@ -23,21 +23,17 @@
 
     <script src="../Geral/Scripts/script.js"></script>
     <script>
-        function errado(){
-            const error = document.getElementById('error');
-            var cpf = document.getElementById('cpf').value;
-            var senha = document.getElementById('senha').value;
-
-            if(cpf === ""){
-                error.textContent = "O campo de CPF é obrigatório!";
-            }else if(senha === ""){
-                error.textContent = "O campo de senha é obrigatório!";
-            }else{
-                error.textContent = "Senha incorreta! (falta verificar no DB)";
-            }
-        }
 
         async function logar() {
+            var inputs = document.querySelectorAll("input");
+
+            for(var i = 0; i < inputs.length; i++){
+                if(inputs[i].value === ""){
+                    document.getElementById("error").textContent = "Todos os campos são obrigatórios!";
+                    return;
+                }
+            }
+
             let id = document.getElementById("cpf").value;
             let senha = document.getElementById("senha").value;
 

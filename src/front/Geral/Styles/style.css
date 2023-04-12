@@ -64,8 +64,8 @@ button#mostrar{
 }
 
 p#mensagem{
-    margin: -10px;
     margin: 0px auto;
+    margin-bottom: 10px;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -76,4 +76,5 @@ input[type=number]::-webkit-inner-spin-button {
 
 .error{
     color: red;
+    margin-bottom: 10px;
 }
