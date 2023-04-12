@@ -1,11 +1,11 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.Aluno;
-import grupo.quatro.api_manage_escola.Aluno.AlunoRepository;
-import grupo.quatro.api_manage_escola.Ocorrencia.DadosListagemOcorrencia;
-import grupo.quatro.api_manage_escola.Ocorrencia.DadosRegistrarOcorrencia;
-import grupo.quatro.api_manage_escola.Ocorrencia.Ocorrencia;
-import grupo.quatro.api_manage_escola.Ocorrencia.OcorrenciaRepository;
+import grupo.quatro.api_manage_escola.Domain.Aluno;
+import grupo.quatro.api_manage_escola.Repository.AlunoRepository;
+import grupo.quatro.api_manage_escola.Receive.Ocorrencia.DadosListagemOcorrencia;
+import grupo.quatro.api_manage_escola.Receive.Ocorrencia.DadosRegistrarOcorrencia;
+import grupo.quatro.api_manage_escola.Domain.Ocorrencia;
+import grupo.quatro.api_manage_escola.Repository.OcorrenciaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

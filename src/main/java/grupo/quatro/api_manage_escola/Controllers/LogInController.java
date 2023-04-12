@@ -1,8 +1,8 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
-import grupo.quatro.api_manage_escola.Usuario.UsuarioRepository;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
+import grupo.quatro.api_manage_escola.Repository.UsuarioRepository;
+import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

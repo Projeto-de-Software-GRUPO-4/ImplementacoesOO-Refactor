@@ -1,15 +1,17 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Professor.*;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
+import grupo.quatro.api_manage_escola.Domain.Professor;
+import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
+import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
+import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
+import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
+import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.List;
 
 @RestController
 @RequestMapping("/professor")

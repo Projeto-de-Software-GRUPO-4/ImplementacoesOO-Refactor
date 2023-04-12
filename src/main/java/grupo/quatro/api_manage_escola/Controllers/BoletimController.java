@@ -1,8 +1,11 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Aluno.DadosListagemAluno;
-import grupo.quatro.api_manage_escola.Bimestre.Bimestre;
-import grupo.quatro.api_manage_escola.Boletim.*;
+import grupo.quatro.api_manage_escola.Domain.Bimestre;
+import grupo.quatro.api_manage_escola.Domain.Boletim;
+import grupo.quatro.api_manage_escola.Receive.Boletim.DadosAtualizarBoletim;
+import grupo.quatro.api_manage_escola.Receive.Boletim.DadosListagemBoletim;
+import grupo.quatro.api_manage_escola.Receive.Boletim.DadosRegistrarBoletim;
+import grupo.quatro.api_manage_escola.Repository.BoletimRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

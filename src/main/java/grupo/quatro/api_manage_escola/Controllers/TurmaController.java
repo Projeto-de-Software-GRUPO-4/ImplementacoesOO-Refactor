@@ -1,8 +1,12 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Professor.Professor;
-import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
-import grupo.quatro.api_manage_escola.Turma.*;
+import grupo.quatro.api_manage_escola.Domain.Professor;
+import grupo.quatro.api_manage_escola.Domain.Turma;
+import grupo.quatro.api_manage_escola.Receive.Turma.DadosCadastroTurma;
+import grupo.quatro.api_manage_escola.Receive.Turma.DadosLinkarProfessorTurma;
+import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
+import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
+import grupo.quatro.api_manage_escola.Repository.TurmaRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

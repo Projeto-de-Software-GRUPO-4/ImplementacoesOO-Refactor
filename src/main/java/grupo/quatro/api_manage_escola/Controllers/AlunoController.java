@@ -1,20 +1,22 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
 
-import grupo.quatro.api_manage_escola.Aluno.*;
-import grupo.quatro.api_manage_escola.Ocorrencia.DadosRegistrarOcorrencia;
-import grupo.quatro.api_manage_escola.Ocorrencia.Ocorrencia;
-import grupo.quatro.api_manage_escola.Turma.Turma;
-import grupo.quatro.api_manage_escola.Turma.TurmaRepository;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
-import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentialsRepository;
+import grupo.quatro.api_manage_escola.Domain.Aluno;
+import grupo.quatro.api_manage_escola.Domain.Turma;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosLinkarAlunoTurma;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosListagemAluno;
+import grupo.quatro.api_manage_escola.Repository.AlunoRepository;
+import grupo.quatro.api_manage_escola.Repository.TurmaRepository;
+import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
+import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.List;
 
 @RestController
 @RequestMapping("/aluno")
