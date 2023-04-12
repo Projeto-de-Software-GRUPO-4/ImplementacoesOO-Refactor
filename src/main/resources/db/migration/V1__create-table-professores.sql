@@ -1,5 +1,5 @@
 CREATE TABLE professor (
-  id bigint not null AUTO_INCREMENT,
+  id char(11) not null unique,
   nome varchar(500) not null,
   data_de_nascimento char(10),
   dia_de_pagamento smallint,
@@ -10,5 +10,3 @@ CREATE TABLE professor (
 
   primary key (id)
 );
-
-ALTER TABLE professor AUTO_INCREMENT = 500000;

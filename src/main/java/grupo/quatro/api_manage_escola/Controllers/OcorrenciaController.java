@@ -28,7 +28,7 @@ public class OcorrenciaController {
     @Transactional
     void registrar(@RequestBody @Valid DadosRegistrarOcorrencia dados) {
         Ocorrencia ocorrencia = repository.save(new Ocorrencia(dados));
-        Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
+        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id_aluno());
         ocorrencia.setAluno(aluno);
     }
 

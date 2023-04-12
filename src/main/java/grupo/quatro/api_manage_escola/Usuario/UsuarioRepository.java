@@ -1,9 +1,12 @@
 package grupo.quatro.api_manage_escola.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+//@NoRepositoryBean
+public interface UsuarioRepository extends JpaRepository<Usuario, BigInteger> {
 
 }

@@ -39,7 +39,7 @@ public class TurmaController {
     @PostMapping("/adicionar_professor")
     @Transactional
     void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
-        Professor professor = professorRepository.findById(dados.id_professor()).orElse(null);
+        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
         Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
         turma.getProfessores().add(professor);
         turmaRepository.save(turma);
@@ -48,7 +48,7 @@ public class TurmaController {
     @DeleteMapping("/remover_professor")
     @Transactional
     void removerProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
-        Professor professor = professorRepository.findById(dados.id_professor()).orElse(null);
+        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
         Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
         turma.getProfessores().remove(professor);
         turmaRepository.save(turma);

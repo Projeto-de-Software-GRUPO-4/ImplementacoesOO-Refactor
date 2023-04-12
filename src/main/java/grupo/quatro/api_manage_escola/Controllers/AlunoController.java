@@ -31,15 +31,16 @@ public class AlunoController {
     @PostMapping
     @Transactional
     void cadastrar(@RequestBody @Valid DadosCadastroAluno dados) {
-        Aluno aluno = alunoRepository.save(new Aluno(dados));
+        Aluno aluno = (Aluno) alunoRepository.save(new Aluno(dados));
         usuarioCredentialsRepository.save(new UsuarioCredentials(aluno.getId().toString(), dados.senha(), dados.userType()));
 
     }
-    
-    @GetMapping
-    public List<DadosListagemAluno> listar() {
-        return alunoRepository.findAllByActiveTrue().stream().map(DadosListagemAluno::new).toList();
-    }
+
+    //TODO
+//    @GetMapping
+//    public List<DadosListagemAluno> listar() {
+//        return alunoRepository.findAllByActiveTrue().stream().map(DadosListagemAluno::new).toList();
+//    }
 
     @GetMapping("/{id}")
     public DadosListagemAluno listarSpecificAluno(@PathVariable BigInteger id) {
@@ -49,14 +50,14 @@ public class AlunoController {
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoAluno dados) {
-        Aluno aluno = alunoRepository.getReferenceById(dados.id());
+        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id());
         aluno.updateInfo(dados);
     }
 
     @PutMapping("/{id}/status_suspensao")
     @Transactional
     public void suspender_desuspender(@PathVariable BigInteger id) {
-        Aluno aluno = alunoRepository.getReferenceById(id);
+        Aluno aluno = (Aluno) alunoRepository.getReferenceById(id);
         aluno.suspender();
     }
 
@@ -72,14 +73,14 @@ public class AlunoController {
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
-        Aluno aluno = alunoRepository.getReferenceById(id);
+        Aluno aluno = (Aluno) alunoRepository.getReferenceById(id);
         aluno.excluir();
     }
 
     @PutMapping("/matricular_turma")
     @Transactional
     void matricular_turma(@RequestBody @Valid DadosLinkarAlunoTurma dados) {
-        Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
+        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id_aluno());
         Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
         aluno.setTurma(turma);
     }

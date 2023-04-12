@@ -30,19 +30,20 @@ public class ProfessorController {
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
-        Professor professor = repository.getReferenceById(dados.id());
+        Professor professor = (Professor) repository.getReferenceById(dados.id());
         professor.updateInfo(dados);
     }
 
-    @GetMapping
-    public List<DadosListagemProfessor> listar() {
-        return repository.findAll().stream().map(DadosListagemProfessor::new).toList();
-    }
+    // TODO
+//    @GetMapping
+//    public List<DadosListagemProfessor> listar() {
+//        return repository.findAll().stream().map(DadosListagemProfessor::new).toList();
+//    }
 
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
-        Professor professor = repository.getReferenceById(id);
+        Professor professor = (Professor) repository.getReferenceById(id);
         professor.excluir();
     }
 

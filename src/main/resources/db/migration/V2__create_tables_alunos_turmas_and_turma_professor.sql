@@ -6,7 +6,7 @@ CREATE TABLE turma(
 );
 
 CREATE TABLE aluno (
-                            id bigint not null AUTO_INCREMENT,
+                            id char(11) not null unique,
                              nome varchar(500) not null,
                              data_de_nascimento char(10),
                              dia_de_pagamento smallint,
@@ -25,7 +25,7 @@ ALTER TABLE aluno AUTO_INCREMENT = 100000;
 
 CREATE TABLE turma_professor(
     turma_id bigint,
-    professor_id bigint,
+    professor_id char(11),
     foreign key (turma_id) references turma(id),
     foreign key (professor_id) references professor(id),
     primary key (turma_id, professor_id)

@@ -28,8 +28,6 @@ public class Professor extends Usuario {
 //    @Id
 //    private String id;
 
-    private String areaEnsino;
-
     private int cargaHorariaDiaria;
 
     private double salarioHora;
@@ -39,7 +37,6 @@ public class Professor extends Usuario {
     Set<Turma> turmas;
     public Professor(DadosCadastroProfessor dados) {
         super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
-        this.areaEnsino = dados.areaEnsino();
         this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
         this.salarioHora = dados.salarioHora();
         this.turmas = new HashSet<Turma>();
@@ -47,7 +44,7 @@ public class Professor extends Usuario {
     }
 
     public List<DadosListagemTurma> getTurmasId() {
-        return turmas.stream().map(turma -> new DadosListagemTurma(turma)).toList();
+        return turmas.stream().map(DadosListagemTurma::new).toList();
     }
 
 //    @NotNull
@@ -63,7 +60,6 @@ public class Professor extends Usuario {
 
     public void updateInfo(DadosAtualizacaoProfessor dados) {
         if (dados.nome() != null) super.nome = dados.nome();
-        if (dados.areaEnsino() != null) this.areaEnsino = dados.areaEnsino();
         if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
         if (dados.cargaHorariaDiaria() != 0) this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
         if (dados.salarioHora() != 0) this.salarioHora = dados.salarioHora();

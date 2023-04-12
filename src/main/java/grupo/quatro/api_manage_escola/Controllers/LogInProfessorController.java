@@ -4,6 +4,7 @@ import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Professor.DadosListagemProfessorLogin;
 import grupo.quatro.api_manage_escola.Professor.Professor;
 import grupo.quatro.api_manage_escola.Professor.ProfessorRepository;
+import grupo.quatro.api_manage_escola.Usuario.Usuario;
 import grupo.quatro.api_manage_escola.UsuarioCredentials.UsuarioCredentials;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +34,7 @@ public class LogInProfessorController extends LogInController {
             UsuarioCredentials credentials = credentialsOptional.get();
 
             if (credentials.getSenha().equals(dados.senha())) {
-                Professor professor = professorRepository.findByCpf(dados.id()).orElse(null);
+                Professor professor = professorRepository.findById(new BigInteger(dados.id())).orElse(null);
                 returnObj = new DadosListagemProfessorLogin(professor);
             }
 

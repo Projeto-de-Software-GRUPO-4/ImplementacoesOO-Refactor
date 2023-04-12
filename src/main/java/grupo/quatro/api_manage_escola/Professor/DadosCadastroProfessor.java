@@ -17,9 +17,6 @@ public record DadosCadastroProfessor(
         @Pattern(regexp = "\\d{11}")
         String cpf,
         @NotNull
-        @NotBlank
-        String areaEnsino,
-        @NotNull
         int diaDePagamento,
         int cargaHorariaDiaria,
         double salarioHora,

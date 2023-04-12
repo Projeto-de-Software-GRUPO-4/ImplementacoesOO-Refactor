@@ -14,7 +14,6 @@ public record DadosAtualizacaoProfessor (
 
     String nome,
 
-    String areaEnsino,
 
     int diaDePagamento,
     int cargaHorariaDiaria,

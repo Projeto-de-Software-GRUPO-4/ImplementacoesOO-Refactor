@@ -1,6 +1,6 @@
 CREATE TABLE ocorrencia (
     id bigint auto_increment,
-    aluno_id bigint,
+    aluno_id char(11),
     descricao text,
     foreign key (aluno_id) references aluno(id),
     primary key (id)
@@ -17,7 +17,7 @@ CREATE TABLE materia (
 
 CREATE TABLE boletim (
     id bigint auto_increment,
-    aluno_id bigint,
+    aluno_id char(11),
     ano year,
     bimestre enum('Primeiro', 'Segundo', 'Terceiro', 'Quarto'),
     materia_id tinyint,

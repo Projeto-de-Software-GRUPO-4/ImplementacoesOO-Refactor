@@ -47,6 +47,7 @@ public class Aluno extends Usuario {
         super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
         this.responsavel = new Responsavel(dados.responsavel());
         this.anoEscolar = dados.anoEscolar();
+        this.id = new BigInteger(dados.cpf());
     }
 
     public void updateInfo(DadosAtualizacaoAluno dados) {

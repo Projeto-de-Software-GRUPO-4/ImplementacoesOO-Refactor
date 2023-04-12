@@ -12,7 +12,7 @@ public abstract class LogInController <T> {
     @Autowired
     UsuarioCredentialsRepository credentialsRepository;
 
-    @Autowired
+
     UsuarioRepository usuarioRepository;
     public abstract T login(@Valid @RequestBody DadosLogin dados);
 

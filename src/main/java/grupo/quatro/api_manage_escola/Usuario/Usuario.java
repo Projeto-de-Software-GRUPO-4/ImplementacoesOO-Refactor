@@ -13,7 +13,6 @@ import java.math.BigInteger;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected BigInteger id;
 
     protected String nome;
