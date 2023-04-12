@@ -10,15 +10,37 @@
 <body>
     <div class="container" id="main">
         <h1>Registro de ocorrências</h1>
-        <fieldset>
+        <fieldset id="data">
             <legend>Dados do aluno: </legend>
-            <textarea name="dados" id="dados" cols="30" rows="10" placeholder="Digite aqui os dados do aluno (nome e turma)."></textarea>
+            <input type="text" id="nome_aluno" placeholder="Digite o nome do aluno">
+            <input type="text" id="turma_ocorrencia" placeholder="Digite a turma da ocorrência">
         </fieldset>
-        <fieldset>
+        <fieldset id="ocorrenc">
             <legend>Registre aqui a ocorrência: </legend>
             <textarea name="ocorrencia" id="ocorrencia" cols="30" rows="10" placeholder="Digite aqui"></textarea>
         </fieldset>
-        <input type="button" value="Enviar" id="enviar">
+        <div class="error"><p id="error"></p></div>
+        <input type="button" value="Enviar" id="enviar" onclick="enviar()">
     </div>
+
+    <script>
+        function enviar(){
+            var inputs = document.querySelectorAll("input");
+            var error = document.getElementById("error");
+            var text = document.getElementById("ocorrencia");
+
+            for(var i = 0; i < inputs.length; i++){
+                if(inputs[i].value === "" || text.value === ""){
+                    error.textContent = "Preencha todos os campos!";
+                    return;
+                }
+            }
+
+            alert("Falta validar se a turma existe!");
+            alert("Ocorrência enviada com sucesso!");
+            window.location.href = "prof_function.html";
+
+        }
+    </script>
 </body>
 </html>

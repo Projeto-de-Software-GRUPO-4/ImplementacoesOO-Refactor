@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="caixa" class="container">
-        <h1>Turma {turma}</h1>
+        <h1 id="nome"></h1>
         <table>
             <tr class="top">
                 <td>Matrícula</td>
@@ -25,6 +25,7 @@
     <script>
         var turmaDigitada = localStorage.getItem("turmaDigitada");
         document.title = turmaDigitada;
+        document.getElementById('nome').textContent = "Turma " + turmaDigitada;
     </script>
 </body>
 </html>

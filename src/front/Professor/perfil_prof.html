@@ -34,7 +34,7 @@
             </fieldset>
             <fieldset id="tel">
                 <legend>Telefone: </legend>
-                <input type="tel" name="telefone" id="telefone" value="">
+                <input type="number" name="telefone" id="telefone" value="">
             </fieldset>
             <fieldset id="password">
                 <legend>Senha: </legend>
@@ -43,16 +43,17 @@
                     <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
                 </div>
                 <div>
-                    <input type="password" name="nova" id="nova" placeholder="Nova senha">
+                    <input type="password" name="nova" id="nova" placeholder="Nova senha" onkeyup="compara()">
                     <button type="button" id="mostrar" onclick="mostrarNova()">&#x1F441</button>
                 </div>
                 <div>
-                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha">
+                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha" onkeyup="compara()">
                     <button type="button" id="mostrar" onclick="mostrarRepita()">&#x1F441</button>
                 </div>
             </fieldset>
     
-            <input type="button" value="Salvar" id="enviar" onclick="mostrarSenha()">
+            <div class="error"><p id="error"></p></div>
+            <input type="button" value="Salvar" id="enviar" onclick="enviar()">
         </div>
     </main>
 
@@ -61,10 +62,49 @@
         document.getElementById("nome").value = "Nome do professor";
         document.getElementById("cpf").value = "11111111111";
         document.getElementById("nasc").value = "2012-12-12";
-        document.getElementById("telefone").value = "(11) 12234-5678";
+        document.getElementById("telefone").value = "11122345678";
 
         function perfil(){
             alert("Você já está no perfil!")
+        }
+
+        function compara(){
+            var senha0 = document.getElementById('senha').value;
+            var senha1 = document.getElementById('nova').value;
+            var senha2 = document.getElementById('repita').value;
+            var enviar = document.getElementById('enviar');
+
+            if(senha0 == senha1 && senha0 !== "" && senha1 !== ""){
+                document.getElementById('error').textContent = "A nova senha nao pode ser igual a senha atual!";
+                return false;
+            }else if(senha1 === senha2){
+                document.getElementById('error').textContent = "";
+                return true;
+            }else{
+                if(senha2 !== ""){
+                    document.getElementById('error').textContent = "As senhas nao coincidem!";
+                    return false;
+                }
+            }
+        }
+
+        function enviar(){
+            var inputs = document.querySelectorAll("input");
+
+            if(compara() === false){
+                return;
+            }else{
+                for (var i = 0; i < inputs.length; i++) {
+                    if(inputs[i].value === ""){
+                        document.getElementById("error").textContent = "Preencha todos os campos!";
+                        return;
+                    }
+                }
+
+                alert("Falta implementar o back para saber se a senha atual e igual a do DB");
+                alert("Dados alterados com sucesso!")
+                window.location.href = "prof_function.html";
+            }
         }
     </script>
 </body>

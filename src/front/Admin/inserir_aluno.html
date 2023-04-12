@@ -14,7 +14,7 @@
             <legend>Nome: </legend>
             <input type="text" name="nome" id="nome" placeholder="Nome do(a) aluno(a)">
         </fieldset>
-        <fieldset id="cpf">
+        <fieldset id="_cpf">
             <legend>CPF: </legend>
             <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) aluno(a)">
         </fieldset>
@@ -32,11 +32,11 @@
         </fieldset>
         <fieldset id="num_res1">
             <legend>Telefone do(a) responsavel: </legend>
-            <input type="tel" name="num_res1" id="num_res1" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
+            <input type="number" name="num_res1" id="num_res1" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
         </fieldset>
         <fieldset id="num_res2">
             <legend>Telefone do(a) segundo(a) responsavel: </legend>
-            <input type="tel" name="num_res2" id="num_res2" placeholder="Numero do(a) segundo(a) responsavel pelo(a) aluno(a)">
+            <input type="number" name="num_res2" id="num_res2" placeholder="Numero do(a) segundo(a) responsavel pelo(a) aluno(a)">
         </fieldset>
         <fieldset id="ensino">
             <legend>Ensino: </legend>
@@ -70,8 +70,39 @@
             <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
         </fieldset>
 
-        <input type="button" value="Salvar" id="enviar">
+        <input type="button" value="Salvar" id="enviar" onclick="enviar()">
+        <div class="error"><p id="error"></p></div>
     </div>
+
     <script src="../Geral/Scripts/script.js"></script>
+    <script>
+
+        function enviar(){
+            var inputs = document.querySelectorAll("input");
+            var cpf = document.getElementById("cpf").value;
+
+            for(var i = 0; i < inputs.length; i++){
+                if(inputs[i].value === "" && i != 4 && i != 6){
+                    document.getElementById('error').textContent = "Preencha todos os campos!";
+                    return;
+                }
+            }
+
+            var ensino = document.querySelector('input[name="ensino"]:checked');
+            var turno = document.querySelector('input[name="turno"]:checked');
+            if(!ensino || !turno){
+                document.getElementById("error").textContent = "Preencha todos os campos!";
+                return;
+            }
+
+            if(isvalid(cpf) === false){
+                document.getElementById('error').textContent = "Digite um CPF válido";
+                return;
+            }
+
+            alert("Cadastro feito com sucesso (FALTA O BACK)!")
+            window.location.href = "admin_function.html";
+        }
+    </script>
 </body>
 </html>

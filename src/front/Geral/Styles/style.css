@@ -8,11 +8,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 10cm;
-    height: 5cm;
     margin: 0 auto;
     width: 600px;
-    height: 250px;
+    height: auto;
     flex-direction: column;
 }
 
@@ -51,10 +49,6 @@ input#senha{
     text-align: center;
     border-color: transparent;
     border-radius: 5px;
-}
-
-h1#titulo{
-    margin-top: -10px;
 }
 
 .container#dados{

@@ -70,3 +70,7 @@ input#botao:hover{
         width: 90%;
     }
 }
+
+.error{
+    color: red;
+}
