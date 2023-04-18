@@ -12,7 +12,7 @@
     <header>
         <nav>
             <ul>
-                <li><a id="link" href="" onclick="home_home()">Home</a></li>
+                <li><a id="link" href="" disabled>Home</a></li>
                 <li><a id="link" href="perfil_admin.html">Perfil</a></li>
             </ul>
         </nav>
@@ -23,7 +23,7 @@
             <fieldset id="caixa">
                 <legend><h1 id="titulo">O que deseja fazer hoje? </h1></legend>
                 <select name="funcao" id="funcao">
-                    <option value="">--- Selecione uma operação ---</option>
+                    <option value="" disabled selected>--- Selecione uma operação ---</option>
                     <option value="inserir">Inserir usuário</option>
                     <option value="excluir">Excluir usuário</option>
                     <option value="alterar">Alterar dados do usuário</option>
@@ -40,10 +40,6 @@
     <script>
         const buttomElement = document.getElementById('next');
         
-        function home_home(){
-            alert("Você está na home!");
-        }
-        
         function funcao(){
             const selectElement = document.getElementById('funcao');
             const selectValue = selectElement.value;
@@ -59,8 +55,6 @@
             }else if(selectValue === 'mostrar_turma'){
                 localStorage.setItem("tipo", "admin");
                 window.location.href = 'turma.html';
-            }else if(selectValue === ""){
-                document.getElementById('error').textContent = "Selecione uma opção!";
             }else{
                 window.location.href = 'direct.html';
             }

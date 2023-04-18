@@ -11,9 +11,17 @@
     <div class="container" id="user">
         <h1 id="titulo">Página de login</h1>
         <div class="container" id="dados">
-            CPF: <input type="number" name="cpf" id="cpf" placeholder="Digite seu CPF"><br>
-            Senha: <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
-            <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+            <fieldset>
+                <legend>CPF: </legend>
+                <input type="number" name="cpf" id="cpf" placeholder="Digite seu CPF">
+            </fieldset>
+            <fieldset>
+                <legend>Senha:</legend>
+                <input type="password" name="senha" id="senha" placeholder="Digite sua senha">
+                <button type="button" id="mostrar" onclick="mostrarSenha()">
+                    <img src="../Geral/Imagens/eye-solid.png" id="botaosenha" style="width: 20px; height: 15px;">
+                </button>
+            </fieldset>
         </div>
         <input type="button" value="Acessar" id="botao" onclick="errado()">
         <div class="error" id="error"></div>
@@ -29,6 +37,8 @@
 
             if(cpf === ""){
                 error.textContent = "O campo de CPF é obrigatório!";
+            }else if(isvalid(cpf) === false){
+                error.textContent = "Digite um CPF válido!";
             }else if(senha === ""){
                 error.textContent = "O campo de senha é obrigatório!";
             }else{

@@ -12,7 +12,7 @@
         <nav>
             <ul>
                 <li><a id="link" href="admin_function.html">Home</a></li>
-                <li><a id="link" href="" onclick="perfil()">Perfil</a></li>
+                <li><a id="link" href="" disabled>Perfil</a></li>
             </ul>
         </nav>
     </header>
@@ -34,22 +34,18 @@
             </fieldset>
             <fieldset id="password">
                 <legend>Senha: </legend>
-                <div>
+                <div class="xx">
                     <input type="password" name="senha" id="senha" placeholder="Senha atual">
-                    <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
+                    <button type="button" id="mostrar" onclick="mostrarSenha()">
+                        <img src="../Geral/Imagens/eye-solid.png" id="botaosenha" style="width: 20px; height: 15px;">
+                    </button>
                 </div>
-                <div>
-                    <input type="password" name="nova" id="nova" placeholder="Nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarNova()">&#x1F441</button>
-                </div>
-                <div>
-                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarRepita()">&#x1F441</button>
-                    <div class="error"><p id="error"></p></div>
-                </div>
+
+                <a id="alterar" href="" onclick="alterar()">Alterar senha</a>
             </fieldset>
     
             <input type="button" value="Salvar" id="enviar" onclick="enviar()">
+            <div class="error"><p id="error"></p></div>
         </div>
     </main>
 
@@ -60,47 +56,32 @@
         document.getElementById("cpf").value = "11111111111";
         document.getElementById("nasc").value = "2012-12-12";
 
-        function perfil(){
-            alert("Você já está no perfil!")
-        }
+        function alterar(){
+            var alterar = document.getElementById("alterar");
 
-        function compara(){
-            var senha0 = document.getElementById('senha').value;
-            var senha1 = document.getElementById('nova').value;
-            var senha2 = document.getElementById('repita').value;
-            var enviar = document.getElementById('enviar');
-
-            if(senha0 == senha1 && senha0 !== "" && senha1 !== ""){
-                document.getElementById('error').textContent = "A nova senha nao pode ser igual a senha atual!";
-                return false;
-            }else if(senha1 === senha2){
-                document.getElementById('error').textContent = "";
-                return true;
-            }else{
-                if(senha2 !== ""){
-                    document.getElementById('error').textContent = "As senhas nao coincidem!";
-                    return false;
-                }
-            }
+            localStorage.setItem("qm_chamou", "admin");
+            alterar.href = "../Geral/HTML/alterar_senha.html";
         }
 
         function enviar(){
             var inputs = document.querySelectorAll("input");
+            var cpf = document.getElementById("cpf").value;
 
-            if(compara() === false){
+            if(isvalid(cpf) === false){
+                document.getElementById("error").textContent = "Digite um CPF válido!";
                 return;
-            }else{
-                for (var i = 0; i < inputs.length; i++) {
-                    if(inputs[i].value === ""){
-                        document.getElementById("error").textContent = "Preencha todos os campos!";
-                        return;
-                    }
-                }
-
-                alert("Falta implementar o back para saber se a senha atual e igual a do DB");
-                alert("Dados alterados com sucesso!")
-                window.location.href = "admin_function.html";
             }
+
+            for (var i = 0; i < inputs.length; i++) {
+                if(inputs[i].value === ""){
+                    document.getElementById("error").textContent = "Preencha todos os campos!";
+                    return;
+                }
+            }
+
+            alert("Falta implementar o back para saber se a senha atual e igual a do DB");
+            alert("Dados alterados com sucesso!")
+            window.location.href = "admin_function.html";
         }
     </script>
 </body>

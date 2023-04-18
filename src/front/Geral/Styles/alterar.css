@@ -1,0 +1,108 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    margin: 0;
+}
+
+header{
+	background-color: #f5f5f5;
+	padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    
+}
+
+nav ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	font-size: 20px;
+	justify-content: space-around;
+}
+
+main{
+    margin-top: 150px;
+    padding: 20px;
+}
+
+a#home, a#perfil{
+    text-decoration: none;
+    color: black;
+}
+
+.container#main{
+    background-color: #f5f5f5;
+    border-radius: 30px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 600px;
+    height: auto;
+    flex-direction: column;
+}
+
+fieldset{
+    border-radius: 10px;
+    width: 400px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+input#senha, input#nova, input#repita{
+    height: 25px;
+    width: 250px;
+    border-width: 1px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+button#mostrar{
+    border-color: transparent;
+}
+
+button#mostrar:hover, input#salvar:hover{
+    cursor: pointer;
+}
+
+input#salvar{
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background-color: rgb(74, 74, 240);
+    color: white;
+    border-color: transparent;
+    height: 30px;
+    width: 100px;
+}
+
+.error{
+    color: red;
+}
+
+main {
+    position: relative;
+}
+  
+.alterada {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -250%);
+    background-color: green;
+    width: 400px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    height: auto;
+}
+
+input#ok{
+    margin-bottom: 10px;
+    cursor: pointer;
+}
