@@ -38,18 +38,11 @@
             </fieldset>
             <fieldset id="password">
                 <legend>Senha: </legend>
-                <div>
+                <div class="xx">
                     <input type="password" name="senha" id="senha" placeholder="Senha atual">
                     <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
                 </div>
-                <div>
-                    <input type="password" name="nova" id="nova" placeholder="Nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarNova()">&#x1F441</button>
-                </div>
-                <div>
-                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarRepita()">&#x1F441</button>
-                </div>
+                <a id="alterar" href="" onclick="alterar()">Alterar senha</a>
             </fieldset>
     
             <div class="error"><p id="error"></p></div>
@@ -63,6 +56,13 @@
         document.getElementById("cpf").value = "11111111111";
         document.getElementById("nasc").value = "2012-12-12";
         document.getElementById("telefone").value = "11122345678";
+
+        function alterar(){
+            var alterar = document.getElementById("alterar");
+
+            localStorage.setItem("qm_chamou", "professor");
+            alterar.href = "../Geral/HTML/alterar_senha.html";
+        }
 
         function perfil(){
             alert("Você já está no perfil!")

@@ -26,18 +26,11 @@
             </fieldset>
             <fieldset id="password">
                 <legend>Senha: </legend>
-                <div>
+                <div class="xx">
                     <input type="password" name="senha" id="senha" placeholder="Senha atual">
                     <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
                 </div>
-                <div>
-                    <input type="password" name="nova" id="nova" placeholder="Nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarNova()">&#x1F441</button>
-                </div>
-                <div>
-                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha" onkeyup="compara()">
-                    <button type="button" id="mostrar" onclick="mostrarRepita()">&#x1F441</button>
-                </div>
+                <a id="alterar" href="" onclick="alterar()">Alterar senha</a>
             </fieldset>
             
             <div class="error"><p id="error"></p></div>
@@ -48,6 +41,13 @@
     <script src="../Geral/Scripts/script.js"></script>
     <script>
         document.getElementById("nome").value = "Nome do aluno"
+
+        function alterar(){
+            var alterar = document.getElementById("alterar");
+
+            localStorage.setItem("qm_chamou", "aluno");
+            alterar.href = "../Geral/HTML/alterar_senha.html";
+        }
 
         function compara(){
             var senha0 = document.getElementById('senha').value;

@@ -60,7 +60,6 @@ fieldset{
 
 #nome, #cpf, #responsavel1, #responsavel2, #num_res1, #num_res2, #telefone{
     width: 400px;
-    text-align: center;
 }
 
 input{
@@ -68,6 +67,7 @@ input{
     border-width: 1px;
     margin-top: 10px;
     height: 25px;
+    text-align: center;
 }
 
 #data{
@@ -93,7 +93,6 @@ input#vencimento{
 }
 
 input#enviar{
-    margin-bottom: 20px;
     margin-top: 15px;
 }
 
@@ -101,8 +100,6 @@ input#enviar{
     background-color: rgb(74, 74, 240);
     color: white;
     border-color: transparent;
-    width: 70px;
-    height: 30px;
     height: 30px;
     width: 100px;
 }
@@ -133,4 +130,12 @@ fieldset#senha{
 
 .error{
     color: red;
+}
+
+.xx{
+    margin-bottom: 10px;
+}
+
+button#mostrar:hover{
+    cursor: pointer;
 }

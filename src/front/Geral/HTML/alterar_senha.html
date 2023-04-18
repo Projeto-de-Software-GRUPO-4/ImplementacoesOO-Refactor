@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar senha</title>
+    <link rel="stylesheet" href="../Styles/alterar.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a id="home" href="" onclick="onde('home')">Home</a></li>
+                <li><a id="perfil" href="" onclick="onde('perfil')">Perfil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container" id="main">
+            <h1>Alterar senha</h1>
+            <fieldset>
+                <legend>Senha atual:</legend>
+                <div>
+                    <input type="password" name="senha" id="senha" placeholder="Senha atual" onkeyup="compara()">
+                    <button type="button" id="mostrar" onclick="mostrarSenha()">
+                        <img src="../Imagens/eye-solid.png" id="botaosenha" style="width: 20px; height: 15px;">
+                    </button>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Nova senha: </legend>
+                <div>
+                    <input type="password" name="nova" id="nova" placeholder="Nova senha" onkeyup="compara()">
+                    <button type="button" id="mostrar" onclick="mostrarNova()">
+                        <img src="../Imagens/eye-solid.png" id="botaonova" style="width: 20px; height: 15px;">
+                    </button>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Repita a senha:</legend>
+                <div>
+                    <input type="password" name="repita" id="repita" placeholder="Repita a nova senha" onkeyup="compara()">
+                    <button type="button" id="mostrar" onclick="mostrarRepita()">
+                        <img src="../Imagens/eye-solid.png" id="botaorepita" style="width: 20px; height: 15px;">
+                    </button>
+                </div>
+            </fieldset>
+            <input type="button" id="salvar" value="Salvar" onclick="enviar()">
+            <div class="error"><p id="error"></p></div>
+        </div>
+    </main>
+    <div class="alterada" id="div_alterada">
+        <p id="alterada"></p>
+        <input type="button" id="ok" value="OK!" onclick="ok()">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
