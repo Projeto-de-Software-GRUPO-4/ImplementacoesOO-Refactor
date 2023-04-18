@@ -1,31 +1,22 @@
 package grupo.quatro.api_manage_escola.Receive.Professor;
 
 import grupo.quatro.api_manage_escola.Domain.UserType;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosCadastroUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 
-public record DadosCadastroProfessor(
-        @NotNull
-        @NotBlank
-        String nome,
-        @NotNull
-        @NotBlank
-        String dataDeNascimento,
-        @NotNull
-        @Pattern(regexp = "\\d{11}")
-        String cpf,
-        @NotNull
-        int diaDePagamento,
-        int cargaHorariaDiaria,
-        double salarioHora,
+@Getter
+@Setter
+public class DadosCadastroProfessor extends DadosCadastroUsuario {
 
         @NotNull
-        @NotBlank
-        String senha,
+        protected int diaDePagamento;
+        protected int cargaHorariaDiaria;
+        protected double salarioHora;
 
-        @NotNull
-        @Valid UserType userType
-) {
+
 }

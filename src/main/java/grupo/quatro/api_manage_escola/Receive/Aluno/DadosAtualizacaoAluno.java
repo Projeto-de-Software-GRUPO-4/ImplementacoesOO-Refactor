@@ -1,22 +1,21 @@
 package grupo.quatro.api_manage_escola.Receive.Aluno;
 
 import grupo.quatro.api_manage_escola.Receive.Responsavel.DadosResponsavel;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosAtualizacaoUsuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigInteger;
 
-public record DadosAtualizacaoAluno(
+@Getter
+@Setter
+public class DadosAtualizacaoAluno extends DadosAtualizacaoUsuario {
 
-        @NotNull
-        BigInteger id,
-
-        String nome,
         @Valid
-        DadosResponsavel responsavel,
+        protected DadosResponsavel responsavel;
 
-        int diaDePagamento,
+        protected int anoEscolar;
 
-        int anoEscolar
-) {
 }

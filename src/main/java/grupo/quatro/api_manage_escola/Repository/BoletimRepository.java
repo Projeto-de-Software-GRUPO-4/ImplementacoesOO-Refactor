@@ -29,5 +29,5 @@ public interface BoletimRepository extends JpaRepository<Boletim, BigInteger> {
     List<Boletim> findAllByAluno_AnoEscolarAndAnoAndBimestre(int aluno_anoEscolar, Year ano, Bimestre bimestre);
 
     // Resgata todas as notas de uma série em um dado ano, bimestre e matéria
-    List<Boletim> findAllByAluno_AnoEscolarAndAnoAndBimestreAndMateria_id(int aluno_anoEscolar, Year ano, Bimestre bimestre, int materia_id);
+    List<Boletim> findAllByAluno_AnoEscolarAndAnoAndMateria_id(int aluno_anoEscolar, Year ano, int materia_id);
 }

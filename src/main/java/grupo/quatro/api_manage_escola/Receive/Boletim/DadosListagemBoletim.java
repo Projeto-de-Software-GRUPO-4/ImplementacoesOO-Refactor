@@ -7,6 +7,8 @@ import java.math.BigInteger;
 import java.time.Year;
 
 public record DadosListagemBoletim (
+
+        BigInteger id,
     BigInteger aluno_id,
     Year ano,
     Bimestre bimestre,
@@ -16,7 +18,7 @@ public record DadosListagemBoletim (
 ) {
 
     public DadosListagemBoletim(Boletim boletim) {
-        this(boletim.getAluno_id(), boletim.getAno(), boletim.getBimestre(), boletim.getMateria_id(), boletim.getNota());
+        this(boletim.getId(), boletim.getAluno_id(), boletim.getAno(), boletim.getBimestre(), boletim.getMateria_id(), boletim.getNota());
     }
 
 }

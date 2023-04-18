@@ -40,32 +40,33 @@ public class BoletimController {
             return repository.findAllByAluno_idAndAno(aluno_id, ano).stream().map(DadosListagemBoletim::new).toList();
     }
 
-    @GetMapping("/aluno/{aluno_id}/{ano}/{materia_id}")
+    @GetMapping("/aluno/{aluno_id}/{ano}/bimestre/{bimestre}")
+    List<DadosListagemBoletim> listarNotasAluno(@PathVariable BigInteger aluno_id, @PathVariable Year ano,
+                                                @PathVariable Bimestre bimestre) {
+        return repository.findAllByAluno_idAndAnoAndBimestre(aluno_id, ano, bimestre).stream().map(DadosListagemBoletim::new).toList();
+    }
+
+    @GetMapping("/aluno/{aluno_id}/{ano}/materia/{materia_id}")
     List<DadosListagemBoletim> listarNotasAluno(@PathVariable BigInteger aluno_id, @PathVariable Year ano,
                                    @PathVariable int materia_id) {
         return repository.findAllByAluno_idAndAnoAndMateria_id(aluno_id, ano, materia_id).stream().map(DadosListagemBoletim::new).toList();
     }
 
-    @GetMapping("/aluno/{aluno_id}/{ano}/{bimestre}")
-    List<DadosListagemBoletim> listarNotasAluno(@PathVariable BigInteger aluno_id, @PathVariable Year ano,
-                                                @PathVariable Bimestre bimestre) {
-        return repository.findAllByAluno_idAndAnoAndBimestre(aluno_id, ano, bimestre).stream().map(DadosListagemBoletim::new).toList();
-    }
 
     @GetMapping("/alunos/{anoEscolar}/{ano}")
     List<DadosListagemBoletim> listarNotasTodosAlunos(@PathVariable int anoEscolar, @PathVariable Year ano) {
         return repository.findAllByAluno_AnoEscolarAndAno(anoEscolar, ano).stream().map(DadosListagemBoletim::new).toList();
     }
 
-    @GetMapping("/alunos/{anoEscolar}/{ano}/{bimestre}")
+    @GetMapping("/alunos/{anoEscolar}/{ano}/bimestre/{bimestre}")
     List<DadosListagemBoletim> listarNotasTodosAlunos(@PathVariable int anoEscolar, @PathVariable Year ano, @PathVariable Bimestre bimestre) {
         return repository.findAllByAluno_AnoEscolarAndAnoAndBimestre(anoEscolar, ano, bimestre).stream().map(DadosListagemBoletim::new).toList();
     }
 
-    @GetMapping("/alunos/{anoEscolar}/{ano}/{bimestre}/{materia_id}")
+    @GetMapping("/alunos/{anoEscolar}/{ano}/materia/{materia_id}")
     List<DadosListagemBoletim> listarNotasTodosAlunos(@PathVariable int anoEscolar, @PathVariable Year ano,
-                                         @PathVariable Bimestre bimestre, @PathVariable int materia_id) {
-        return repository.findAllByAluno_AnoEscolarAndAnoAndBimestreAndMateria_id(anoEscolar, ano, bimestre, materia_id).stream().map(DadosListagemBoletim::new).toList();
+                                                      @PathVariable int materia_id) {
+        return repository.findAllByAluno_AnoEscolarAndAnoAndMateria_id(anoEscolar, ano, materia_id).stream().map(DadosListagemBoletim::new).toList();
     }
 
     @PutMapping("/alterar")

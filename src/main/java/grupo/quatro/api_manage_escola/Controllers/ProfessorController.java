@@ -1,52 +1,64 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
-import grupo.quatro.api_manage_escola.Domain.Professor;
-import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
-import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
-import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
+import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
+import grupo.quatro.api_manage_escola.Service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequestMapping("/professor")
 public class ProfessorController {
 
+
     @Autowired
-    private ProfessorRepository repository;
-    @Autowired
-    private UsuarioCredentialsRepository usuarioCredentialsRepository;
+    ProfessorService professorService;
 
     @PostMapping
     @Transactional
     public void cadastro(@RequestBody @Valid DadosCadastroProfessor dados) {
-        repository.save(new Professor(dados));
-        usuarioCredentialsRepository.save(new UsuarioCredentials(dados.cpf(), dados.senha(), dados.userType()));
+        professorService.salvar(dados);
     }
 
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
-        Professor professor = (Professor) repository.getReferenceById(dados.id());
-        professor.updateInfo(dados);
+        professorService.atualizar(dados);
     }
 
-    // TODO
-//    @GetMapping
-//    public List<DadosListagemProfessor> listar() {
-//        return repository.findAll().stream().map(DadosListagemProfessor::new).toList();
-//    }
+    @GetMapping("/{id}")
+    public DadosListagemProfessor resgatarProfessor(@PathVariable BigInteger id) {
+        return (DadosListagemProfessor) professorService.resgatar(id);
+    }
+    @GetMapping("/all")
+    public List<DadosListagemProfessor> resgatarTodosAlunos() {
+        return professorService.resgatarTodos();
+    }
 
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
-        Professor professor = (Professor) repository.getReferenceById(id);
-        professor.excluir();
+        professorService.deletar(id);
+
     }
+
+    @PostMapping("/adicionar_a_turma")
+    @Transactional
+    public void linkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+        professorService.linkarATurma(dados);
+    }
+
+    @DeleteMapping("/remover_da_turma")
+    void deslinkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+        professorService.deslinkarATurma(dados);
+    }
+
 
 }

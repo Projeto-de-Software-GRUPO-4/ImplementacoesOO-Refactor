@@ -33,33 +33,22 @@ public class Professor extends Usuario {
     @ManyToMany(mappedBy = "professores")
     Set<Turma> turmas;
     public Professor(DadosCadastroProfessor dados) {
-        super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
-        this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
-        this.salarioHora = dados.salarioHora();
+        super(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento());
+        this.cargaHorariaDiaria = dados.getCargaHorariaDiaria();
+        this.salarioHora = dados.getSalarioHora();
         this.turmas = new HashSet<Turma>();
-        this.id = new BigInteger(dados.cpf());
+        this.id = new BigInteger(dados.getCpf());
     }
 
     public List<DadosListagemTurma> getTurmasId() {
         return turmas.stream().map(DadosListagemTurma::new).toList();
     }
 
-//    @NotNull
-//    BigInteger id,
-//
-//    String nome,
-//
-//    String areaEnsino,
-//
-//    int diaDePagamento,
-//    int cargaHorariaDiaria,
-//    double salarioHora
-
     public void updateInfo(DadosAtualizacaoProfessor dados) {
-        if (dados.nome() != null) super.nome = dados.nome();
-        if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
-        if (dados.cargaHorariaDiaria() != 0) this.cargaHorariaDiaria = dados.cargaHorariaDiaria();
-        if (dados.salarioHora() != 0) this.salarioHora = dados.salarioHora();
+        if (dados.getNome() != null) super.nome = dados.getNome();
+        if (dados.getDiaDePagamento() != 0) super.diaDePagamento = dados.getDiaDePagamento();
+        if (dados.getCargaHorariaDiaria() != 0) this.cargaHorariaDiaria = dados.getCargaHorariaDiaria();
+        if (dados.getSalarioHora() != 0) this.salarioHora = dados.getSalarioHora();
     }
 
 }

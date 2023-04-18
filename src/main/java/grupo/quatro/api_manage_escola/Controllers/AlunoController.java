@@ -6,84 +6,72 @@ import grupo.quatro.api_manage_escola.Domain.Turma;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosLinkarAlunoTurma;
-import grupo.quatro.api_manage_escola.Receive.Aluno.DadosListagemAluno;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
+import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
 import grupo.quatro.api_manage_escola.Repository.AlunoRepository;
 import grupo.quatro.api_manage_escola.Repository.TurmaRepository;
 import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
+import grupo.quatro.api_manage_escola.Service.AlunoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequestMapping("/aluno")
 public class AlunoController {
-    @Autowired
-    AlunoRepository alunoRepository;
 
     @Autowired
-    UsuarioCredentialsRepository usuarioCredentialsRepository;
-
-    @Autowired
-    TurmaRepository turmaRepository;
+    AlunoService alunoService;
 
     @PostMapping
     @Transactional
     void cadastrar(@RequestBody @Valid DadosCadastroAluno dados) {
-        Aluno aluno = (Aluno) alunoRepository.save(new Aluno(dados));
-        usuarioCredentialsRepository.save(new UsuarioCredentials(aluno.getId().toString(), dados.senha(), dados.userType()));
-
+        alunoService.salvar(dados);
     }
-
-    //TODO
-//    @GetMapping
-//    public List<DadosListagemAluno> listar() {
-//        return alunoRepository.findAllByActiveTrue().stream().map(DadosListagemAluno::new).toList();
-//    }
 
     @GetMapping("/{id}")
-    public DadosListagemAluno listarSpecificAluno(@PathVariable BigInteger id) {
-        return new DadosListagemAluno(alunoRepository.findById(id).orElse(null));
+    public DadosListagemAluno resgatarAluno(@PathVariable BigInteger id) {
+        return (DadosListagemAluno) alunoService.resgatar(id);
     }
+
+    @GetMapping("/all")
+    public List<DadosListagemAluno> resgatarTodosAlunos() {
+        return alunoService.resgatarTodos();
+    }
+
 
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizacaoAluno dados) {
-        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id());
-        aluno.updateInfo(dados);
+        alunoService.atualizar(dados);
     }
 
     @PutMapping("/{id}/status_suspensao")
     @Transactional
     public void suspender_desuspender(@PathVariable BigInteger id) {
-        Aluno aluno = (Aluno) alunoRepository.getReferenceById(id);
-        aluno.suspender();
+        alunoService.suspender(id);
     }
-
-//    @PostMapping("/registrar_ocorrencia")
-//    @Transactional
-//    public void registrarOcorrencia(DadosRegistrarOcorrencia dados) {
-//        Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
-//        System.out.println(aluno.getNome());
-//        aluno.getOcorrencias().add(new Ocorrencia(dados));
-//        alunoRepository.save(aluno);
-//    }
 
     @DeleteMapping("/{id}")
     @Transactional
     public void deletar(@PathVariable BigInteger id) {
-        Aluno aluno = (Aluno) alunoRepository.getReferenceById(id);
-        aluno.excluir();
+        alunoService.deletar(id);
     }
 
-    @PutMapping("/matricular_turma")
+    @PutMapping("/matricular_a_turma")
     @Transactional
-    void matricular_turma(@RequestBody @Valid DadosLinkarAlunoTurma dados) {
-        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id_aluno());
-        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-        aluno.setTurma(turma);
+    void matricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+        alunoService.linkarATurma(dados);
+    }
+
+    @PutMapping("/desmatricular_a_turma")
+    @Transactional
+    void desmatricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+        alunoService.deslinkarATurma(dados);
     }
 }

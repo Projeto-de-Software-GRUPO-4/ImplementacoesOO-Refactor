@@ -16,34 +16,4 @@ public abstract class LogInController <T> {
     UsuarioRepository usuarioRepository;
     public abstract T login(@Valid @RequestBody DadosLogin dados);
 
-//    @Autowired
-//    ProfessorRepository professorRepository;
-
-//    @Autowired
-//    AlunoRepository alunoRepository;
-
-
-//        Optional<UsuarioCredentials> credentialsObj = credentialsRepository.findById(dados.id());
-//    @PostMapping("/login/aluno")
-//    public Optional<Usuario> login(@Valid @RequestBody DadosLogin dados) {
-//
-//        Optional<UsuarioCredentials> credentialsObject = credentialsRepository.findById(dados.id());
-//
-//        Optional<Usuario> returnObject;
-//
-//        if (credentialsObject.isPresent()) {
-//
-//            UsuarioCredentials credentials = credentialsObject.get();
-//
-//            switch (credentials.getUserType()) {
-//                case Professor -> returnObject = professorRepository.findById(dados.id()).stream().map(Usuario::new);
-//            }
-//
-//        }
-//
-//        return alunoRepository.findById(dados.id());
-////        if (credentials.isPresent()) {
-////            return usuarioRepository.findById(dados.id());
-////        }
-//    }
 }

@@ -30,16 +30,21 @@ public class TurmaController {
         Turma turma = turmaRepository.save(new Turma(dados));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<DadosListagemTurma> listar() {
         return turmaRepository.findAll().stream().map(DadosListagemTurma::new).toList();
     }
 
-    //    @PostMapping("/adicionar_professor")
-//    @Transactional
-//    void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
-//
-//    }
+    @GetMapping("/{anoEscolar}")
+    public List<DadosListagemTurma> listarTurmasDeAnoEscolar(@PathVariable int anoEscolar) {
+        return turmaRepository.findAllByAnoEscolar(anoEscolar).stream().map(DadosListagemTurma::new).toList();
+    }
+    @GetMapping
+    public DadosListagemTurma listarTurmaEspecifica(@RequestBody @Valid DadosCadastroTurma dados) {
+        return new DadosListagemTurma(turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra()));
+    }
+
+
     @PostMapping("/adicionar_professor")
     @Transactional
     void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {

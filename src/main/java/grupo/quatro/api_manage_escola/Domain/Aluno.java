@@ -36,16 +36,16 @@ public class Aluno extends Usuario {
     private Set<Ocorrencia> ocorrencias;
 
     public Aluno(DadosCadastroAluno dados) {
-        super(dados.nome(), new BigInteger(dados.cpf()), dados.dataDeNascimento(), dados.diaDePagamento());
-        this.responsavel = new Responsavel(dados.responsavel());
-        this.anoEscolar = dados.anoEscolar();
-        this.id = new BigInteger(dados.cpf());
+        super(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento());
+        this.responsavel = new Responsavel(dados.getResponsavel());
+        this.anoEscolar = dados.getAnoEscolar();
+        this.id = new BigInteger(dados.getCpf());
     }
 
     public void updateInfo(DadosAtualizacaoAluno dados) {
-        if (dados.nome() != null) super.nome = dados.nome();
-        if (dados.diaDePagamento() != 0) super.diaDePagamento = dados.diaDePagamento();
-        if (dados.responsavel() != null) this.responsavel.updateInfo(dados.responsavel());
+        if (dados.getNome() != null) super.nome = dados.getNome();
+        if (dados.getDiaDePagamento() != 0) super.diaDePagamento = dados.getDiaDePagamento();
+        if (dados.getResponsavel() != null) this.responsavel.updateInfo(dados.getResponsavel());
     }
 
     public DadosListagemTurma getTurmaId() {
