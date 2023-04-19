@@ -3,11 +3,13 @@ package grupo.quatro.api_manage_escola.Controllers;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
+import grupo.quatro.api_manage_escola.Respond.Message;
 import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
 import grupo.quatro.api_manage_escola.Respond.Usuario.DadosListagemUsuario;
 import grupo.quatro.api_manage_escola.Service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +33,24 @@ public class ProfessorController {
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
-        professorService.atualizar(dados);
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoProfessor dados) {
+        try {
+            return new ResponseEntity<>(professorService.atualizar(dados), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
-    public DadosListagemUsuario resgatarProfessor(@PathVariable BigInteger id) {
-        return professorService.resgatar(id);
+    public ResponseEntity resgatarProfessor(@PathVariable BigInteger id) {
+
+        try {
+            return new ResponseEntity<>(professorService.resgatar(id), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
     @GetMapping("/all")
     public List<DadosListagemProfessor> resgatarTodosAlunos() {
@@ -46,20 +59,42 @@ public class ProfessorController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void deletar(@PathVariable BigInteger id) {
-        professorService.deletar(id);
+    public ResponseEntity deletar(@PathVariable BigInteger id) {
+        try {
+            professorService.deletar(id);
+            Message message = new Message("Aluno deletado com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
 
     }
 
     @PostMapping("/adicionar_a_turma")
     @Transactional
-    public void linkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
-        professorService.linkarATurma(dados);
+    public ResponseEntity linkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+        try {
+            professorService.linkarATurma(dados);
+            Message message = new Message("Professor vinculado à turma com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("/remover_da_turma")
-    void deslinkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
-        professorService.deslinkarATurma(dados);
+    public ResponseEntity deslinkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+
+        try {
+            professorService.deslinkarATurma(dados);
+            Message message = new Message("Professor desvinculado da turma com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
 

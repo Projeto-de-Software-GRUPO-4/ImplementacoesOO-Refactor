@@ -1,12 +1,14 @@
 package grupo.quatro.api_manage_escola.Service;
 
-import grupo.quatro.api_manage_escola.Domain.Professor;
-import grupo.quatro.api_manage_escola.Domain.Turma;
-import grupo.quatro.api_manage_escola.Domain.Usuario;
-import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
+import grupo.quatro.api_manage_escola.Domain.*;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Repository.TurmaProfessorRepository;
+import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
+import grupo.quatro.api_manage_escola.Respond.Exceptions.AlunoNotFoundException;
+import grupo.quatro.api_manage_escola.Respond.Exceptions.ProfessorNotFoundException;
+import grupo.quatro.api_manage_escola.Respond.Exceptions.TurmaNotFoundException;
 import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosAtualizacaoUsuario;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosCadastroUsuario;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfessorService extends UsuarioService {
@@ -40,9 +43,16 @@ public class ProfessorService extends UsuarioService {
     }
 
     @Override
-    public DadosListagemUsuario resgatar(BigInteger id) {
-        return new DadosListagemProfessor(professorRepository.findById(id).orElse(null));
-//        return new ResponseEntity<>("a", HttpStatus.NOT_FOUND);
+    public DadosListagemUsuario resgatar(BigInteger id) throws Exception {
+        Optional<Professor> professorOptional = professorRepository.findById(id);
+
+        if (professorOptional.isPresent()) {
+            Professor professor = professorOptional.get();
+            return new DadosListagemProfessor(professor);
+        } else {
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", id));
+        }
+
     }
 
     @Override
@@ -54,35 +64,57 @@ public class ProfessorService extends UsuarioService {
     }
 
     @Override
-    public DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) {
-        Professor professor = professorRepository.getReferenceById(dados.getId());
-        professor.updateInfo((DadosAtualizacaoProfessor) dados);
-
-        return new DadosListagemUsuario();
-//        return new ResponseEntity<>("a", HttpStatus.NOT_FOUND);
+    public DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) throws Exception {
+        try {
+            Professor professor = professorRepository.getReferenceById(dados.getId());
+            professor.updateInfo((DadosAtualizacaoProfessor) dados);
+            return new DadosListagemProfessor(professor);
+        } catch (Exception e) {
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.getId()));
+        }
     }
 
     @Override
-    public void deletar(BigInteger id) {
-        Professor professor = professorRepository.getReferenceById(id);
-        usuarioCredentialsService.deletar(id.toString());
-        turmaProfessorRepository.deleteByProfessorId(id);
-        professor.excluir();
+    public void deletar(BigInteger id) throws Exception {
+        try {
+            Professor professor = professorRepository.getReferenceById(id);
+            usuarioCredentialsService.deletar(id.toString());
+            turmaProfessorRepository.deleteByProfessorId(id);
+            professor.excluir();
+        } catch (Exception e) {
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", id));
+        }
     }
 
     @Override
-    public void linkarATurma(DadosLinkarUsuarioTurma dados) {
-        Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
-        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-        turma.getProfessores().add(professor);
-        turmaRepository.save(turma);
+    public void linkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
+        try {
+            Professor professor = professorRepository.getReferenceById(dados.id_usuario());
+            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+            turma.getProfessores().add(professor);
+            turmaRepository.save(turma);
+        } catch (ProfessorNotFoundException e) {
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.id_usuario()));
+        } catch (TurmaNotFoundException e) {
+            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
+        };
     }
 
     @Override
-    public void deslinkarATurma(DadosLinkarUsuarioTurma dados) {
-        Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
-        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-        turma.getProfessores().remove(professor);
-        turmaRepository.save(turma);
+    public void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
+        try {
+            Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
+            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+            turma.getProfessores().remove(professor);
+            turmaRepository.save(turma);
+        } catch (ProfessorNotFoundException e) {
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.id_usuario()));
+        } catch (TurmaNotFoundException e) {
+            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
+        };
+//        Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
+//        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+//        turma.getProfessores().remove(professor);
+//        turmaRepository.save(turma);
     }
 }

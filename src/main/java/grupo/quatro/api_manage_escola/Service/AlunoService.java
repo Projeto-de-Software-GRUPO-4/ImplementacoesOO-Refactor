@@ -41,7 +41,7 @@ public class AlunoService extends UsuarioService {
             Aluno aluno = alunoOptional.get();
             return new DadosListagemAluno(aluno);
         } else {
-            throw new Exception(String.format("Não foi possível localizar o usuário de ID %d", id));
+            throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", id));
         }
 
 
@@ -92,7 +92,7 @@ public class AlunoService extends UsuarioService {
     public void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
         try {
             Aluno aluno = alunoRepository.findById(dados.id_usuario()).orElse(null);
-            aluno.setTurma(new Turma());
+            aluno.setTurma(null);
         } catch (AlunoNotFoundException e) {
             throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", dados.id_usuario()));
         }

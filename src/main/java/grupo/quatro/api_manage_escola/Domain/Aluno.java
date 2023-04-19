@@ -50,7 +50,11 @@ public class Aluno extends Usuario {
     }
 
     public Optional<DadosListagemTurma> getTurmaId() {
-        return Optional.of(new DadosListagemTurma(turma.getId(), turma.getAnoEscolar(), turma.getLetra()));
+        if (turma != null) {
+            return Optional.of(new DadosListagemTurma(turma.getId(), turma.getAnoEscolar(), turma.getLetra()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     public void suspender() {
