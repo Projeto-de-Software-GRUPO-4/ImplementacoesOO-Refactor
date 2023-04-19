@@ -62,7 +62,7 @@ public class ProfessorController {
     public ResponseEntity deletar(@PathVariable BigInteger id) {
         try {
             professorService.deletar(id);
-            Message message = new Message("Aluno deletado com sucesso.");
+            Message message = new Message("Professor deletado com sucesso.");
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());

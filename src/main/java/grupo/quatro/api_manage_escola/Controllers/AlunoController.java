@@ -27,8 +27,10 @@ public class AlunoController {
 
     @PostMapping
     @Transactional
-    void cadastrar(@RequestBody @Valid DadosCadastroAluno dados) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroAluno dados) {
         alunoService.salvar(dados);
+        Message message = new Message("Aluno cadastrado com sucesso.");
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -103,7 +105,7 @@ public class AlunoController {
     ResponseEntity desmatricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
         try {
             alunoService.deslinkarATurma(dados);
-            Message message = new Message("Aluno desmatricula da turma com sucesso.");
+            Message message = new Message("Aluno desmatriculado da turma com sucesso.");
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());

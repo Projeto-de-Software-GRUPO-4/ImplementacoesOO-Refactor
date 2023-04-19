@@ -22,38 +22,34 @@
             <legend>Data de nascimento: </legend>
             <input type="date" name="nasc" id="nasc">
         </fieldset>
-        <fieldset id="responsavel1">
+        <fieldset id="responsavelNome">
             <legend>Nome do(a) responsavel: </legend>
-            <input type="text" name="responsavel1" id="responsavel1" placeholder="Nome do(a) responsavel pelo(a) aluno(a)">
+            <input type="text" name="responsavelNome" id="responsavelNome" placeholder="Nome do(a) responsavel pelo(a) aluno(a)">
         </fieldset>
-        <fieldset iid="responsavel2">
-            <legend>Nome do(a) segundo(a) responsavel: </legend>
-            <input type="text" name="responsavel2" id="responsavel2" placeholder="Nome do(a) segundo responsavel pelo(a) aluno(a)">
+        <fieldset id="responsavelCpf">
+            <legend>CPF do(a) responsavel: </legend>
+            <input type="text" name="responsavelCpf" id="responsavelCpf" placeholder="Nome do(a) segundo responsavel pelo(a) aluno(a)">
         </fieldset>
-        <fieldset id="num_res1">
+        <fieldset id="responsavelNumero">
             <legend>Telefone do(a) responsavel: </legend>
-            <input type="number" name="num_res1" id="num_res1" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
+            <input type="number" name="responsavelNumero" id="responsavelNumero" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
         </fieldset>
-        <fieldset id="num_res2">
-            <legend>Telefone do(a) segundo(a) responsavel: </legend>
-            <input type="number" name="num_res2" id="num_res2" placeholder="Numero do(a) segundo(a) responsavel pelo(a) aluno(a)">
+        <fieldset id="serie">
+            <legend>Serie: </legend>
+            <input type="number" name="serie" id="serie" placeholder="">
         </fieldset>
-        <fieldset id="ensino">
+        <!-- <fieldset id="ensino">
             <legend>Ensino: </legend>
             <input type="radio" name="ensino" id="ensino" value="infantil">Infantil
             <input type="radio" name="ensino" id="ensino" value="fundamental">fundamental
             <input type="radio" name="ensino" id="ensino" value="medio">Medio
-        </fieldset>
-        <fieldset iid="serie">
-            <legend>Serie: </legend>
-            <input type="number" name="serie" id="serie" placeholder="">
         </fieldset>
         <fieldset id="turno">
             <legend>Turno: </legend>
             <input type="radio" name="turno" id="turno" value="matutino">Matutino
             <input type="radio" name="turno" id="turno" value="vespertino">Vespertino
             <input type="radio" name="turno" id="turno" value="diurno">Diurno
-        </fieldset>
+        </fieldset> -->
         <fieldset id="mensalidade">
             <legend>Mensalidade: </legend>
             <span class="rs">R$</span>
@@ -77,6 +73,60 @@
     <script src="../Geral/Scripts/script.js"></script>
     <script>
 
+        function dataHelper(data) {
+            data = data.split("-")
+            return `${data[2]}/${data[1]}/${data[0]}`;
+
+        }
+
+        function asJSON() {
+
+            let nome = document.querySelector('input[id="nome"]');
+            let dataNasc = document.querySelector("input[id='nasc']");
+            let cpf = document.querySelector("input[id='cpf']");
+            let responsavelCpf = document.querySelector("input[id='responsavelCpf']");
+            let responsavelNome = document.querySelector("input[id='responsavelNome']");
+            let responsavelNumero = document.querySelector("input[id='responsavelNumero']");
+            let serie = document.querySelector("input[id='serie']");
+            let mensalidade = document.querySelector("input[id='mensalidade']");
+            let vencimento = document.querySelector("input[id='vencimento']");
+            let senha = document.querySelector("input[id='senha']");
+
+            let json = {
+                nome: nome.value,
+                dataDeNascimento: dataHelper(dataNasc.value),
+                cpf: cpf.value,
+                diaDePagamento: parseInt(vencimento.value),
+                anoEscolar: parseInt(serie.value), 
+                senha: serie.value,
+                responsavel: {
+                    nome: responsavelNome.value, 
+                    cpf: responsavelCpf.value, 
+                    telefone: responsavelNumero.value
+                },
+                userType: "Aluno"
+            }
+
+            console.log(JSON.stringify(json))
+
+            return JSON.stringify(json);
+        }
+
+
+
+        async function cadastrar() {
+            let response = await fetch("http://localhost:8080/aluno", {
+                method: "POST",
+                body: asJSON(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const result = await response.json(); 
+            return result;
+        }
+
         function enviar(){
             var inputs = document.querySelectorAll("input");
             var cpf = document.getElementById("cpf").value;
@@ -88,20 +138,26 @@
                 }
             }
 
-            var ensino = document.querySelector('input[name="ensino"]:checked');
-            var turno = document.querySelector('input[name="turno"]:checked');
-            if(!ensino || !turno){
-                document.getElementById("error").textContent = "Preencha todos os campos!";
-                return;
-            }
+            // var ensino = document.querySelector('input[name="ensino"]:checked');
+            // var turno = document.querySelector('input[name="turno"]:checked');
+            // if(!ensino || !turno){
+            //     document.getElementById("error").textContent = "Preencha todos os campos!";
+            //     return;
+            // }
 
             if(isvalid(cpf) === false){
                 document.getElementById('error').textContent = "Digite um CPF válido";
                 return;
             }
 
-            alert("Cadastro feito com sucesso (FALTA O BACK)!")
-            window.location.href = "admin_function.html";
+            cadastrar()
+                .then(res => {
+                    if (res.message = "Aluno cadastrado com sucesso") {
+                        alert("Cadastro feito com sucesso!")
+                        window.location.href = "admin_function.html";
+                    }
+                })
+
         }
     </script>
 </body>
