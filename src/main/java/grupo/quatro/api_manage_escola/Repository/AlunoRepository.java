@@ -11,4 +11,6 @@ import java.util.List;
 public interface AlunoRepository extends JpaRepository<Aluno, BigInteger>  {
 
     List<Aluno> findAllByActiveTrue();
+
+    
 }

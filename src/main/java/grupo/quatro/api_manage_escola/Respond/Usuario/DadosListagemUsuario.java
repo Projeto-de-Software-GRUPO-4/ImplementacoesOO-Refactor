@@ -14,4 +14,5 @@ public class DadosListagemUsuario {
     protected BigInteger cpf;
     protected String dataDeNascimento;
     protected int diaDePagamento;
+
 }

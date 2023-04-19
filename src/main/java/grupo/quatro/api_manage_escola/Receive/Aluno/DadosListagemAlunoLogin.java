@@ -4,9 +4,10 @@ import grupo.quatro.api_manage_escola.Domain.Aluno;
 import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
 
 import java.math.BigInteger;
+import java.util.Optional;
 
 public record DadosListagemAlunoLogin(
-        BigInteger id, String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento, int anoEscolar, DadosListagemTurma turma
+        BigInteger id, String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento, int anoEscolar, Optional<DadosListagemTurma> turma
 ) {
 
     public DadosListagemAlunoLogin(Aluno aluno) {

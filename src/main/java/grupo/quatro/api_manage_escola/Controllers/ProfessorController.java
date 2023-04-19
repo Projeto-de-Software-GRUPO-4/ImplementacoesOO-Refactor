@@ -4,9 +4,11 @@ import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfesso
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
+import grupo.quatro.api_manage_escola.Respond.Usuario.DadosListagemUsuario;
 import grupo.quatro.api_manage_escola.Service.ProfessorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +36,8 @@ public class ProfessorController {
     }
 
     @GetMapping("/{id}")
-    public DadosListagemProfessor resgatarProfessor(@PathVariable BigInteger id) {
-        return (DadosListagemProfessor) professorService.resgatar(id);
+    public DadosListagemUsuario resgatarProfessor(@PathVariable BigInteger id) {
+        return professorService.resgatar(id);
     }
     @GetMapping("/all")
     public List<DadosListagemProfessor> resgatarTodosAlunos() {

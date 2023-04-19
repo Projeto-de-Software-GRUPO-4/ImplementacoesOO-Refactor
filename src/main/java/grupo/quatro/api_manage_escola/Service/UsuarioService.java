@@ -9,6 +9,7 @@ import grupo.quatro.api_manage_escola.Respond.Usuario.DadosListagemUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -20,13 +21,13 @@ public abstract class UsuarioService<T> {
 
     @Autowired
     TurmaRepository turmaRepository;
-    public abstract Usuario salvar(DadosCadastroUsuario dados);
-    public abstract DadosListagemUsuario resgatar(BigInteger id);
+    public abstract Usuario salvar(DadosCadastroUsuario dados) throws Exception;
+    public abstract DadosListagemUsuario resgatar(BigInteger id) throws Exception;
     public abstract List<T> resgatarTodos();
-    public abstract void atualizar(DadosAtualizacaoUsuario dados);
-    public abstract void deletar(BigInteger id);
-    public abstract void linkarATurma(DadosLinkarUsuarioTurma dados);
-    public abstract void deslinkarATurma(DadosLinkarUsuarioTurma dados);
+    public abstract DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) throws Exception;
+    public abstract void deletar(BigInteger id) throws Exception;
+    public abstract void linkarATurma(DadosLinkarUsuarioTurma dados) throws Exception;
+    public abstract void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception;
 
 
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.Optional;
 import java.util.Set;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -48,8 +49,8 @@ public class Aluno extends Usuario {
         if (dados.getResponsavel() != null) this.responsavel.updateInfo(dados.getResponsavel());
     }
 
-    public DadosListagemTurma getTurmaId() {
-        return new DadosListagemTurma(turma.getId(), turma.getAnoEscolar(), turma.getLetra());
+    public Optional<DadosListagemTurma> getTurmaId() {
+        return Optional.of(new DadosListagemTurma(turma.getId(), turma.getAnoEscolar(), turma.getLetra()));
     }
 
     public void suspender() {

@@ -15,6 +15,8 @@ import grupo.quatro.api_manage_escola.Receive.UsuarioCredentials.DadosCadastroUs
 import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
 import grupo.quatro.api_manage_escola.Respond.Usuario.DadosListagemUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -40,6 +42,7 @@ public class ProfessorService extends UsuarioService {
     @Override
     public DadosListagemUsuario resgatar(BigInteger id) {
         return new DadosListagemProfessor(professorRepository.findById(id).orElse(null));
+//        return new ResponseEntity<>("a", HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -51,9 +54,12 @@ public class ProfessorService extends UsuarioService {
     }
 
     @Override
-    public void atualizar(DadosAtualizacaoUsuario dados) {
+    public DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) {
         Professor professor = professorRepository.getReferenceById(dados.getId());
         professor.updateInfo((DadosAtualizacaoProfessor) dados);
+
+        return new DadosListagemUsuario();
+//        return new ResponseEntity<>("a", HttpStatus.NOT_FOUND);
     }
 
     @Override
