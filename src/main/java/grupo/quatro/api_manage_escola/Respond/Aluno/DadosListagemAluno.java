@@ -16,11 +16,13 @@ public class DadosListagemAluno extends DadosListagemUsuario {
 
     private int anoEscolar;
 
-    private Responsavel reponsavel;
+    private Responsavel responsavel;
 
     private boolean suspenso;
 
     private Optional<DadosListagemTurma> turma;
+
+    private double mensalidade;
 
 
     public DadosListagemAluno(Aluno aluno) {
@@ -30,8 +32,9 @@ public class DadosListagemAluno extends DadosListagemUsuario {
         this.dataDeNascimento = aluno.getDataDeNascimento();
         this.diaDePagamento = aluno.getDiaDePagamento();
         this.anoEscolar = aluno.getAnoEscolar();
-        this.reponsavel = aluno.getResponsavel();
+        this.responsavel = aluno.getResponsavel();
         this.suspenso = aluno.isSuspended();
         this.turma = aluno.getTurmaId();
+        this.mensalidade = aluno.getMensalidade();
     }
 }

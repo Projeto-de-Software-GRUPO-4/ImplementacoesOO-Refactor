@@ -27,10 +27,20 @@ public class AlunoService extends UsuarioService {
     AlunoRepository alunoRepository;
 
     @Override
-    public Usuario salvar(DadosCadastroUsuario dados) {
-        Aluno aluno = alunoRepository.save(new Aluno((DadosCadastroAluno) dados));
-        UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
-        return aluno;
+    public Usuario salvar(DadosCadastroUsuario dados) throws Exception {
+        Optional<Aluno> alunoOptional = alunoRepository.findById(new BigInteger(dados.getCpf()));
+
+        if (alunoOptional.isPresent()) {
+            throw new Exception("Já existe cadastro desse usuário, não é possível cadastrar novamente.");
+        } else {
+
+            Aluno aluno = alunoRepository.save(new Aluno((DadosCadastroAluno) dados));
+            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+            return aluno;
+
+        }
+
+
     }
 
     @Override
@@ -81,6 +91,11 @@ public class AlunoService extends UsuarioService {
         try {
             Aluno aluno = alunoRepository.getReferenceById(dados.id_usuario());
             Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+
+            if (aluno.getTurma() == turma) {
+                throw new Exception(String.format("O aluno %d e a turma de ID %d já têm vínculo.", dados.id_usuario(), dados.id_turma()));
+            }
+
             aluno.setTurma(turma);
         } catch (AlunoNotFoundException e) {
             throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", dados.id_usuario()));
@@ -91,7 +106,17 @@ public class AlunoService extends UsuarioService {
     @Override
     public void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
         try {
-            Aluno aluno = alunoRepository.findById(dados.id_usuario()).orElse(null);
+//            Aluno aluno = alunoRepository.findById(dados.id_usuario()).orElse(null);
+            Aluno aluno = alunoRepository.getReferenceById(dados.id_usuario());
+            Turma turma = turmaRepository.getReferenceById(dados.id_turma());
+
+            if (aluno.getTurma() != turma) {
+                System.out.println("Eu não tenho turma");
+                throw new Exception(String.format("O aluno %d não está matriculado na turma %d.", dados.id_usuario(), dados.id_turma()));
+            } else if (aluno.getTurma() == null) {
+                throw new Exception(String.format("O aluno %d não está matriculado na turma %d.", dados.id_usuario(), dados.id_turma()));
+            }
+
             aluno.setTurma(null);
         } catch (AlunoNotFoundException e) {
             throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", dados.id_usuario()));

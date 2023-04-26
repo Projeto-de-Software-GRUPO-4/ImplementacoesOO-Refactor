@@ -16,7 +16,7 @@
         </fieldset>
         <fieldset id="_cpf">
             <legend>CPF: </legend>
-            <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) aluno(a)">
+            <input type="text" name="cpf" id="cpf" placeholder="CPF do(a) aluno(a)">
         </fieldset>
         <fieldset id="nasc">
             <legend>Data de nascimento: </legend>
@@ -71,62 +71,16 @@
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../services/AlunoService.js"></script>
     <script>
+        
 
-        function dataHelper(data) {
-            data = data.split("-")
-            return `${data[2]}/${data[1]}/${data[0]}`;
-
-        }
-
-        function asJSON() {
-
-            let nome = document.querySelector('input[id="nome"]');
-            let dataNasc = document.querySelector("input[id='nasc']");
-            let cpf = document.querySelector("input[id='cpf']");
-            let responsavelCpf = document.querySelector("input[id='responsavelCpf']");
-            let responsavelNome = document.querySelector("input[id='responsavelNome']");
-            let responsavelNumero = document.querySelector("input[id='responsavelNumero']");
-            let serie = document.querySelector("input[id='serie']");
-            let mensalidade = document.querySelector("input[id='mensalidade']");
-            let vencimento = document.querySelector("input[id='vencimento']");
-            let senha = document.querySelector("input[id='senha']");
-
-            let json = {
-                nome: nome.value,
-                dataDeNascimento: dataHelper(dataNasc.value),
-                cpf: cpf.value,
-                diaDePagamento: parseInt(vencimento.value),
-                anoEscolar: parseInt(serie.value), 
-                senha: serie.value,
-                responsavel: {
-                    nome: responsavelNome.value, 
-                    cpf: responsavelCpf.value, 
-                    telefone: responsavelNumero.value
-                },
-                userType: "Aluno"
-            }
-
-            console.log(JSON.stringify(json))
-
-            return JSON.stringify(json);
-        }
-
-
-
-        async function cadastrar() {
-            let response = await fetch("http://localhost:8080/aluno", {
-                method: "POST",
-                body: asJSON(),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            const result = await response.json(); 
-            return result;
-        }
-
+    
         function enviar(){
             var inputs = document.querySelectorAll("input");
             var cpf = document.getElementById("cpf").value;
@@ -150,10 +104,14 @@
                 return;
             }
 
-            cadastrar()
-                .then(res => {
-                    if (res.message = "Aluno cadastrado com sucesso") {
-                        alert("Cadastro feito com sucesso!")
+
+            AlunoService.cadastrar()
+                .then((res) => {
+                    alert(res.json.message)
+                    return res;
+                })
+                .then((res) => {
+                    if (res.status == 200) {
                         window.location.href = "admin_function.html";
                     }
                 })

@@ -13,8 +13,10 @@ public class DadosListagemProfessor extends DadosListagemUsuario {
 
 
 //    String nome, String dataDeNascimento, BigInteger cpf, int diaDePagamento, int cargaHorariaDiaria, double salarioHora
-    protected int cargaHoraria;
+    protected int cargaHorariaDiaria;
     protected double salarioHora;
+
+    protected String telefone;
 
     public DadosListagemProfessor(Professor professor) {
         this.id = professor.getId();
@@ -22,18 +24,9 @@ public class DadosListagemProfessor extends DadosListagemUsuario {
         this.dataDeNascimento = professor.getDataDeNascimento();
         this.cpf = professor.getCpf();
         this.diaDePagamento = professor.getDiaDePagamento();
-        this.cargaHoraria = professor.getCargaHorariaDiaria();
+        this.cargaHorariaDiaria = professor.getCargaHorariaDiaria();
         this.salarioHora = professor.getSalarioHora();
-    }
-
-    public DadosListagemProfessor(DadosListagemProfessor dados) {
-        this.id = dados.getId();
-        this.nome = dados.getNome();
-        this.dataDeNascimento = dados.getDataDeNascimento();
-        this.cpf = dados.getCpf();
-        this.diaDePagamento = dados.getDiaDePagamento();
-        this.cargaHoraria = dados.getCargaHoraria();
-        this.salarioHora = dados.getSalarioHora();
+        this.telefone = professor.getTelefone();
     }
 
 }

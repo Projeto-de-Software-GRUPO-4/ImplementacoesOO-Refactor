@@ -24,7 +24,21 @@
             document.title = "Inserir usuário";
             document.getElementById('titulo').textContent = "Inserir usuário";
             document.getElementById('edit').textContent = "Que tipo de usuário deseja inserir?";
-        }else{
+        } else if (escolha == "excluir") {
+            document.title = "Excluir usuário";
+            document.getElementById('titulo').textContent = "Excluir usuário";
+            document.getElementById('edit').textContent = "Que tipo de usuário deseja excluir?";
+        } else if (escolha == "linkar_usuario") {
+            document.title = "Vincular usuário a turma";
+            document.getElementById('titulo').textContent = "Vincular usuário a turma";
+            document.getElementById('edit').textContent = "Que tipo de usuário deseja vincular a uma turma?";
+        } else if (escolha == "deslinkar_usuario") {
+            document.title = "Desvincular usuário a turma";
+            document.getElementById('titulo').textContent = "desvincular usuário a turma";
+            document.getElementById('edit').textContent = "Que tipo de usuário deseja desvincular a uma turma?";
+        }
+        
+        else{
             document.title = "Alterar dados";
             document.getElementById('titulo').textContent = "Alterar dados de usuário";
             document.getElementById('edit').textContent = "De que tipo de usuário deseja editar os dados?";
@@ -37,7 +51,27 @@
                 window.location.href = 'inserir_aluno.html';
             }else if(tipo === "Professor" && escolha == "alterar"){
                 window.location.href = 'edit_prof.html';
-            }else{
+            }else if(tipo === "Professor" && escolha == "excluir"){
+                localStorage.setItem("user_type", "professor"); 
+                window.location.href = 'direct.html';
+            }else if(tipo === "Aluno" && escolha == "excluir"){
+                localStorage.setItem("user_type", "aluno"); 
+                window.location.href = 'direct.html';
+            } else if(tipo === "Professor" && escolha == "linkar_usuario"){
+                localStorage.setItem("user_type", "professor"); 
+                window.location.href = 'link_user.html';
+            }else if(tipo === "Aluno" && escolha == "linkar_usuario"){
+                localStorage.setItem("user_type", "aluno"); 
+                window.location.href = 'link_user.html';
+            } else if(tipo === "Professor" && escolha == "deslinkar_usuario"){
+                localStorage.setItem("user_type", "professor"); 
+                window.location.href = 'link_user.html';
+            }else if(tipo === "Aluno" && escolha == "deslinkar_usuario"){
+                localStorage.setItem("user_type", "aluno"); 
+                window.location.href = 'link_user.html';
+            }
+            
+            else {
                 window.location.href = 'edit_aluno.html';
             }
         }

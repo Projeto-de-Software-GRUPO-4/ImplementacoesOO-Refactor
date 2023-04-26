@@ -2,6 +2,7 @@ package grupo.quatro.api_manage_escola.Service;
 
 import grupo.quatro.api_manage_escola.Domain.*;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
 import grupo.quatro.api_manage_escola.Repository.TurmaProfessorRepository;
@@ -35,11 +36,20 @@ public class ProfessorService extends UsuarioService {
     TurmaProfessorRepository turmaProfessorRepository;
 
     @Override
-    public Usuario salvar(DadosCadastroUsuario dados) {
-        Professor professor = professorRepository.save(new Professor((DadosCadastroProfessor) dados));
-        UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+    public Usuario salvar(DadosCadastroUsuario dados) throws Exception {
+        Optional<Professor> professorOptional = professorRepository.findById(new BigInteger(dados.getCpf()));
 
-        return professor;
+        if (professorOptional.isPresent()) {
+            throw new Exception("Já existe cadastro desse usuário, não é possível cadastrar novamente.");
+        } else {
+
+            Professor professor = professorRepository.save(new Professor((DadosCadastroProfessor) dados));
+            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+
+            return professor;
+
+        }
+
     }
 
     @Override
@@ -91,6 +101,11 @@ public class ProfessorService extends UsuarioService {
         try {
             Professor professor = professorRepository.getReferenceById(dados.id_usuario());
             Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+
+            if (turma.getProfessores().contains(turma)) {
+                throw new Exception(String.format("O professor %d e a turma de ID %d já têm vínculo.", dados.id_usuario(), dados.id_turma()));
+            }
+
             turma.getProfessores().add(professor);
             turmaRepository.save(turma);
         } catch (ProfessorNotFoundException e) {
@@ -105,6 +120,13 @@ public class ProfessorService extends UsuarioService {
         try {
             Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
             Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+            System.out.println(turma.getProfessores().contains(professor));
+
+
+            if (!turma.getProfessores().contains(professor)) {
+                throw new Exception(String.format("O professor %d e a turma de ID %d não têm vínculo.", dados.id_usuario(), dados.id_turma()));
+            }
+
             turma.getProfessores().remove(professor);
             turmaRepository.save(turma);
         } catch (ProfessorNotFoundException e) {
@@ -112,9 +134,15 @@ public class ProfessorService extends UsuarioService {
         } catch (TurmaNotFoundException e) {
             throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
         };
-//        Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
-//        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-//        turma.getProfessores().remove(professor);
-//        turmaRepository.save(turma);
+//        try {
+//            Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
+//            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+//            turma.getProfessores().remove(professor);
+//            turmaRepository.save(turma);
+//        } catch (ProfessorNotFoundException e) {
+//            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.id_usuario()));
+//        } catch (TurmaNotFoundException e) {
+//            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
+//        };
     }
 }

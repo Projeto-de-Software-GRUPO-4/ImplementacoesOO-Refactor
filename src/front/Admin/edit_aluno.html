@@ -10,78 +10,38 @@
 <body>
     
     <div class="container" id="main">
-        <h1>Insira os dados do aluno</h1>
-        <fieldset id="name">
-            <legend>Nome: </legend>
-            <input type="text" name="nome" id="nome" value="">
-        </fieldset>
+        <h1>Insira o CPF do aluno</h1>
         <fieldset id="_cpf">
             <legend>CPF: </legend>
-            <input type="number" name="cpf" id="cpf" value="">
+            <input type="text" name="cpf" id="cpf" value="">
         </fieldset>
-        <fieldset id="nascimento">
-            <legend>Data de nascimento: </legend>
-            <input type="date" name="nasc" id="nasc" value="">
-        </fieldset>
-        <fieldset id="_responsavel1">
-            <legend>Nome do(a) responsavel: </legend>
-            <input type="text" name="responsavel1" id="responsavel1" value="">
-        </fieldset>
-        <fieldset iid="_responsavel2">
-            <legend>Nome do(a) segundo(a) responsavel: </legend>
-            <input type="text" name="responsavel2" id="responsavel2" value="">
-        </fieldset>
-        <fieldset id="_num_res1">
-            <legend>Telefone do(a) responsavel: </legend>
-            <input type="number" name="num_res1" id="num_res1" value="">
-        </fieldset>
-        <fieldset id="_num_res2">
-            <legend>Telefone do(a) segundo(a) responsavel: </legend>
-            <input type="number" name="num_res2" id="num_res2" value="">
-        </fieldset>
-        <fieldset id="_ensino">
-            <legend>Ensino: </legend>
-            <input type="radio" name="ensino" id="ensino" value="infantil">Infantil
-            <input type="radio" name="ensino" id="ensino" value="fundamental">fundamental
-            <input type="radio" name="ensino" id="ensino" value="medio">Medio
-        </fieldset>
-        <fieldset id="_serie">
-            <legend>Serie: </legend>
-            <input type="number" name="serie" id="serie" value="">
-        </fieldset>
-        <fieldset id="_turno">
-            <legend>Turno: </legend>
-            <input type="radio" name="turno" id="turno" value="matutino">Matutino
-            <input type="radio" name="turno" id="turno" value="vespertino">Vespertino
-            <input type="radio" name="turno" id="turno" value="diurno">Diurno
-        </fieldset>
-        <fieldset id="_mensalidade">
-            <legend>Mensalidade: </legend>
-            <span class="rs">R$</span>
-            <input type="number" name="mensalidade" id="mensalidade" value="">
-        </fieldset>
-        <fieldset id="_vencimento">
-            <legend>Vencimento das faturas:</legend>
-            <span>Dia:</span>
-            <input type="number" name="vencimento" id="vencimento" value="">
-        </fieldset>
+        
 
-        <input type="button" value="Salvar" id="enviar" onclick="enviar()">
+        <input type="button" value="Buscar " id="enviar" onclick="resgatarInformacoes()">
         <div class="error"><p id="error"></p></div>
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../services/AlunoService.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
     <script>
-        document.getElementById("nome").value = "Nome do aluno";
-        document.getElementById("cpf").value = "11111111111";
-        document.getElementById("nasc").value = "2012-12-12";
-        document.getElementById("responsavel1").value = "Nome do responsavel";
-        document.getElementById("responsavel2").value = "Nome do segundo responsavel";
-        document.getElementById("num_res1").value = "11122345678";
-        document.getElementById("num_res2").value = "11122345678";
-        document.getElementById("serie").value = "2";
-        document.getElementById("mensalidade").value = "222.222";
-        document.getElementById("vencimento").value = "12";
+        // document.getElementById("nome").value = "Nome do aluno";
+        document.getElementById("cpf").placeholder = "11111111111";
+        // document.getElementById("nasc").value = "2012-12-12";
+        // document.getElementById("responsavel1").value = "Nome do responsavel";
+        // document.getElementById("responsavel2").value = "Nome do segundo responsavel";
+        // document.getElementById("num_res1").value = "11122345678";
+        // document.getElementById("num_res2").value = "11122345678";
+        // document.getElementById("serie").value = "2";
+        // document.getElementById("mensalidade").value = "222.222";
+        // document.getElementById("vencimento").value = "12";
 
         function enviar(){
             var inputs = document.querySelectorAll("input");
@@ -93,15 +53,100 @@
                 }
             }
 
-            var ensino = document.querySelector('input[name="ensino"]:checked');
-            var turno = document.querySelector('input[name="turno"]:checked');
-            if(!ensino || !turno){
-                document.getElementById("error").textContent = "Preencha todos os campos!";
-                return;
-            }
+            // var ensino = document.querySelector('input[name="ensino"]:checked');
+            // var turno = document.querySelector('input[name="turno"]:checked');
+            // if(!ensino || !turno){
+            //     document.getElementById("error").textContent = "Preencha todos os campos!";
+            //     return;
+            // }
+            AlunoService.atualizar()
+                .then((res) => {
+                    if (res.status == 200) {
+                        alert("Dados do usuário atualizados com sucesso.")
+                        window.location.href = "admin_function.html";
+                    } else {
+                        alert("Não foi possível atualizar os dados do aluno.")
+                        console.log(res.message);
+                    }
+                })
 
-            alert("Dados alterados com sucesso (falta alterar no DB)");
-            window.location.href = "admin_function.html"
+        }
+
+        function resgatarInformacoes(){
+            
+            AlunoService.resgatar()
+                .then((res) => {
+                    if (res.status !== 200) {
+                        alert(res.json.message);
+                        return 
+                    } 
+                    console.log(res.json)
+                    return res.json;
+                })
+                .then((aluno) => {
+                    
+                    if (document.querySelector("input[id='nome']") == null) {
+
+                        console.log(aluno.responsavel)
+
+                        const dados = `
+                        <fieldset id="name">
+            <legend>Nome: </legend>
+            <input type="text" name="nome" id="nome" value="${aluno.nome}">
+        </fieldset>
+        <fieldset id="nascimento">
+            <legend>Data de nascimento: </legend>
+            <input type="date" name="nasc" id="nasc" value="${DateHelper.stringToInternationalString(aluno.dataDeNascimento)}">
+        </fieldset>
+        <fieldset id="responsavelNome">
+            <legend>Nome do(a) responsavel: </legend>
+            <input type="text" value="${aluno.responsavel?.nomeResponsavel}" name="responsavelNome" id="responsavelNome" placeholder="Nome do(a) responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="responsavelCpf">
+            <legend>CPF do(a) responsavel: </legend>
+            <input type="text" name="responsavelCpf" value="${aluno.responsavel?.cpfResponsavel}" id="responsavelCpf" placeholder="Nome do(a) segundo responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="responsavelNumero">
+            <legend>Telefone do(a) responsavel: </legend>
+            <input type="number" name="responsavelNumero" value="${aluno.responsavel?.telefoneResponsavel}" id="responsavelNumero" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
+        </fieldset>
+        <fieldset id="_serie">
+            <legend>Serie: </legend>
+            <input type="number" name="serie" id="serie" value="${aluno.anoEscolar}">
+        </fieldset>
+        <fieldset id="_mensalidade">
+            <legend>Mensalidade: </legend>
+            <span class="rs">R$</span>
+            <input type="number" name="mensalidade" id="mensalidade" value="${aluno.mensalidade}">
+        </fieldset>
+        <fieldset id="_vencimento">
+            <legend>Vencimento das faturas:</legend>
+            <span>Dia:</span>
+            <input type="number" name="vencimento" id="vencimento" value="${aluno.diaDePagamento}">
+        </fieldset>
+        <!-- <fieldset id="_turno">
+            <legend>Turno: </legend>
+            <input type="radio" name="turno" id="turno" value="matutino">Matutino
+            <input type="radio" name="turno" id="turno" value="vespertino">Vespertino
+            <input type="radio" name="turno" id="turno" value="diurno">Diurno
+        </fieldset> -->
+        <input type="button" value="Enviar" id="enviar" onclick="enviar()"> 
+                        ` 
+                        const container = document.getElementById("main");
+                        container.innerHTML += dados;
+
+                    }
+
+                    const cpf = document.querySelector("input[id='cpf']");
+                    cpf.value = aluno.cpf; 
+                    cpf.disabled = true; 
+
+                    const buscarButton = document.querySelector("input[id='enviar']");
+                    buscarButton.remove(); 
+
+
+                })
+
         }
     </script>
 </body>

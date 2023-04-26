@@ -1,6 +1,7 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
 
+import grupo.quatro.api_manage_escola.Domain.Aluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
@@ -28,9 +29,14 @@ public class AlunoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroAluno dados) {
-        alunoService.salvar(dados);
-        Message message = new Message("Aluno cadastrado com sucesso.");
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        try {
+            alunoService.salvar(dados);
+            Message message = new Message("Aluno cadastrado" + dados.getCpf() + " com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/{id}")
@@ -66,7 +72,7 @@ public class AlunoController {
     public ResponseEntity suspender_desuspender(@PathVariable BigInteger id) {
         try {
             alunoService.suspender(id);
-            Message message = new Message("Aluno suspenso com sucesso.");
+            Message message = new Message("Status de suspensão do aluno " + id + " alterado com sucesso.");
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());
@@ -87,7 +93,7 @@ public class AlunoController {
         }
     }
 
-    @PutMapping("/matricular_a_turma")
+    @PostMapping("/matricular_a_turma")
     @Transactional
     ResponseEntity matricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
         try {
@@ -100,7 +106,7 @@ public class AlunoController {
         }
     }
 
-    @PutMapping("/desmatricular_a_turma")
+    @DeleteMapping("/desmatricular_a_turma")
     @Transactional
     ResponseEntity desmatricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
         try {

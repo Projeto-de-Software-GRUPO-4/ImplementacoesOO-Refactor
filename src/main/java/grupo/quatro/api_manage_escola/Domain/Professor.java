@@ -29,6 +29,8 @@ public class Professor extends Usuario {
 
     private double salarioHora;
 
+    private String telefone;
+
     // O valor do mapped by precisa ser o nome do atributo
     @ManyToMany(mappedBy = "professores")
     Set<Turma> turmas;
@@ -37,6 +39,7 @@ public class Professor extends Usuario {
         this.cargaHorariaDiaria = dados.getCargaHorariaDiaria();
         this.salarioHora = dados.getSalarioHora();
         this.turmas = new HashSet<Turma>();
+        this.telefone = dados.getTelefone();
         this.id = new BigInteger(dados.getCpf());
     }
 
@@ -49,6 +52,7 @@ public class Professor extends Usuario {
         if (dados.getDiaDePagamento() != 0) super.diaDePagamento = dados.getDiaDePagamento();
         if (dados.getCargaHorariaDiaria() != 0) this.cargaHorariaDiaria = dados.getCargaHorariaDiaria();
         if (dados.getSalarioHora() != 0) this.salarioHora = dados.getSalarioHora();
+        if (dados.getTelefone() != null) this.telefone = dados.getTelefone();
     }
 
 }

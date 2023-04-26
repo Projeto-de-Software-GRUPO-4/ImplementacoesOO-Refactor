@@ -18,5 +18,7 @@ public class DadosCadastroProfessor extends DadosCadastroUsuario {
         protected int cargaHorariaDiaria;
         protected double salarioHora;
 
+        protected String telefone;
+
 
 }

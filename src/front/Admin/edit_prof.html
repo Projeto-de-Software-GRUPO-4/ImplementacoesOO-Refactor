@@ -9,48 +9,34 @@
 </head>
 <body>
     <div class="container" id="main">
-        <h1>Insira os dados do professor</h1>
-        <fieldset id="name">
-            <legend>Nome: </legend>
-            <input type="text" name="nome" id="nome" value="">
-        </fieldset>
+        <h1>Insira o CPF do professor</h1>
         <fieldset id="_cpf">
             <legend>CPF: </legend>
-            <input type="number" name="cpf" id="cpf" value="">
+            <input type="text" name="cpf" id="cpf" value="">
         </fieldset>
-        <fieldset id="nascimento">
-            <legend>Data de nascimento: </legend>
-            <input type="date" name="nasc" id="nasc" value="">
-        </fieldset>
-        <fieldset id="tel">
-            <legend>Telefone: </legend>
-            <input type="number" name="telefone" id="telefone" value="">
-        </fieldset>
-        <fieldset id="salario">
-            <legend>Salário: </legend>
-            <span class="rs">R$</span>
-            <input type="number" name="mensalidade" id="mensalidade" value="">
-        </fieldset>
-        <fieldset id="pagamento">
-            <legend>Data de pagamento:</legend>
-            <span>Dia:</span>
-            <input type="number" name="vencimento" id="vencimento" value>
-        </fieldset>
-
-        <input type="button" value="Salvar" id="enviar" onclick="enviar()">
         <div class="error"><p id="error"></p></div>
+        <input type="button" value="Buscar" id="enviar" onclick="resgatarInformacoes()">
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
-    <script>
-        document.getElementById("nome").value = "Nome do professor";
-        document.getElementById("cpf").value = "11111111111";
-        document.getElementById("nasc").value = "2012-12-12";
-        document.getElementById("telefone").value = "11122345678";
-        document.getElementById("mensalidade").value = "111.111";
-        document.getElementById("vencimento").value = "12";
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../services/ProfessorService.js"></script>
 
-        function enviar(){
+    <script>
+        // document.getElementById("nome").placeholder = "Nome do professor";
+        document.getElementById("cpf").placeholder = "11111111111";
+        // document.getElementById("nasc").placeholder = "2012-12-12";
+        // document.getElementById("telefone").placeholder = "11122345678";
+        // document.getElementById("mensalidade").placeholder = "111.111";
+        // document.getElementById("vencimento").placeholder = "12";
+        
+        function enviar() {
             var inputs = document.querySelectorAll("input");
             var pag = document.getElementById("vencimento").value;
             
@@ -66,8 +52,81 @@
                 return;
             }
 
-            alert("Dados alterados com sucesso (falta alterar no DB)");
-            window.location.href = "admin_function.html";
+            ProfessorService.atualizar()
+                .then((res) => {
+                    if (res.status == 200) {
+                        alert("Dados do usuário atualizados com sucesso.")
+                        window.location.href = "admin_function.html";
+                    } else {
+                        alert("Não foi possível atualizar os dados do aluno.")
+                        console.log(res.message);
+                    }
+                })
+
+
+
+        }
+
+
+        function resgatarInformacoes(){
+            
+            ProfessorService.resgatar()
+                .then((res) => {
+                    if (res.status !== 200) {
+                        alert(res.json.message);
+                        return 
+                    } 
+                    console.log(res.json)
+                    return res.json;
+                })
+                .then((professor) => {
+                    
+                    if (document.querySelector("input[id='nome']") == null) {
+
+                        const dados = `
+                            <fieldset id="name">
+                                <legend>Nome: </legend>
+                                <input type="text" name="nome" id="nome" value="${professor.nome}">
+                            </fieldset>
+                            <fieldset id="nascimento">
+                                <legend>Data de nascimento: </legend>
+                                <input type="date" name="nasc" id="nasc" value="${DateHelper.stringToInternationalString(professor.dataDeNascimento)}">
+                            </fieldset>
+                            <fieldset id="tel">
+                                <legend>Telefone: </legend>
+                                <input type="number" name="telefone" id="telefone" value="${professor.telefone}">
+                            </fieldset>
+                            <fieldset id="salario">
+                                <legend>Salário hora: </legend>
+                                <span class="rs">R$</span>
+                                <input type="number" name="mensalidade" id="mensalidade" value="${professor.salarioHora}">
+                            </fieldset>
+                            <fieldset id="cargaHoraria">
+                                <legend>Carga horária diária: </legend>
+                                <input type="number" name="cargaHoraria" id="cargaHoraria" value="${professor.cargaHorariaDiaria}" placeholder="Valor">
+                            </fieldset>
+                            <fieldset id="pagamento">
+                                <legend>Data de pagamento:</legend>
+                                <span>Dia:</span>
+                                <input type="number" name="vencimento" id="vencimento" value="${professor.diaDePagamento}">
+                            </fieldset>
+                            <input type="button" value="Enviar" id="enviar" onclick="enviar()"> 
+                        ` 
+                        const container = document.getElementById("main");
+                        container.innerHTML += dados;
+
+                    }
+
+                    const cpf = document.querySelector("input[id='cpf']");
+                    cpf.value = professor.cpf; 
+                    cpf.disabled = true; 
+
+                    const buscarButton = document.querySelector("input[id='enviar']");
+                    buscarButton.remove(); 
+
+
+                })
+
         }
     </script>
 </body>

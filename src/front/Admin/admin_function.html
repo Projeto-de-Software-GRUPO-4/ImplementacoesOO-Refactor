@@ -28,7 +28,10 @@
                     <option value="excluir">Excluir usuário</option>
                     <option value="alterar">Alterar dados do usuário</option>
                     <option value="suspender">Suspender aluno</option>
+                    <option value="criar_turma">Criar turma</option>
                     <option value="mostrar_turma">Mostrar alunos de uma turma</option>
+                    <option value="linkar_usuário">Vincular usuário a uma turma</option>
+                    <option value="deslinkar_usuário">Desvincular usuário a uma turma</option>
                     <option value="expulsar">Expulsar aluno</option>
                 </select>
                 <input type="button" id="next" value="Avançar" onclick="funcao()">
@@ -55,7 +58,21 @@
             }else if(selectValue === 'mostrar_turma'){
                 localStorage.setItem("tipo", "admin");
                 window.location.href = 'turma.html';
-            }else{
+            }else if(selectValue === "excluir") {
+                localStorage.setItem("escolha", "excluir");
+                window.location.href = 'tipo_user.html';
+            } else if (selectValue == "criar_turma") {
+                localStorage.setItem("escolha", "criar_turma");
+                window.location.href = 'inserir_turma.html';
+            } else if (selectValue == "linkar_usuário") {
+                localStorage.setItem("escolha", "linkar_usuario");
+                window.location.href = 'tipo_user.html';
+            } else if (selectValue == "deslinkar_usuário") {
+                localStorage.setItem("escolha", "deslinkar_usuario");
+                window.location.href = 'tipo_user.html';
+            }
+             
+            else{
                 window.location.href = 'direct.html';
             }
         }

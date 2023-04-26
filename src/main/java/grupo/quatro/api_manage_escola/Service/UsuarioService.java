@@ -21,7 +21,7 @@ public abstract class UsuarioService<T> {
 
     @Autowired
     TurmaRepository turmaRepository;
-    public abstract Usuario salvar(DadosCadastroUsuario dados);
+    public abstract Usuario salvar(DadosCadastroUsuario dados) throws Exception;
     public abstract DadosListagemUsuario resgatar(BigInteger id) throws Exception;
     public abstract List<T> resgatarTodos();
     public abstract DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) throws Exception;

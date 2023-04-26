@@ -16,6 +16,8 @@ public class DadosAtualizacaoAluno extends DadosAtualizacaoUsuario {
         @Valid
         protected DadosResponsavel responsavel;
 
+        protected double mensalidade;
+
         protected int anoEscolar;
 
 }

@@ -19,22 +19,53 @@
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../services/utils/usertypes.js"></script>
+    <script src="../services/utils/crudfunctions.js"></script>
+    <script src="../services/AlunoService.js"></script>
+
     <script>
         const selectValue = localStorage.getItem('selectValue');
         const linkElement = document.getElementById("link");
+
+        console.log(localStorage.getItem("user_type").charAt(0).toUpperCase() + localStorage.getItem("user_type").slice(1))
 
         function apertado(){
             const cpf = document.getElementById('cpf').value;
 
             if(isvalid(cpf) === true){
                 if(selectValue === 'excluir'){
-                    /*implemente aqui o back*/
-                    alert("Falta implementar o back para excluir!");
-                    alert("user excluido com sucesso (futuro)");
+                    deletar(localStorage.getItem("user_type").charAt(0).toUpperCase() + localStorage.getItem("user_type").slice(1))
+                        .then((res) => {
+                            alert(res.json.message)
+                            console.log(res)
+                            return res;
+                        })
+                        .then((res) => {
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html";
+                            }
+                        })
                 }else if(selectValue === 'suspender'){
-                    /*implemente aqui o back*/
-                    alert("Falta implementar o back para suspender!");
-                    alert("Aluno suspenso com sucesso (futuro)");
+
+                    AlunoService.suspender(cpf)
+                        .then((res) => {
+                            alert(res.json.message)
+                            return res;
+                        })
+                        .then((res) => {
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html";
+                            }
+                        })
+
+
                 }else if(selectValue === 'expulsar'){
                     /*implemente aqui o back*/
                     alert("Falta implementar o back para expulsar aluno!");

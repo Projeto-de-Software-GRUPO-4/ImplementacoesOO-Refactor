@@ -15,6 +15,8 @@ public class DadosCadastroAluno extends DadosCadastroUsuario {
         @Valid
         protected DadosResponsavel responsavel;
 
+        protected double mensalidade;
+
         @NotNull
         protected int anoEscolar;
 }

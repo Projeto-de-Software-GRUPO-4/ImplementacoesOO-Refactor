@@ -27,6 +27,8 @@ public class Aluno extends Usuario {
     private Responsavel responsavel;
     private int anoEscolar;
 
+    private double mensalidade;
+
     private boolean suspended;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
@@ -41,12 +43,14 @@ public class Aluno extends Usuario {
         this.responsavel = new Responsavel(dados.getResponsavel());
         this.anoEscolar = dados.getAnoEscolar();
         this.id = new BigInteger(dados.getCpf());
+        this.mensalidade = dados.getMensalidade();
     }
 
     public void updateInfo(DadosAtualizacaoAluno dados) {
         if (dados.getNome() != null) super.nome = dados.getNome();
         if (dados.getDiaDePagamento() != 0) super.diaDePagamento = dados.getDiaDePagamento();
         if (dados.getResponsavel() != null) this.responsavel.updateInfo(dados.getResponsavel());
+        if (dados.getMensalidade() != 0) this.mensalidade = dados.getMensalidade();
     }
 
     public Optional<DadosListagemTurma> getTurmaId() {

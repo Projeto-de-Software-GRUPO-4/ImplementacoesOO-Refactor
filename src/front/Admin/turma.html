@@ -18,7 +18,11 @@
         </fieldset>
     </div>
 
-    <script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../services/TurmaService.js"></script>
+
+<script>
         var tipo = "";
         tipo = localStorage.getItem("tipo");
 
@@ -31,12 +35,26 @@
             }
             
             localStorage.setItem("turmaDigitada", turma);
-            alert("Falta validar se a turma existe");
-            if(tipo == "admin"){
-                window.location.href = "mostrar_alunos.html";
-            }else if(tipo == "professor"){
-                window.location.href = "../Professor/dar_nota.html";
-            }
+            
+        
+            TurmaService.resgatar()
+                .then((res) => {
+                    if (res.status == 200) {
+                        const idTurma = res.json.id; 
+                        localStorage.setItem("id_turma", idTurma);
+                        window.location.href = "mostrar_alunos.html";
+                    } else {
+                        alert(res.json.message);
+                    }
+                })
+
+
+            // alert("Falta validar se a turma existe");
+            // if(tipo == "admin"){
+            //     window.location.href = "mostrar_alunos.html";
+            // }else if(tipo == "professor"){
+            //     window.location.href = "../Professor/dar_nota.html";
+            // }
         }
     </script>
 </body>

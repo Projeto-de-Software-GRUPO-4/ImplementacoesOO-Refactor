@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar dados</title>
+    <link rel="stylesheet" href="../Geral/Styles/inserir.css">
+</head>
+
+<body>
+    <div class="container" id="main">
+        <h1>Insira o CPF do professor</h1>
+        <fieldset id="_cpf">
+            <legend>CPF: </legend>
+            <input type="text" name="cpf" id="cpf" value="">
+        </fieldset>
+        <fieldset id="_turma">
+            <legend>Selecione uma turma: </legend>
+            <select name="turma" id="turma">
+                <option value="null">-------</option>
+            </select>
+        </fieldset>
+        <div class="error">
+            <p id="error"></p>
+        </div>
+        <input type="button" value="Buscar" id="enviar" onclick="enviar()">
+    </div>
+
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../services/ProfessorService.js"></script>
+    <script src="../services/TurmaService.js"></script>
+    <script src="../services/AlunoService.js"></script>
+
+    <script>
+        document.getElementById("cpf").placeholder = "11111111111";
+
+        const escolha = localStorage.getItem("escolha");
+        const user_type = localStorage.getItem("user_type");
+
+        carregarTurmas();
+
+        function carregarTurmas() {
+
+            if (user_type == "aluno" && escolha == "deslinkar_usuario") {
+                document.getElementById("_turma").remove(); 
+            } else {
+                TurmaService.resgatarAll()
+                    .then((res) => {
+                        if (res.status == 200) {
+                            const select = document.querySelector("select[id='turma']");
+                            const turmas = res.json;
+                            const turmasOptions = turmas.map(turma => {
+                                const nome = `${turma.anoEscolar}${turma.letra}`;
+                                const option = document.createElement("option");
+    
+                                option.value = turma.id;
+                                option.text = nome;
+                                select.appendChild(option);
+    
+                            });
+                        }
+                    })
+            }
+            }
+
+
+
+        function enviar() {
+
+            var inputs = document.querySelectorAll("input");
+
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].value === "") {
+                    document.getElementById('error').textContent = "Preencha todos os campos!";
+                    return;
+                }
+            }
+
+            if (escolha == "linkar_usuario") {
+
+                if (user_type == "professor") {
+                    ProfessorService.linkarATurma()
+                        .then(res => {
+                            alert(res.json.message)
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html"
+                            }
+                        })
+                } else if (user_type == "aluno") {
+                    AlunoService.linkarATurma()
+                        .then(res => {
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html"
+                            }
+                        })
+                }
+
+            } else if (escolha == "deslinkar_usuario") {
+
+                if (user_type == "professor") {
+                    ProfessorService.deslinkarATurma()
+                        .then(res => {
+                            alert(res.json.message)
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html"
+                            }
+                        })
+                } else if (user_type == "aluno") {
+                    AlunoService.deslinkarATurma()
+                        .then(res => {
+                            console.log(res)
+                            // alert(res.json.message)
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html"
+                            }
+                        })
+                }
+
+            }
+
+
+
+
+
+            // ProfessorService.linkarATurma() 
+
+
+
+        }
+    </script>
+</body>
+
+</html>

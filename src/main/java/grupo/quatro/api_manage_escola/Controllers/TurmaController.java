@@ -7,8 +7,12 @@ import grupo.quatro.api_manage_escola.Receive.Turma.DadosLinkarProfessorTurma;
 import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
 import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
 import grupo.quatro.api_manage_escola.Repository.TurmaRepository;
+import grupo.quatro.api_manage_escola.Respond.Message;
+import grupo.quatro.api_manage_escola.Service.TurmaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,44 +28,54 @@ public class TurmaController {
     @Autowired
     ProfessorRepository professorRepository;
 
+    @Autowired
+    TurmaService turmaService;
+
     @PostMapping
     @Transactional
-    void cadastrar(@RequestBody @Valid DadosCadastroTurma dados) {
-        Turma turma = turmaRepository.save(new Turma(dados));
+    ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroTurma dados) {
+        try {
+            turmaService.salvar(dados);
+            Message message = new Message("Turma " + dados.anoEscolar() + dados.letra() + " cadastrada com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/all")
     public List<DadosListagemTurma> listar() {
-        return turmaRepository.findAll().stream().map(DadosListagemTurma::new).toList();
+        return turmaService.listar();
     }
 
     @GetMapping("/{anoEscolar}")
     public List<DadosListagemTurma> listarTurmasDeAnoEscolar(@PathVariable int anoEscolar) {
-        return turmaRepository.findAllByAnoEscolar(anoEscolar).stream().map(DadosListagemTurma::new).toList();
+        return turmaService.listarTurmasDeAnoEscolar(anoEscolar);
     }
-    @GetMapping
+    @PostMapping("/resgatar")
     public DadosListagemTurma listarTurmaEspecifica(@RequestBody @Valid DadosCadastroTurma dados) {
-        return new DadosListagemTurma(turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra()));
+        return turmaService.listarTurmaEspecifica(dados);
     }
 
 
-    @PostMapping("/adicionar_professor")
-    @Transactional
-    void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
-        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
-        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-        turma.getProfessores().add(professor);
-        turmaRepository.save(turma);
-    }
-
-    @DeleteMapping("/remover_professor")
-    @Transactional
-    void removerProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
-        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
-        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-        turma.getProfessores().remove(professor);
-        turmaRepository.save(turma);
-
-    }
+//    @PostMapping("/adicionar_professor")
+//    @Transactional
+//    void alocarProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
+//        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
+//        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+//        turma.getProfessores().add(professor);
+//        turmaRepository.save(turma);
+//    }
+//
+//    @DeleteMapping("/remover_professor")
+//    @Transactional
+//    void removerProfessor(@RequestBody @Valid DadosLinkarProfessorTurma dados) {
+//        Professor professor = (Professor) professorRepository.findById(dados.id_professor()).orElse(null);
+//        Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+//        turma.getProfessores().remove(professor);
+//        turmaRepository.save(turma);
+//
+//    }
 
 }

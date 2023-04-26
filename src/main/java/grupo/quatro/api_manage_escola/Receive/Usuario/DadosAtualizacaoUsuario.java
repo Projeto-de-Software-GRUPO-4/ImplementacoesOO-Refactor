@@ -12,5 +12,10 @@ public class DadosAtualizacaoUsuario {
     protected BigInteger id;
 
     protected String nome;
+
+    protected String dataDeNascimento;
+
+    protected String telefone;
+
     protected int diaDePagamento;
 }

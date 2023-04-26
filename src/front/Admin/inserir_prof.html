@@ -16,7 +16,7 @@
         </fieldset>
         <fieldset id="_cpf">
             <legend>CPF: </legend>
-            <input type="number" name="cpf" id="cpf" placeholder="CPF do(a) professor(a)">
+            <input type="text" name="cpf" id="cpf" placeholder="CPF do(a) professor(a)">
         </fieldset>
         <fieldset id="nasc">
             <legend>Data de nascimento: </legend>
@@ -30,6 +30,10 @@
             <legend>Salário: </legend>
             <span class="rs">R$</span>
             <input type="number" name="mensalidade" id="mensalidade" placeholder="Valor">
+        </fieldset>
+        <fieldset id="cargaHoraria">
+            <legend>Carga horária diária: </legend>
+            <input type="number" name="cargaHoraria" id="cargaHoraria" placeholder="Valor">
         </fieldset>
         <fieldset id="vencimento">
             <legend>Data de pagamento:</legend>
@@ -47,7 +51,15 @@
     </div>
 
     <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../services/ProfessorService.js"></script>
     <script>
+
+
         function enviar(){
             var inputs = document.querySelectorAll("input");
             var cpf = document.getElementById("cpf").value;
@@ -64,8 +76,19 @@
                 return;
             }
 
-            alert("Cadastro efetuado com sucesso! (FALTA O BACK!)");
-            window.location.href = "admin_function.html";
+            ProfessorService.cadastrar()
+                .then((res) => {
+                    alert(res.json.message)
+                    return res;
+                })
+                .then((res) => {
+                    if (res.status == 200) {
+                        window.location.href = "admin_function.html";
+                    }
+                })
+
+            // alert("Cadastro efetuado com sucesso! (FALTA O BACK!)");
+            // window.location.href = "admin_function.html";
         }
     </script>
 </body>

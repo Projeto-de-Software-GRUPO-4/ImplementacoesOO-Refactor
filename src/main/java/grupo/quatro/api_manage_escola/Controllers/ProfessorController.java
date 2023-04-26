@@ -27,8 +27,15 @@ public class ProfessorController {
 
     @PostMapping
     @Transactional
-    public void cadastro(@RequestBody @Valid DadosCadastroProfessor dados) {
-        professorService.salvar(dados);
+    public ResponseEntity cadastro(@RequestBody @Valid DadosCadastroProfessor dados) {
+        try {
+            professorService.salvar(dados);
+            Message message = new Message("Professor " + dados.getCpf()  + " cadastrado com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PutMapping
