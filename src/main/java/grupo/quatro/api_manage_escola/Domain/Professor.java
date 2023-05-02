@@ -31,6 +31,16 @@ public class Professor extends Usuario {
 
     private String telefone;
 
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "materia_id")
+    private Materia materia;
+
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @MapsId("materia_id")
+////    @JoinColumn(name="materia_id")
+//    private Materia materia;
+
     // O valor do mapped by precisa ser o nome do atributo
     @ManyToMany(mappedBy = "professores")
     Set<Turma> turmas;
@@ -41,6 +51,7 @@ public class Professor extends Usuario {
         this.turmas = new HashSet<Turma>();
         this.telefone = dados.getTelefone();
         this.id = new BigInteger(dados.getCpf());
+
     }
 
     public List<DadosListagemTurma> getTurmasId() {

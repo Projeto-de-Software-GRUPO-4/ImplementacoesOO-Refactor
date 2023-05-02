@@ -22,6 +22,7 @@ public class Usuario {
 
     protected boolean active;
 
+
     public Usuario(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento) {
         this.active = true;
         this.nome = nome;

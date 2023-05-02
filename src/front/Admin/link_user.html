@@ -54,6 +54,11 @@
 
             if (user_type == "aluno" && escolha == "deslinkar_usuario") {
                 document.getElementById("_turma").remove(); 
+
+                // const id_turma = AlunoService.resgatar();
+                
+                // console.log(id_turma)
+
             } else {
                 TurmaService.resgatarAll()
                     .then((res) => {
@@ -86,12 +91,14 @@
                     return;
                 }
             }
+            
 
             if (escolha == "linkar_usuario") {
 
                 if (user_type == "professor") {
                     ProfessorService.linkarATurma()
-                        .then(res => {
+                    .then(res => {
+                            console.log(res)
                             alert(res.json.message)
                             if (res.status == 200) {
                                 window.location.href = "admin_function.html"
@@ -100,6 +107,7 @@
                 } else if (user_type == "aluno") {
                     AlunoService.linkarATurma()
                         .then(res => {
+                            alert(res.json.message)
                             if (res.status == 200) {
                                 window.location.href = "admin_function.html"
                             }
@@ -111,6 +119,7 @@
                 if (user_type == "professor") {
                     ProfessorService.deslinkarATurma()
                         .then(res => {
+                            console.log(res)
                             alert(res.json.message)
                             if (res.status == 200) {
                                 window.location.href = "admin_function.html"
@@ -120,7 +129,7 @@
                     AlunoService.deslinkarATurma()
                         .then(res => {
                             console.log(res)
-                            // alert(res.json.message)
+                            alert(res.json.message)
                             if (res.status == 200) {
                                 window.location.href = "admin_function.html"
                             }

@@ -23,6 +23,7 @@ td{
     border: 1px solid;
     padding: 5px;
     text-align: center;
+    transition: color ease-out 200;
 }
 
 .top{

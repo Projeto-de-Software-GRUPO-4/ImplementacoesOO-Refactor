@@ -1,0 +1,1 @@
+ALTER TABLE aluno ADD COLUMN expelled boolean NOT NULL;

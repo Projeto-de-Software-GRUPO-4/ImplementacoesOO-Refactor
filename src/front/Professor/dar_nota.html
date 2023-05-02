@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,54 +8,278 @@
     <title>Document</title>
     <link rel="stylesheet" href="dar_nota.css">
 </head>
+
 <body>
     <div id="caixa" class="container">
         <h1 id="nome"></h1>
         <table>
             <tr class="top">
-                <td>Matrícula</td>
+                <td>CPF</td>
                 <td class="info">Nome</td>
                 <td class="notas">1º Bimestre</td>
                 <td class="notas">2º Bimestre</td>
                 <td class="notas">3º Bimestre</td>
                 <td class="notas">4º Bimestre</td>
             </tr>
-            <tr>
-                <td>111111</td>
-                <td class="info">Aluno Name</td>
-                <td><input type="number" name="1bim" id="_1bim" class="notas" oninput="limpaerro()"></td>
-                <td><input type="number" name="2bim" id="_2bim" class="notas"></td>
-                <td><input type="number" name="3bim" id="_3bim" class="notas"></td>
-                <td><input type="number" name="4bim" id="_4bim" class="notas"></td>
-            </tr>
         </table>
 
-        <div class="error"><p id="error"></p></div>
+        <div class="error">
+            <p id="error"></p>
+        </div>
         <input type="button" value="Feito" id="botao" onclick="apertou()">
     </div>
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../models/BoletimModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../controllers/BoletimController.js"></script>
+    <script src="../services/utils/usertypes.js"></script>
+    <script src="../services/utils/crudfunctions.js"></script>
+    <script src="../services/AlunoService.js"></script>
+    <script src="../services/BoletimService.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
 
     <script>
         var turmaDigitada = localStorage.getItem("turmaDigitada");
         document.title = turmaDigitada;
         document.getElementById("nome").textContent = turmaDigitada;
+        var turma_id = localStorage.getItem("id_turma");
+        const materia_id = localStorage.getItem("materia_id");
 
-        function apertou(){
-            
+
+        function apertou() {
+
+            const materia_id = 5;
+            const alunos = document.querySelectorAll("tr:not(.top)");
+
+            alunos.forEach((aluno) => {
+                let primeiroBimestre = aluno.querySelector(":scope #_1bim").value;
+                let segundoBimestre = aluno.querySelector(":scope #_2bim").value;
+                let terceiroBimestre = aluno.querySelector(":scope #_3bim").value;
+                let quartoBimestre = aluno.querySelector(":scope #_4bim").value;
+
+                let cpf = aluno.querySelector(":scope td").innerText;
+
+
+                const boletins = [{
+                    aluno_id: cpf,
+                    materia_id: materia_id,
+                    ano: new Date().getFullYear(),
+                    bimestre: "Primeiro",
+                    nota: parseFloat(primeiroBimestre)
+                },
+                {
+                    aluno_id: cpf,
+                    materia_id: materia_id,
+                    ano: new Date().getFullYear(),
+                    bimestre: "Segundo",
+                    nota: parseFloat(segundoBimestre)
+                },
+                {
+                    aluno_id: cpf,
+                    materia_id: materia_id,
+                    ano: new Date().getFullYear(),
+                    bimestre: "Terceiro",
+                    nota: parseFloat(terceiroBimestre)
+                },
+                {
+                    aluno_id: cpf,
+                    materia_id: materia_id,
+                    ano: new Date().getFullYear(),
+                    bimestre: "Quarto",
+                    nota: parseFloat(quartoBimestre)
+                }
+                ]
+
+                boletins.forEach(boletim => {
+                    if (!Number.isNaN(boletim.nota)) {
+                        const boletimJSON = JSON.stringify(boletim);
+                        console.log(boletimJSON)
+                        // console.log(BoletimController.toJson(boletim))
+                        BoletimService.cadastrar(boletim)
+                            .then((res) => {
+                                if (res.status == 200) {
+                                    aluno.style.backgroundColor = "green";
+                                    setTimeout(() => {aluno.removeAttribute("style")}, 1000);
+                                }
+                            })
+                    }
+
+
+                })
+
+            })
+
         }
 
-        function limpaerro(){
+        function limpaerro() {
             var _1bim = document.getElementById("_1bim").value;
             var _2bim = document.getElementById("_2bim").value;
             var _3bim = document.getElementById("_3bim").value;
             var _4bim = document.getElementById("_4bim").value;
 
-            if(_1bim > 10 || _1bim < 0 || _2bim > 10 || _2bim < 0 || _3bim > 10 || _3bim < 0 || _4bim > 10 || _4bim < 0){
+            if (_1bim > 10 || _1bim < 0 || _2bim > 10 || _2bim < 0 || _3bim > 10 || _3bim < 0 || _4bim > 10 || _4bim < 0) {
                 document.getElementById("error").textContent = "Há alguma nota inválida!";
                 return;
-            }else{
+            } else {
                 document.getElementById("error").textContent = "";
             }
         }
+
+        aoCarregar();
+
+        function aoCarregar() {
+            let materia_id = 5;
+            let ano = new Date().getFullYear();
+
+            AlunoService.resgatarAllByTurma(turma_id)
+                .then((res) => {
+                    const alunos = res.json;
+
+                    const table = document.getElementsByTagName("table")[0];
+
+                    alunos.forEach((aluno) => {
+                
+                        const tr = document.createElement('tr');
+                        const cpf = document.createElement('td');
+                        const nome = document.createElement('td');
+
+                        nome.classList.add("info");
+                        cpf.innerText = aluno["id"];
+                        nome.innerText = aluno["nome"];
+
+                        tr.append(cpf, nome);
+                        tr.innerHTML += `
+                        <td><input type="number" name="1bim" id="_1bim" class="notas" oninput="limpaerro()"></td>
+                        <td><input type="number" name="2bim" id="_2bim" class="notas"></td>
+                        <td><input type="number" name="3bim" id="_3bim" class="notas"></td>
+                        <td><input type="number" name="4bim" id="_4bim" class="notas"></td>
+                        `
+
+                        table.append(tr);
+                    })
+                    // const alunos = res.json;
+                    // console.log(alunos[0])
+
+                    // alunos.forEach((element) => console.log(element))
+
+                    // alunos.forEach(aluno => {
+                    //     const table = document.getElementsByTagName("table")[0];
+
+                    //     const tr = document.createElement('tr');
+                    //     const cpf = document.createElement('td');
+                    //     const nome = document.createElement('td');
+
+                    //     nome.classList.add("info");
+                    //     cpf.innerText = aluno["cpf"];
+                    //     nome.innerText = aluno["nome"];
+
+                    //     tr.append(cpf, nome);
+                    //     table.append(tr);
+                    // });
+
+                })
+                .then(() => {
+                    BoletimService.resgatarAllTurmaAno(materia_id, ano)
+                        .then((res) => {
+        
+                            const notas = res.json;
+                            const alunos = {};
+        
+                            notas.forEach(nota => {
+        
+                                const id = nota["id"];
+        
+                                if (id in alunos == false) {
+                                    alunos[id] = {
+                                        nome: nota["nome"],
+                                        primeiroBimestre: null,
+                                        segundoBimestre: null,
+                                        terceiroBimestre: null,
+                                        quartoBimestre: null
+                                    }
+                                }
+        
+                                switch (nota["bimestre"]) {
+                                    case "0":
+                                        alunos[id]["primeiroBimestre"] = nota["nota"];
+                                        break;
+                                    case "1":
+                                        alunos[id]["segundoBimestre"] = nota["nota"];
+                                        break;
+                                    case "2":
+                                        alunos[id]["terceiroBimestre"] = nota["nota"];
+                                        break;
+                                    case "3":
+                                        alunos[id]["quartoBimestre"] = nota["nota"];
+                                        break;
+                                    default:
+                                        break;
+                                }
+        
+                            });
+        
+                            
+                            const alunosRows = document.querySelectorAll("tr:not(.top)");
+
+                            alunosRows.forEach((row) => {
+
+                                const cpf = row.querySelector(":scope td").innerText;
+    
+                                if (cpf in alunos) {
+    
+                                    const primeiroBimestre = row.querySelector(":scope #_1bim");
+                                    const segundoBimestre = row.querySelector(":scope #_2bim");
+                                    const terceiroBimestre = row.querySelector(":scope #_3bim");
+                                    const quartoBimestre = row.querySelector(":scope #_4bim");
+                                    
+                                    primeiroBimestre.value = alunos[cpf].primeiroBimestre;
+                                    segundoBimestre.value = alunos[cpf].segundoBimestre;
+                                    terceiroBimestre.value = alunos[cpf].terceiroBimestre;
+                                    quartoBimestre.value = alunos[cpf].quartoBimestre;
+                                    
+                                }
+
+                            })
+
+        
+                            // const table = document.getElementsByTagName("table")[0];
+                            // for (const id in alunos) {
+                            //     const aluno = alunos[id];
+        
+                            //     const tr = document.createElement('tr');
+                            //     const cpf = document.createElement('td');
+                            //     const nome = document.createElement('td');
+        
+                            //     nome.classList.add("info");
+                            //     cpf.innerText = id;
+                            //     nome.innerText = aluno["nome"];
+        
+                            //     tr.append(cpf, nome);
+                            //     tr.innerHTML += `
+                            //         <td><input type="number" value="${aluno["primeiroBimestre"]}" name="1bim" id="_1bim" class="notas" oninput="limpaerro()"></td>
+                            //         <td><input type="number" value="${aluno["segundoBimestre"]}" name="2bim" id="_2bim" class="notas"></td>
+                            //         <td><input type="number" value="${aluno["terceiroBimestre"]}" name="3bim" id="_3bim" class="notas"></td>
+                            //         <td><input type="number" value="${aluno["quartoBimestre"]}" name="4bim" id="_4bim" class="notas"></td>
+                            //         `
+        
+                            //     table.append(tr);
+                            // }
+        
+                        })
+
+                })
+
+
+        }
     </script>
 </body>
+
 </html>

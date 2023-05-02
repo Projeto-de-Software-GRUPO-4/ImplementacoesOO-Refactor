@@ -54,8 +54,13 @@ public class TurmaController {
         return turmaService.listarTurmasDeAnoEscolar(anoEscolar);
     }
     @PostMapping("/resgatar")
-    public DadosListagemTurma listarTurmaEspecifica(@RequestBody @Valid DadosCadastroTurma dados) {
-        return turmaService.listarTurmaEspecifica(dados);
+    public ResponseEntity listarTurmaEspecifica(@RequestBody @Valid DadosCadastroTurma dados) {
+        try {
+            return new ResponseEntity<>(turmaService.listarTurmaEspecifica(dados), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        }
     }
 
 

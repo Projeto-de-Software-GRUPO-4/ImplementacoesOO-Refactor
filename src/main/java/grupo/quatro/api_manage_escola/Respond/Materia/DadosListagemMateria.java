@@ -2,8 +2,10 @@ package grupo.quatro.api_manage_escola.Respond.Materia;
 
 import grupo.quatro.api_manage_escola.Domain.Materia;
 
+import java.math.BigInteger;
+
 public record DadosListagemMateria(
-        int id,
+        BigInteger id,
         String titulo
 
 

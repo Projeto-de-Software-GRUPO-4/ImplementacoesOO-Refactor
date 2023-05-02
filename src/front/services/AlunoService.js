@@ -1,6 +1,6 @@
 class AlunoService {
 
-    async cadastrar() {
+    static async cadastrar() {
         let aluno = new AlunoController().createAsJson();
         let response = await fetch("http://localhost:8080/aluno", {
             method: "POST",
@@ -17,7 +17,7 @@ class AlunoService {
         };
     }
 
-    async atualizar() {
+    static async atualizar() {
         let aluno = new AlunoController().createAsJson();
         let response = await fetch(`http://localhost:8080/aluno`, {
             method: "PUT",
@@ -34,7 +34,7 @@ class AlunoService {
         };
     }
 
-    async resgatar() {
+    static async resgatar() {
         let aluno = new AlunoController().create();
         let response = await fetch(`http://localhost:8080/aluno/${aluno.cpf}`);
 
@@ -46,7 +46,22 @@ class AlunoService {
 
     }
 
-    async deletar() {
+    static async resgatarAllByTurma(id_turma) {
+        let response = await fetch(`http://localhost:8080/aluno/all/${id_turma}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        return {
+            json: await response.json(),
+            status: response.status,
+            text: response.statusText
+        };
+    }
+
+    static async deletar() {
         let aluno = new AlunoController().create();
         let response = await fetch(`http://localhost:8080/aluno/${aluno.cpf}`, {
             method: "DELETE",
@@ -91,8 +106,6 @@ class AlunoService {
         let aluno = new AlunoController().create();
         let turma = new TurmaController().create();
 
-        console.log(turma.id);
-    
         const turma_aluno = JSON.stringify({
             id_usuario: aluno.cpf,
             id_turma: turma.id
@@ -119,6 +132,22 @@ class AlunoService {
 
         let response = await fetch(`http://localhost:8080/aluno/${cpf}/status_suspensao`, {
             method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        return {
+            json: await response.json(),
+            status: response.status,
+            text: response.statusText
+        };
+
+    }
+
+    static async expulsar(cpf) {
+        let response = await fetch(`http://localhost:8080/aluno/expulsar/${cpf}`, {
+            method: "DELETE",
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -38,14 +38,13 @@
             const selectElement = document.getElementById('funcao');
             const selectValue = selectElement.value;
             if(selectValue === "alocado"){
-                alert("Falta implementar o back para mostrar a tabela de turmas!");
+                window.location.href = "mostrar_turmas.html";
             }else if(selectValue === "baixar"){
-                alert("Falta implementar o back");
+                window.location.href = "../Admin/escolher_turma.html";
             }else if(selectValue === "registrar"){
                 window.location.href = "registrar.html";
             }else if(selectValue === "atribuir"){
                 localStorage.setItem("tipo", "professor");
-                alert("Falta validar se a turma existe");
                 window.location.href= "../Admin/turma.html";
             }else if(selectValue === ""){
                 document.getElementById("error").textContent = "Selecione uma operação!";

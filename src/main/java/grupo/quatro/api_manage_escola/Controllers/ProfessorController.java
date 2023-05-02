@@ -2,6 +2,8 @@ package grupo.quatro.api_manage_escola.Controllers;
 
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
+import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosDeslinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Respond.Message;
 import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
@@ -24,6 +26,7 @@ public class ProfessorController {
 
     @Autowired
     ProfessorService professorService;
+
 
     @PostMapping
     @Transactional
@@ -92,7 +95,7 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/remover_da_turma")
-    public ResponseEntity deslinkarATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+    public ResponseEntity deslinkarATurma(@RequestBody @Valid DadosDeslinkarUsuarioTurma dados) {
 
         try {
             professorService.deslinkarATurma(dados);
@@ -102,6 +105,17 @@ public class ProfessorController {
             Message message = new Message(e.getMessage());
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/minhas_turmas/{id}")
+    public ResponseEntity resgatarTurmas(@PathVariable BigInteger id) {
+        try {
+            return new ResponseEntity<>(professorService.resgatarTurmasDoProfessor(id), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

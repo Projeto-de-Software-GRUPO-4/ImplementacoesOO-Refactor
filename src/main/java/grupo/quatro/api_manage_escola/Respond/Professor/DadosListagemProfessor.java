@@ -18,6 +18,8 @@ public class DadosListagemProfessor extends DadosListagemUsuario {
 
     protected String telefone;
 
+    protected BigInteger materia_id;
+
     public DadosListagemProfessor(Professor professor) {
         this.id = professor.getId();
         this.nome = professor.getNome();
@@ -27,6 +29,7 @@ public class DadosListagemProfessor extends DadosListagemUsuario {
         this.cargaHorariaDiaria = professor.getCargaHorariaDiaria();
         this.salarioHora = professor.getSalarioHora();
         this.telefone = professor.getTelefone();
+        this.materia_id = professor.getMateria().getId();
     }
 
 }

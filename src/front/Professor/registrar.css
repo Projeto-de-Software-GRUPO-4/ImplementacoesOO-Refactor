@@ -47,7 +47,7 @@ input#enviar:hover{
     background-color: rgb(68, 128, 48);
 }
 
-input#nome_aluno, input#turma_ocorrencia{
+input#cpf_aluno, input#turma_ocorrencia{
     width: 300px;
     height: 20px;
     border-radius: 10px;

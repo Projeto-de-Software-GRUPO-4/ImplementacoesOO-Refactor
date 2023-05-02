@@ -12,8 +12,7 @@
         <h1>Registro de ocorrências</h1>
         <fieldset id="data">
             <legend>Dados do aluno: </legend>
-            <input type="text" id="nome_aluno" placeholder="Digite o nome do aluno">
-            <input type="text" id="turma_ocorrencia" placeholder="Digite a turma da ocorrência">
+            <input type="text" id="cpf_aluno" placeholder="Digite o cpf do aluno">
         </fieldset>
         <fieldset id="ocorrenc">
             <legend>Registre aqui a ocorrência: </legend>
@@ -22,6 +21,13 @@
         <div class="error"><p id="error"></p></div>
         <input type="button" value="Enviar" id="enviar" onclick="enviar()">
     </div>
+
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/OcorrenciaModel.js"></script>
+    <script src="../controllers/OcorrenciaController.js"></script>
+    <script src="../services/OcorrenciaService.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
 
     <script>
         function enviar(){
@@ -36,9 +42,23 @@
                 }
             }
 
-            alert("Falta validar se a turma existe!");
-            alert("Ocorrência enviada com sucesso!");
-            window.location.href = "prof_function.html";
+            console.log(new OcorrenciaController().createAsJson())
+
+
+            OcorrenciaService.cadastrar() 
+                .then((res) => {
+                    if (res.status == 200) {
+                        alert(res.json.message);
+                        window.location.href = "prof_function.html";
+                    } else {
+                        alert("Não foi possível cadastrar a ocorrência.")
+                        console.log(res);
+                    }
+                })
+
+            // alert("Falta validar se a turma existe!");
+            // alert("Ocorrência enviada com sucesso!");
+            // window.location.href = "prof_function.html";
 
         }
     </script>

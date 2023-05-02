@@ -30,7 +30,7 @@ public class TurmaService {
     TurmaProfessorRepository turmaProfessorRepository;
 
     public Turma salvar(DadosCadastroTurma dados) throws Exception {
-        Optional<Turma> turmaOptional = Optional.ofNullable(turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra()));
+        Optional<Turma> turmaOptional = turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra());
 
         if (turmaOptional.isPresent()) {
             throw  new Exception("A turma " + dados.anoEscolar() + dados.letra() + " já existe, não é possível cadastrar novamente.");
@@ -48,8 +48,16 @@ public class TurmaService {
         return turmaRepository.findAllByAnoEscolar(anoEscolar).stream().map(DadosListagemTurma::new).toList();
     }
 
-    public DadosListagemTurma listarTurmaEspecifica(DadosCadastroTurma dados) {
-        return new DadosListagemTurma(turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra()));
+    public DadosListagemTurma listarTurmaEspecifica(DadosCadastroTurma dados) throws Exception {
+        Optional<Turma> turmaOptional = turmaRepository.findByAnoEscolarAndLetra(dados.anoEscolar(), dados.letra());
+
+        if (turmaOptional.isPresent()) {
+            Turma turma = turmaOptional.get();
+            return new DadosListagemTurma(turma);
+        } else {
+            throw new Exception("Não foi possível localizar a turma");
+        }
+
     }
 
 }

@@ -4,10 +4,14 @@ package grupo.quatro.api_manage_escola.Controllers;
 import grupo.quatro.api_manage_escola.Domain.Aluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
+import grupo.quatro.api_manage_escola.Receive.Boletim.DadosRegistrarBoletim;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosDeslinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
 import grupo.quatro.api_manage_escola.Respond.Message;
 import grupo.quatro.api_manage_escola.Service.AlunoService;
+import grupo.quatro.api_manage_escola.Service.BoletimService;
+import grupo.quatro.api_manage_escola.Service.TurmaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +29,9 @@ public class AlunoController {
 
     @Autowired
     AlunoService alunoService;
+
+    @Autowired
+    BoletimService boletimService;
 
     @PostMapping
     @Transactional
@@ -53,6 +60,16 @@ public class AlunoController {
     @GetMapping("/all")
     public List<DadosListagemAluno> resgatarTodosAlunos() {
         return alunoService.resgatarTodos();
+    }
+
+    @GetMapping("/all/{turma_id}")
+    public ResponseEntity resgatarAlunosDeUmaTurma(@PathVariable BigInteger turma_id) {
+        try {
+            return new ResponseEntity<>(alunoService.resgatarTodosDeTurma(turma_id), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -93,6 +110,19 @@ public class AlunoController {
         }
     }
 
+    @DeleteMapping("/expulsar/{id}")
+    @Transactional
+    public ResponseEntity expulsar(@PathVariable BigInteger id) {
+        try {
+            alunoService.expulsar(id);
+            Message message = new Message("Aluno expulso com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/matricular_a_turma")
     @Transactional
     ResponseEntity matricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
@@ -102,20 +132,20 @@ public class AlunoController {
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
         }
     }
 
     @DeleteMapping("/desmatricular_a_turma")
     @Transactional
-    ResponseEntity desmatricularATurma(@RequestBody @Valid DadosLinkarUsuarioTurma dados) {
+    ResponseEntity desmatricularATurma(@RequestBody @Valid DadosDeslinkarUsuarioTurma dados) {
         try {
             alunoService.deslinkarATurma(dados);
             Message message = new Message("Aluno desmatriculado da turma com sucesso.");
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
         }
     }
 }

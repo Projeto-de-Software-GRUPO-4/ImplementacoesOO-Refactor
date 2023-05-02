@@ -31,6 +31,8 @@ public class Aluno extends Usuario {
 
     private boolean suspended;
 
+    private boolean expelled;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
     private Set<Boletim> boletim;
 
@@ -63,6 +65,12 @@ public class Aluno extends Usuario {
 
     public void suspender() {
         this.suspended = !this.suspended;
+    }
+
+    @Override
+    public void excluir() {
+        super.excluir();
+        this.expelled = true;
     }
 
 

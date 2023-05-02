@@ -1,13 +1,19 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
+import grupo.quatro.api_manage_escola.Domain.AlunoBoletim;
 import grupo.quatro.api_manage_escola.Domain.Bimestre;
 import grupo.quatro.api_manage_escola.Domain.Boletim;
 import grupo.quatro.api_manage_escola.Receive.Boletim.DadosAtualizarBoletim;
 import grupo.quatro.api_manage_escola.Receive.Boletim.DadosListagemBoletim;
 import grupo.quatro.api_manage_escola.Receive.Boletim.DadosRegistrarBoletim;
+import grupo.quatro.api_manage_escola.Repository.AlunoBoletimRepository;
 import grupo.quatro.api_manage_escola.Repository.BoletimRepository;
+import grupo.quatro.api_manage_escola.Respond.Message;
+import grupo.quatro.api_manage_escola.Service.BoletimService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,10 +28,22 @@ public class BoletimController {
     @Autowired
     BoletimRepository repository;
 
+    @Autowired
+    BoletimService boletimService;
+
+    @Autowired
+    AlunoBoletimRepository alunoBoletimRepository;
+
     @PostMapping("/registrar")
     @Transactional
-    void registrar(@RequestBody @Valid DadosRegistrarBoletim dados) {
-        Boletim boletim = repository.save(new Boletim(dados));
+    ResponseEntity registrar(@RequestBody @Valid DadosRegistrarBoletim dados) {
+        try {
+            Message message = boletimService.registrar(dados);
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/aluno/{aluno_id}")
@@ -69,11 +87,21 @@ public class BoletimController {
         return repository.findAllByAluno_AnoEscolarAndAnoAndMateria_id(anoEscolar, ano, materia_id).stream().map(DadosListagemBoletim::new).toList();
     }
 
-    @PutMapping("/alterar")
-    @Transactional
-    void alterar(@RequestBody @Valid DadosAtualizarBoletim dados) {
-        Boletim boletim = repository.getReferenceById(dados.id());
-        boletim.updateInfo(dados);
+//    @PutMapping("/alterar")
+//    @Transactional
+//    void alterar(@RequestBody @Valid DadosAtualizarBoletim dados) {
+//        Boletim boletim = repository.getReferenceById(dados.id());
+//        boletim.updateInfo(dados);
+//    }
+
+    @GetMapping("/materia/{materia_id}/ano/{ano}")
+    ResponseEntity listarNotasDeUmaTurma(@PathVariable int materia_id, @PathVariable Year ano) {
+        try {
+            return new ResponseEntity<>(boletimService.listarNotasDeUmaTurma(materia_id, ano), HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
     }
 
 }

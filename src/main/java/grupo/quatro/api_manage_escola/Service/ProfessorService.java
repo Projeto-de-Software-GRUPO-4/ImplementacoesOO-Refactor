@@ -1,13 +1,13 @@
 package grupo.quatro.api_manage_escola.Service;
 
 import grupo.quatro.api_manage_escola.Domain.*;
-import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
-import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosAtualizacaoProfessor;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosCadastroProfessor;
+import grupo.quatro.api_manage_escola.Receive.Professor.DadosDeslinkarProfessorTurma;
+import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosDeslinkarUsuarioTurma;
+import grupo.quatro.api_manage_escola.Repository.MateriaRepository;
 import grupo.quatro.api_manage_escola.Repository.TurmaProfessorRepository;
-import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
-import grupo.quatro.api_manage_escola.Respond.Exceptions.AlunoNotFoundException;
 import grupo.quatro.api_manage_escola.Respond.Exceptions.ProfessorNotFoundException;
 import grupo.quatro.api_manage_escola.Respond.Exceptions.TurmaNotFoundException;
 import grupo.quatro.api_manage_escola.Respond.Professor.DadosListagemProfessor;
@@ -18,8 +18,6 @@ import grupo.quatro.api_manage_escola.Receive.UsuarioCredentials.DadosCadastroUs
 import grupo.quatro.api_manage_escola.Repository.ProfessorRepository;
 import grupo.quatro.api_manage_escola.Respond.Usuario.DadosListagemUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -35,6 +33,9 @@ public class ProfessorService extends UsuarioService {
     @Autowired
     TurmaProfessorRepository turmaProfessorRepository;
 
+    @Autowired
+    MateriaRepository materiaRepository;
+
     @Override
     public Usuario salvar(DadosCadastroUsuario dados) throws Exception {
         Optional<Professor> professorOptional = professorRepository.findById(new BigInteger(dados.getCpf()));
@@ -43,10 +44,48 @@ public class ProfessorService extends UsuarioService {
             throw new Exception("Já existe cadastro desse usuário, não é possível cadastrar novamente.");
         } else {
 
-            Professor professor = professorRepository.save(new Professor((DadosCadastroProfessor) dados));
+            Professor professor = new Professor((DadosCadastroProfessor) dados);
+            Materia materia = new Materia();
+            materia.setId(((DadosCadastroProfessor) dados).getMateria_id());
+            professor.setMateria(materia);
             UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+            return professorRepository.save(professor);
 
-            return professor;
+
+            // Terceira tentativa
+//            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
+//            Materia materia = new Materia();
+//            materia.setId(dadosProfessor.getMateria_id());
+//
+//            Professor professor = new Professor(dadosProfessor);
+//            professor.setMateria(materia);
+//
+//            return professorRepository.save(professor);
+            //Segunda tentativa
+//            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
+//            Professor professor = new Professor(dadosProfessor);
+//            Materia materia = new Materia();
+//            materia.setId(dadosProfessor.getMateria_id());
+//            professor.setMateria(materia);
+//
+//            Professor professorSave = professorRepository.save(professor);
+//            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+//
+//            return professorSave;
+
+            //Primeira tentativa
+            //            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
+//
+//            Materia materia = materiaRepository.findById(dadosProfessor.getMateria_id()).orElse(null);
+//            dadosProfessor.setMateria_id(materia.getId());
+//            Professor professor = new Professor(dadosProfessor);
+//            professor.setMateria(materia);
+//            Professor professorSave = professorRepository.save(new Professor((DadosCadastroProfessor) dados));
+//
+//            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
+//
+//
+//            return professorSave;
 
         }
 
@@ -116,33 +155,31 @@ public class ProfessorService extends UsuarioService {
     }
 
     @Override
-    public void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
+    public void deslinkarATurma(DadosDeslinkarUsuarioTurma dados) throws Exception {
+
         try {
-            Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
-            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+            Professor professor = professorRepository.findById(dados.getId_usuario()).orElse(null);
+            Turma turma = turmaRepository.findById(dados.getId_turma()).orElse(null);
             System.out.println(turma.getProfessores().contains(professor));
 
 
             if (!turma.getProfessores().contains(professor)) {
-                throw new Exception(String.format("O professor %d e a turma de ID %d não têm vínculo.", dados.id_usuario(), dados.id_turma()));
+                throw new Exception(String.format("O professor %d e a turma de ID %d não têm vínculo.", dados.getId_usuario(), dados.getId_turma()));
             }
 
             turma.getProfessores().remove(professor);
             turmaRepository.save(turma);
         } catch (ProfessorNotFoundException e) {
-            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.id_usuario()));
+            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.getId_usuario()));
         } catch (TurmaNotFoundException e) {
-            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
+            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", ((DadosDeslinkarProfessorTurma) dados).getId_turma()));
         };
-//        try {
-//            Professor professor = professorRepository.findById(dados.id_usuario()).orElse(null);
-//            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
-//            turma.getProfessores().remove(professor);
-//            turmaRepository.save(turma);
-//        } catch (ProfessorNotFoundException e) {
-//            throw new Exception(String.format("Não foi possível localizar o professor de ID %d", dados.id_usuario()));
-//        } catch (TurmaNotFoundException e) {
-//            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
-//        };
+    }
+
+    public List<DadosListagemTurma> resgatarTurmasDoProfessor(BigInteger professor_id) throws Exception {
+        return turmaProfessorRepository.getByProfessorId(professor_id)
+                .stream()
+                .map(DadosListagemTurma::new)
+                .toList();
     }
 }

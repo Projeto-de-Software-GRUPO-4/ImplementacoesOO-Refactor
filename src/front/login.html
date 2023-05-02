@@ -29,6 +29,23 @@
 
 
     <script src="Geral/Scripts/script.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../models/LoginModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../controllers/LoginController.js"></script>
+    <script src="../services/utils/usertypes.js"></script>
+    <script src="../services/utils/crudfunctions.js"></script>
+    <script src="../services/TurmaService.js"></script>
+    <script src="../services/LoginService.js"></script>
+    
     <script>
         function errado(){
             const error = document.getElementById('error');
@@ -37,14 +54,48 @@
 
             if(cpf === ""){
                 error.textContent = "O campo de CPF é obrigatório!";
-            }else if(isvalid(cpf) === false){
-                error.textContent = "Digite um CPF válido!";
-            }else if(senha === ""){
+            }
+            // else if(isvalid(cpf) === false){
+            //     error.textContent = "Digite um CPF válido!";
+            // }
+            else if(senha === ""){
                 error.textContent = "O campo de senha é obrigatório!";
             }else{
-                error.textContent = "Senha incorreta! (falta verificar no DB)";
-                alert("A rota depende do retorno do DB, mas como exemplo sera usada a rota para admin!");
-                window.location.href = 'Admin/admin_function.html';
+                
+                LoginService.login()
+                    .then((res) => {
+                        if (res.status == 200) {
+                            const user = res.json; 
+
+                            if (user.userType == "Professor") {
+
+                                localStorage.setItem("materia_id", user.materia_id);
+                                localStorage.setItem("professor_id", user.id);
+                                window.location.href = "Professor/prof_function.html";
+
+                            } else if (user.userType == "Aluno") {
+
+                                localStorage.setItem("aluno_id", user.id);
+                                window.location.href = "Aluno/aluno_function.html";
+
+                            } else if (user.message.split(" ")[0] == "Admin") {
+                                
+                                window.location.href = "Admin/admin_function.html";
+
+                            }
+
+
+                        } else if (res.status == 404 || res.status == 401) {
+                            // User not found
+                            alert(res.json.message);
+
+                        }
+                    })
+                
+                
+                // error.textContent = "Senha incorreta! (falta verificar no DB)";
+                // alert("A rota depende do retorno do DB, mas como exemplo sera usada a rota para admin!");
+                // window.location.href = 'Admin/admin_function.html';
             }
         }
     </script>

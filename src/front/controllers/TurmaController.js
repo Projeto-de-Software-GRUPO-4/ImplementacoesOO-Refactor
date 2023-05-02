@@ -9,7 +9,7 @@ class TurmaController {
     }
 
     create() {
-        return new Turma(this.anoEscolar?.value, this.letra?.value, this.id?.value ? this.id?.value : -1);
+        return new Turma(this.anoEscolar?.value, this.letra?.value, this.id?.value);
     }
 
     createAsJson() {

@@ -40,6 +40,12 @@
             <span>Dia:</span>
             <input type="number" name="vencimento" id="vencimento" placeholder="Ex: 12">
         </fieldset>
+        <fieldset id="_materia">
+            <legend>Matéria:</legend>
+            <select name="materia" id="materia">
+                <option disabled value="null">-----</option>
+            </select> 
+        </fieldset>
         <fieldset id="password">
             <legend>Senha: </legend>
             <input type="password" name="senha" id="senha" placeholder="Senha">
@@ -54,11 +60,15 @@
     <script src="../helpers/DateHelper.js"></script>
     <script src="../models/UsuarioModel.js"></script>
     <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
     <script src="../controllers/UsuarioController.js"></script>
     <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
     <script src="../services/ProfessorService.js"></script>
+    <script src="../services/MateriaService.js"></script>
     <script>
 
+        aoCarregar();
 
         function enviar(){
             var inputs = document.querySelectorAll("input");
@@ -89,6 +99,26 @@
 
             // alert("Cadastro efetuado com sucesso! (FALTA O BACK!)");
             // window.location.href = "admin_function.html";
+        }
+
+        function aoCarregar() {
+            MateriaService.resgatarAll()
+                    .then((res) => {
+                        console.log(res)
+                        if (res.status == 200) {
+                            const select = document.querySelector("select[id='materia']");
+                            const materias = res.json;
+                            const materiasOptions = materias.map(materia => {
+                                const nome = `${materia.titulo}`;
+                                const option = document.createElement("option");
+    
+                                option.value = materia.id;
+                                option.text = nome;
+                                select.appendChild(option);
+    
+                            });
+                        }
+                    })
         }
     </script>
 </body>

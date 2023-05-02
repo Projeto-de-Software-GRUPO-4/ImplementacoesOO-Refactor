@@ -3,8 +3,10 @@ package grupo.quatro.api_manage_escola.Service;
 import grupo.quatro.api_manage_escola.Domain.*;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
+import grupo.quatro.api_manage_escola.Receive.Aluno.DadosDeslinkarAlunoTurma;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosAtualizacaoUsuario;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosCadastroUsuario;
+import grupo.quatro.api_manage_escola.Receive.Usuario.DadosDeslinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Receive.Usuario.DadosLinkarUsuarioTurma;
 import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
 import grupo.quatro.api_manage_escola.Receive.UsuarioCredentials.DadosCadastroUsuarioCredentials;
@@ -65,6 +67,21 @@ public class AlunoService extends UsuarioService {
                 .toList();
     }
 
+    public List<DadosListagemAluno> resgatarTodosDeTurma(BigInteger turma_id) throws Exception {
+        Optional<Turma> turmaOptional = turmaRepository.findById(turma_id);
+
+        if (turmaOptional.isPresent()) {
+            Turma turma = turmaOptional.get();
+            return alunoRepository.findAllByTurma(turma)
+                    .stream()
+                    .map(DadosListagemAluno::new)
+                    .toList();
+        } else {
+            throw new Exception("Não foi possível achar a turma.");
+        }
+
+    }
+
     @Override
     public DadosListagemUsuario atualizar(DadosAtualizacaoUsuario dados) throws Exception {
         try {
@@ -103,30 +120,36 @@ public class AlunoService extends UsuarioService {
             throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
         }
     }
-    @Override
-    public void deslinkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
-        try {
-//            Aluno aluno = alunoRepository.findById(dados.id_usuario()).orElse(null);
-            Aluno aluno = alunoRepository.getReferenceById(dados.id_usuario());
-            Turma turma = turmaRepository.getReferenceById(dados.id_turma());
 
-            if (aluno.getTurma() != turma) {
-                System.out.println("Eu não tenho turma");
-                throw new Exception(String.format("O aluno %d não está matriculado na turma %d.", dados.id_usuario(), dados.id_turma()));
-            } else if (aluno.getTurma() == null) {
-                throw new Exception(String.format("O aluno %d não está matriculado na turma %d.", dados.id_usuario(), dados.id_turma()));
+    @Override
+    public void deslinkarATurma(DadosDeslinkarUsuarioTurma dados) throws Exception {
+
+
+            Optional<Aluno> alunoOptional = alunoRepository.findById(dados.getId_usuario());
+
+            if (alunoOptional.isPresent()) {
+                Aluno aluno = alunoOptional.get();
+                aluno.setTurma(null);
+            } else {
+                throw new Exception("Não foi possível localizar o aluno " + dados.getId_usuario());
             }
 
-            aluno.setTurma(null);
-        } catch (AlunoNotFoundException e) {
-            throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", dados.id_usuario()));
-        }
     }
     public void suspender(BigInteger id) throws Exception {
         try {
             Aluno aluno = alunoRepository.getReferenceById(id);
             aluno.suspender();
         } catch (AlunoNotFoundException e) {
+            throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", id));
+        }
+    }
+
+    public void expulsar(BigInteger id) throws Exception {
+        try {
+            Aluno aluno = alunoRepository.getReferenceById(id);
+            usuarioCredentialsService.deletar(id.toString());
+            aluno.excluir();
+        } catch (Exception e) {
             throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", id));
         }
     }

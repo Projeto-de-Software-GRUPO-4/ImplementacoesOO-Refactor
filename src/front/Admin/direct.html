@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Gerenciamento</title>
     <link rel="stylesheet" href="direct.css">
 </head>
+
 <body>
     <div class="container" id="main">
         <h1>Gerenciamento de usuários</h1>
@@ -14,7 +16,9 @@
             <legend>CPF do usuário: </legend>
             <input id="cpf" type="number" placeholder="Digite o CPF do usuário">
             <input id="botao" type="button" value="Próximo" onclick="apertado()">
-            <div class="error"><p id ="error"></p></div>
+            <div class="error">
+                <p id="error"></p>
+            </div>
         </fieldset>
     </div>
 
@@ -36,11 +40,11 @@
 
         console.log(localStorage.getItem("user_type").charAt(0).toUpperCase() + localStorage.getItem("user_type").slice(1))
 
-        function apertado(){
+        function apertado() {
             const cpf = document.getElementById('cpf').value;
 
-            if(isvalid(cpf) === true){
-                if(selectValue === 'excluir'){
+            if (isvalid(cpf) === true) {
+                if (selectValue === 'excluir') {
                     deletar(localStorage.getItem("user_type").charAt(0).toUpperCase() + localStorage.getItem("user_type").slice(1))
                         .then((res) => {
                             alert(res.json.message)
@@ -52,7 +56,7 @@
                                 window.location.href = "admin_function.html";
                             }
                         })
-                }else if(selectValue === 'suspender'){
+                } else if (selectValue === 'suspender') {
 
                     AlunoService.suspender(cpf)
                         .then((res) => {
@@ -66,12 +70,22 @@
                         })
 
 
-                }else if(selectValue === 'expulsar'){
-                    /*implemente aqui o back*/
-                    alert("Falta implementar o back para expulsar aluno!");
-                    alert("Aluno expulso com sucesso (futuro)");
+                } else if (selectValue === 'expulsar') {
+
+                    AlunoService.expulsar(cpf)
+                        .then((res) => {
+                            alert(res.json.message)
+                            return res;
+                        })
+                        .then((res) => {
+                            if (res.status == 200) {
+                                window.location.href = "admin_function.html";
+                            }
+                        })
+
+
                 }
-            }else{
+            } else {
                 document.getElementById('error').textContent = "Digite um CPF válido!";
                 return;
             }
@@ -79,4 +93,5 @@
 
     </script>
 </body>
+
 </html>

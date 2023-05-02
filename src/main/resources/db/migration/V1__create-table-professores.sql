@@ -7,6 +7,7 @@ CREATE TABLE professor (
   carga_horaria_diaria smallint,
   salario_hora double,
   cpf char(11) not null unique,
-
+#   materia_id bigint,
+# foreign key (materia_id) references materia(id),
   primary key (id)
 );

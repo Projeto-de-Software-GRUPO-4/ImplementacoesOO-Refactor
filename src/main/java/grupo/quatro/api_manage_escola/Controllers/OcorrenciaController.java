@@ -6,8 +6,11 @@ import grupo.quatro.api_manage_escola.Receive.Ocorrencia.DadosListagemOcorrencia
 import grupo.quatro.api_manage_escola.Receive.Ocorrencia.DadosRegistrarOcorrencia;
 import grupo.quatro.api_manage_escola.Domain.Ocorrencia;
 import grupo.quatro.api_manage_escola.Repository.OcorrenciaRepository;
+import grupo.quatro.api_manage_escola.Respond.Message;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,10 +29,17 @@ public class OcorrenciaController {
 
     @PostMapping("/registrar")
     @Transactional
-    void registrar(@RequestBody @Valid DadosRegistrarOcorrencia dados) {
-        Ocorrencia ocorrencia = repository.save(new Ocorrencia(dados));
-        Aluno aluno = (Aluno) alunoRepository.getReferenceById(dados.id_aluno());
-        ocorrencia.setAluno(aluno);
+    ResponseEntity registrar(@RequestBody @Valid DadosRegistrarOcorrencia dados) {
+        try {
+            Ocorrencia ocorrencia = repository.save(new Ocorrencia(dados));
+            Aluno aluno = alunoRepository.getReferenceById(dados.id_aluno());
+            ocorrencia.setAluno(aluno);
+            Message message = new Message("Ocorrência cadastrada com sucesso.");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } catch (Exception e) {
+            Message message = new Message(e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")

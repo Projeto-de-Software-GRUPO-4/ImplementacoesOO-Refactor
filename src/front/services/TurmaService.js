@@ -42,11 +42,13 @@ class TurmaService {
             }
         })
 
+
         return {
             json: await response.json(),
             status: response.status,
             text: response.statusText
         };
     }
+
 
 }

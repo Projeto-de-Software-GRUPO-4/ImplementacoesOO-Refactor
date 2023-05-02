@@ -50,10 +50,11 @@ public class Boletim {
         this.ano = dados.ano();
     }
 
-    public void updateInfo(DadosAtualizarBoletim dados) {
+    public void updateInfo(DadosRegistrarBoletim dados) {
         if (dados.materia_id() != 0) this.materia_id = dados.materia_id();
         if (dados.nota() != null && dados.nota() >= 0 && dados.nota() <= 10) this.nota = dados.nota();
         if (dados.bimestre() != null) this.bimestre = dados.bimestre();
+        if (dados.ano() != null) this.ano = dados.ano();
     }
 
 

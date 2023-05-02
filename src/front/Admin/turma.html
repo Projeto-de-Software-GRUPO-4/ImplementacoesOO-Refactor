@@ -39,10 +39,17 @@
         
             TurmaService.resgatar()
                 .then((res) => {
+                    console.log(res);
                     if (res.status == 200) {
                         const idTurma = res.json.id; 
                         localStorage.setItem("id_turma", idTurma);
-                        window.location.href = "mostrar_alunos.html";
+
+                        if (tipo == "admin") {
+                            window.location.href = "mostrar_alunos.html";
+                        } else if (tipo == "professor") {
+                            window.location.href = "../Professor/dar_nota.html";
+                        }
+
                     } else {
                         alert(res.json.message);
                     }
@@ -53,7 +60,7 @@
             // if(tipo == "admin"){
             //     window.location.href = "mostrar_alunos.html";
             // }else if(tipo == "professor"){
-            //     window.location.href = "../Professor/dar_nota.html";
+            //     window.location.href = "../Professor/.html";
             // }
         }
     </script>

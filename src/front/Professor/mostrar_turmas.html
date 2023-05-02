@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar turmas</title>
+    <link rel="stylesheet" href="../Admin/mostrar_alunos.css">
+</head>
+<body>
+    <div id="caixa" class="container">
+        <h1 id="nome"></h1>
+        <table>
+            <tr class="top">
+                <td class="info">Turma</td>
+            </tr>
+            <!-- <tr>
+                <td>111111</td>
+                <td class="info">aluno name</td>
+            </tr> -->
+        </table>
+    </div>
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../services/utils/usertypes.js"></script>
+    <script src="../services/utils/crudfunctions.js"></script>
+    <script src="../services/ProfessorService.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
+    <script>
+
+        document.getElementById('nome').textContent = "Minhas Turmas";
+
+        const professor_id = localStorage.getItem('professor_id');
+
+        aoCarregar();
+
+        function aoCarregar() {
+            ProfessorService.resgatarMyTurmas(professor_id)
+                .then((res) => {
+                    const turmas = res.json;
+                    console.log(turmas[0])
+
+                    turmas.forEach((element) => console.log(element))
+
+                    turmas.forEach(turma => {
+                        const table = document.getElementsByTagName("table")[0];
+                        
+                        const tr = document.createElement('tr');
+                        const nome = document.createElement('td');
+
+                        nome.classList.add("info");
+                        nome.innerText = `${turma["anoEscolar"]}${turma["letra"]}`;
+
+                        tr.append(nome);
+                        table.append(tr);
+                    });
+                    
+                })
+            
+            // AlunoService.resgatarAllByTurma(turma_id)
+            //     .then((res) => {
+            //         const alunos = res.json;
+            //         console.log(alunos[0])
+
+            //         alunos.forEach((element) => console.log(element))
+
+            //         alunos.forEach(aluno => {
+            //             const table = document.getElementsByTagName("table")[0];
+                        
+            //             const tr = document.createElement('tr');
+            //             const cpf = document.createElement('td');
+            //             const nome = document.createElement('td');
+
+            //             nome.classList.add("info");
+            //             cpf.innerText = aluno["cpf"];
+            //             nome.innerText = aluno["nome"];
+
+            //             tr.append(cpf, nome);
+            //             table.append(tr);
+            //         });
+                    
+            //     })
+
+        }
+    </script>
+</body>
+</html>

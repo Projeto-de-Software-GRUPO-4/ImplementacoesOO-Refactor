@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="../Geral/Styles/function.css">
     <link rel="stylesheet" href="../Geral/Styles/tabela.css">
 </head>
+
 <body>
     <header>
         <nav>
@@ -31,7 +33,7 @@
                     <td>MÉDIA FINAL</td>
                     <td>CONCEITO</td>
                 </tr>
-                <tr id="dis">
+                <!-- <tr id="dis">
                     <td>Português</td>
                     <td id="nota">#</td>
                     <td id="nota">#</td>
@@ -59,7 +61,9 @@
                     <td id="nota">#</td>
                 </tr>
                 <tr id="dis">
-                    <td><nobr>Ed. Física</nobr></td>
+                    <td>
+                        <nobr>Ed. Física</nobr>
+                    </td>
                     <td id="nota">#</td>
                     <td id="nota">#</td>
                     <td id="nota">#</td>
@@ -138,17 +142,109 @@
                     <td id="nota">#</td>
                     <td id="nota">#</td>
                     <td id="nota">AP</td>
-                </tr>
-                
+                </tr> -->
+
             </table>
         </div>
     </main>
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../models/BoletimModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../controllers/BoletimController.js"></script>
+    <script src="../services/ProfessorService.js"></script>
+    <script src="../services/MateriaService.js"></script>
+    <script src="../services/BoletimService.js"></script>
 
     <script>
 
-        function home_home(){
+        const aluno_id = localStorage.getItem("aluno_id");
+        aoCarregar()
+
+        function home_home() {
             alert("Você já está na home!");
         }
+
+        function aoCarregar() {
+
+            MateriaService.resgatarAll()
+                .then((res) => {
+                    console.log(res)
+                    if (res.status == 200) {
+                        const materias = res.json;
+                        const table = document.querySelector("tbody")
+                        const materiasOptions = materias.map(materia => {
+                            const tr = document.createElement("tr");
+                            tr.id = "dis";
+
+                            const td = document.createElement("td");
+                            td.setAttribute("materia_id", materia.id);
+                            td.innerText = materia.titulo;
+
+                            tr.appendChild(td);
+
+                            for (let i = 0; i < 6; i++) {
+                                const td = document.createElement("td");
+                                td.id = "nota";
+                                td.innerText = "#";
+                                tr.appendChild(td);
+                                table.appendChild(tr);
+                            }
+
+
+
+
+                        });
+                    }
+                })
+                .then(() => {
+
+                    BoletimService.resgatarAllAlunoAno(aluno_id, new Date().getFullYear())
+                        .then((res) => {
+                            const notas = res.json;
+                            console.log(notas)
+
+                            notas.forEach(nota => {
+
+                                const materia = parseInt(nota?.materia_id);
+                                const bimestre = nota?.bimestre;
+                                const _nota = nota?.nota;
+
+
+                                const row = document.querySelector(`td[materia_id='${materia}']`);
+
+                                switch (bimestre) {
+                                    case "Primeiro":
+                                        row.parentElement.children[1].innerText = _nota;
+                                        break;
+                                    case "Segundo":
+                                        row.parentElement.children[2].innerText = _nota;
+                                        break;
+                                    case "Terceiro":
+                                        row.parentElement.children[3].innerText = _nota;
+                                        break;
+                                    case "Quarto":
+                                        row.parentElement.children[4].innerText = _nota;
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+
+
+
+                            });
+                        })
+                })
+
+        }
+
     </script>
 </body>
+
 </html>

@@ -15,17 +15,61 @@
                 <td>CPF</td>
                 <td class="info">Nome</td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>111111</td>
                 <td class="info">aluno name</td>
-            </tr>
+            </tr> -->
         </table>
     </div>
-
+    <script src="../Geral/Scripts/script.js"></script>
+    <script src="../helpers/DateHelper.js"></script>
+    <script src="../models/UsuarioModel.js"></script>
+    <script src="../models/AlunoModel.js"></script>
+    <script src="../models/ProfessorModel.js"></script>
+    <script src="../models/TurmaModel.js"></script>
+    <script src="../controllers/UsuarioController.js"></script>
+    <script src="../controllers/AlunoController.js"></script>
+    <script src="../controllers/ProfessorController.js"></script>
+    <script src="../controllers/TurmaController.js"></script>
+    <script src="../services/utils/usertypes.js"></script>
+    <script src="../services/utils/crudfunctions.js"></script>
+    <script src="../services/AlunoService.js"></script>
+    <script src="../Geral/Scripts/script.js"></script>
     <script>
         var turmaDigitada = localStorage.getItem("turmaDigitada");
+        var turma_id = localStorage.getItem("id_turma");
         document.title = turmaDigitada;
         document.getElementById('nome').textContent = "Turma " + turmaDigitada;
+
+
+        aoCarregar();
+
+        function aoCarregar() {
+            AlunoService.resgatarAllByTurma(turma_id)
+                .then((res) => {
+                    const alunos = res.json;
+                    console.log(alunos[0])
+
+                    alunos.forEach((element) => console.log(element))
+
+                    alunos.forEach(aluno => {
+                        const table = document.getElementsByTagName("table")[0];
+                        
+                        const tr = document.createElement('tr');
+                        const cpf = document.createElement('td');
+                        const nome = document.createElement('td');
+
+                        nome.classList.add("info");
+                        cpf.innerText = aluno["cpf"];
+                        nome.innerText = aluno["nome"];
+
+                        tr.append(cpf, nome);
+                        table.append(tr);
+                    });
+                    
+                })
+
+        }
     </script>
 </body>
 </html>

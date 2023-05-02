@@ -9,6 +9,8 @@ class ProfessorService {
             }
         })
 
+        console.log(professor)
+
         return {
             json: await response.json(),
             status: response.status,
@@ -43,6 +45,22 @@ class ProfessorService {
             }
         });
 
+        return {
+            json: await response.json(),
+            status: response.status,
+            text: response.statusText
+        }
+
+    }
+
+    static async resgatarMyTurmas(id_professor) {
+        let response = await fetch(`http://localhost:8080/professor/minhas_turmas/${id_professor}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        
         return {
             json: await response.json(),
             status: response.status,
