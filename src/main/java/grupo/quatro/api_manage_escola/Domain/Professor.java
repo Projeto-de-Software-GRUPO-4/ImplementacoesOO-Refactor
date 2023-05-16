@@ -44,14 +44,21 @@ public class Professor extends Usuario {
     // O valor do mapped by precisa ser o nome do atributo
     @ManyToMany(mappedBy = "professores")
     Set<Turma> turmas;
-    public Professor(DadosCadastroProfessor dados) {
-        super(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento());
-        this.cargaHorariaDiaria = dados.getCargaHorariaDiaria();
-        this.salarioHora = dados.getSalarioHora();
-        this.turmas = new HashSet<Turma>();
-        this.telefone = dados.getTelefone();
-        this.id = new BigInteger(dados.getCpf());
 
+    public Professor(
+            String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento,
+            int cargaHorariaDiaria, double salarioHora, String telefone
+    ) {
+        super(nome, cpf, dataDeNascimento, diaDePagamento);
+        this.cargaHorariaDiaria = cargaHorariaDiaria;
+        this.salarioHora = salarioHora;
+        this.turmas = new HashSet<Turma>();
+        this.telefone = telefone;
+        this.id = cpf;
+    }
+    public Professor(DadosCadastroProfessor dados) {
+        this(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento(),
+                dados.getCargaHorariaDiaria(), dados.getSalarioHora(), dados.getTelefone());
     }
 
     public List<DadosListagemTurma> getTurmasId() {

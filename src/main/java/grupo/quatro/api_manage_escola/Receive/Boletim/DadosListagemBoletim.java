@@ -14,7 +14,7 @@ public record DadosListagemBoletim (
     Bimestre bimestre,
     int materia_id,
 
-    Long nota
+    Double nota
 ) {
 
     public DadosListagemBoletim(Boletim boletim) {

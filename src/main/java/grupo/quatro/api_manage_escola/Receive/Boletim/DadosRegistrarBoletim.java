@@ -20,6 +20,6 @@ public record DadosRegistrarBoletim(
         @NotNull
         Bimestre bimestre,
 
-        Long nota
+        Double nota
 ) {
 }

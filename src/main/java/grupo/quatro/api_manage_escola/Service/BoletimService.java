@@ -1,6 +1,7 @@
 package grupo.quatro.api_manage_escola.Service;
 
 import grupo.quatro.api_manage_escola.Domain.Boletim;
+import grupo.quatro.api_manage_escola.Receive.Boletim.DadosListagemBoletim;
 import grupo.quatro.api_manage_escola.Receive.Boletim.DadosRegistrarBoletim;
 import grupo.quatro.api_manage_escola.Repository.AlunoBoletimRepository;
 import grupo.quatro.api_manage_escola.Repository.BoletimRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.math.BigInteger;
 import java.time.Year;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +34,14 @@ public class BoletimService {
                 .stream()
                 .map(DadosListagemAlunoBoletim::new)
                 .toList();
+    }
+
+//    List<Boletim> findAllByAluno_idAndAnoAndMateria_id(BigInteger aluno_id, Year ano, BigInteger materia_id)
+    public List<Boletim> listarNotasAlunoEmAnoEMateria(@PathVariable BigInteger aluno_id,
+                                                                         @PathVariable Year ano,
+                                                                         @PathVariable BigInteger materia_id) {
+        return boletimRepository.findAllByAluno_idAndAnoAndMateria_id(aluno_id, ano, materia_id);
+
     }
 
     public Message registrar(DadosRegistrarBoletim dados) throws Exception{

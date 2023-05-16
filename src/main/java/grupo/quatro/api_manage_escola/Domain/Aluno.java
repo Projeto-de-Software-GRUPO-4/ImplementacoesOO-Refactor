@@ -3,10 +3,17 @@ package grupo.quatro.api_manage_escola.Domain;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosAtualizacaoAluno;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosCadastroAluno;
 import grupo.quatro.api_manage_escola.Receive.Turma.DadosListagemTurma;
+import grupo.quatro.api_manage_escola.Repository.AlunoRepository;
+import grupo.quatro.api_manage_escola.Respond.Aluno.DadosListagemAluno;
+import grupo.quatro.api_manage_escola.Service.BoletimService;
+import grupo.quatro.api_manage_escola.States.AlunoAprovacaoState;
+import grupo.quatro.api_manage_escola.States.AlunoAprovadoState;
+import grupo.quatro.api_manage_escola.States.AlunoReprovadoState;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
@@ -33,6 +40,12 @@ public class Aluno extends Usuario {
 
     private boolean expelled;
 
+    private boolean status_aprovacao;
+
+    @Transient
+    private AlunoAprovacaoState aprovacaoState = new AlunoReprovadoState();
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "aluno")
     private Set<Boletim> boletim;
 
@@ -40,12 +53,25 @@ public class Aluno extends Usuario {
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL)
     private Set<Ocorrencia> ocorrencias;
 
+    public Aluno(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento,
+                 Responsavel responsavel, int anoEscolar, double mensalidade) {
+        super(nome, cpf, dataDeNascimento, diaDePagamento);
+        this.responsavel = responsavel;
+        this.anoEscolar = anoEscolar;
+        this.mensalidade = mensalidade;
+        this.id = cpf;
+        this.status_aprovacao = false;
+        this.aprovacaoState = new AlunoReprovadoState();
+    }
+
     public Aluno(DadosCadastroAluno dados) {
-        super(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento());
-        this.responsavel = new Responsavel(dados.getResponsavel());
-        this.anoEscolar = dados.getAnoEscolar();
-        this.id = new BigInteger(dados.getCpf());
-        this.mensalidade = dados.getMensalidade();
+        this(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento(),
+                new Responsavel(dados.getResponsavel()), dados.getAnoEscolar(), dados.getMensalidade());
+    }
+
+    public Aluno(DadosListagemAluno dados) {
+        this(dados.getNome(), dados.getCpf(), dados.getDataDeNascimento(), dados.getDiaDePagamento(),
+                dados.getResponsavel(), dados.getAnoEscolar(), dados.getMensalidade());
     }
 
     public void updateInfo(DadosAtualizacaoAluno dados) {
@@ -71,6 +97,24 @@ public class Aluno extends Usuario {
     public void excluir() {
         super.excluir();
         this.expelled = true;
+    }
+
+    public void setState(AlunoAprovacaoState state) {
+        this.aprovacaoState = state;
+
+        if (this.aprovacaoState.getClass() == AlunoAprovadoState.class) {
+            this.status_aprovacao = true;
+        } else if (this.aprovacaoState.getClass() == AlunoReprovadoState.class) {
+            this.status_aprovacao = false;
+        }
+
+    }
+
+    public void checkState(Boletim boletim, BoletimService boletimService, AlunoRepository alunoRepository) {
+
+        aprovacaoState.checkState(boletim, boletimService, alunoRepository);
+        this.setState(aprovacaoState);
+
     }
 
 

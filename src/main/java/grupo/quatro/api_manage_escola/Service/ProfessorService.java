@@ -51,42 +51,6 @@ public class ProfessorService extends UsuarioService {
             UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
             return professorRepository.save(professor);
 
-
-            // Terceira tentativa
-//            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
-//            Materia materia = new Materia();
-//            materia.setId(dadosProfessor.getMateria_id());
-//
-//            Professor professor = new Professor(dadosProfessor);
-//            professor.setMateria(materia);
-//
-//            return professorRepository.save(professor);
-            //Segunda tentativa
-//            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
-//            Professor professor = new Professor(dadosProfessor);
-//            Materia materia = new Materia();
-//            materia.setId(dadosProfessor.getMateria_id());
-//            professor.setMateria(materia);
-//
-//            Professor professorSave = professorRepository.save(professor);
-//            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
-//
-//            return professorSave;
-
-            //Primeira tentativa
-            //            DadosCadastroProfessor dadosProfessor = (DadosCadastroProfessor) dados;
-//
-//            Materia materia = materiaRepository.findById(dadosProfessor.getMateria_id()).orElse(null);
-//            dadosProfessor.setMateria_id(materia.getId());
-//            Professor professor = new Professor(dadosProfessor);
-//            professor.setMateria(materia);
-//            Professor professorSave = professorRepository.save(new Professor((DadosCadastroProfessor) dados));
-//
-//            UsuarioCredentials credentials = usuarioCredentialsService.salvar(new DadosCadastroUsuarioCredentials(dados.getCpf(), dados.getSenha(), dados.getUserType()));
-//
-//
-//            return professorSave;
-
         }
 
     }

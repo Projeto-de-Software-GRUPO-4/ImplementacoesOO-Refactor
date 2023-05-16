@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Service;
 
+import grupo.quatro.api_manage_escola.Domain.UserType;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosListagemProfessorLogin;
 import grupo.quatro.api_manage_escola.Domain.Professor;
@@ -24,26 +25,10 @@ public class LogInProfessorService {
     UsuarioCredentialsRepository credentialsRepository;
 
     public DadosListagemProfessorLogin login(DadosLogin dados) {
+
         Professor professor = professorRepository.getReferenceById(new BigInteger(dados.id()));
 
         return new DadosListagemProfessorLogin(professor);
-
-//        Optional<UsuarioCredentials> credentialsOptional = credentialsRepository.findById(dados.id());
-//
-//        DadosListagemProfessorLogin returnObj = null;
-//
-//        if (credentialsOptional.isPresent()) {
-//
-//            UsuarioCredentials credentials = credentialsOptional.get();
-//
-//            if (credentials.getSenha().equals(dados.senha())) {
-//                Professor professor = professorRepository.findById(new BigInteger(dados.id())).orElse(null);
-//                returnObj = new DadosListagemProfessorLogin(professor);
-//            }
-//
-//        }
-//
-//        return returnObj;
 
     }
 }

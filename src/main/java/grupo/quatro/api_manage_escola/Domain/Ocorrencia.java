@@ -13,8 +13,6 @@ import java.math.BigInteger;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-
 //id bigint auto_increment,
 //        aluno_id bigint,
 //        descricao text,
@@ -34,9 +32,13 @@ public class Ocorrencia {
     @JoinColumn(name="aluno_id", insertable = false, updatable = false)
     private Aluno aluno;
 
+    public Ocorrencia(String descricao, BigInteger aluno_id) {
+        this.descricao = descricao;
+        this.aluno_id = aluno_id;
+    }
+
     public Ocorrencia(DadosRegistrarOcorrencia ocorrencia) {
-        this.descricao = ocorrencia.descricao();
-        this.aluno_id = ocorrencia.id_aluno();
+        this(ocorrencia.descricao(), ocorrencia.id_aluno());
     }
 
 

@@ -18,8 +18,7 @@ public class Login {
     }
 
     public Login(DadosLogin dados) {
-        this.id = dados.id();
-        this.senha = dados.senha();
+        this(dados.id(), dados.senha());
     }
 
 

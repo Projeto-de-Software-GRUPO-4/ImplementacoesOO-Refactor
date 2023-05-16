@@ -3,7 +3,6 @@ package grupo.quatro.api_manage_escola.Domain;
 
 
 
-import grupo.quatro.api_manage_escola.Receive.Boletim.DadosAtualizarBoletim;
 import grupo.quatro.api_manage_escola.Receive.Boletim.DadosRegistrarBoletim;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,7 +39,7 @@ public class Boletim {
 
     Bimestre bimestre;
 
-    Long nota;
+    Double nota;
 
     public Boletim(DadosRegistrarBoletim dados) {
         this.aluno_id = dados.aluno_id();

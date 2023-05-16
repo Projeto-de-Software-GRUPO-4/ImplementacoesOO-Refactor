@@ -1,11 +1,12 @@
 package grupo.quatro.api_manage_escola.Controllers;
 
+import grupo.quatro.api_manage_escola.Commands.AdminLoginCommand;
+import grupo.quatro.api_manage_escola.Commands.AlunoLoginCommand;
+import grupo.quatro.api_manage_escola.Commands.LoginCommand;
+import grupo.quatro.api_manage_escola.Commands.ProfessorLoginCommand;
 import grupo.quatro.api_manage_escola.Domain.UserType;
 import grupo.quatro.api_manage_escola.Domain.UsuarioCredentials;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
-import grupo.quatro.api_manage_escola.Receive.Aluno.DadosListagemAlunoLogin;
-import grupo.quatro.api_manage_escola.Receive.Professor.DadosListagemProfessorLogin;
-import grupo.quatro.api_manage_escola.Receive.Usuario.DadosListagemUsuarioLogin;
 import grupo.quatro.api_manage_escola.Repository.UsuarioCredentialsRepository;
 import grupo.quatro.api_manage_escola.Respond.Message;
 import grupo.quatro.api_manage_escola.Service.LogInAlunoService;
@@ -29,6 +30,7 @@ public class LogInController {
     @Autowired
     LogInAlunoService logInAlunoService;
 
+
     @Autowired
     LogInProfessorService logInProfessorService;
 
@@ -46,7 +48,7 @@ public class LogInController {
         Optional<UsuarioCredentials> credentialsOptional = credentialsRepository.findById(dados.id());
 
         Message message = new Message();
-        if (!credentialsOptional.isPresent()) {
+        if (credentialsOptional.isEmpty()) {
             message.setMessage("Usuário não encontrado.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         } else {
@@ -58,22 +60,17 @@ public class LogInController {
             }
 
             UserType userType = usuario.getUserType();
-
-            DadosListagemUsuarioLogin dadosLogin = new DadosListagemUsuarioLogin();
+            LoginCommand command;
 
             if (userType == UserType.Admin) {
-                dadosLogin.setUserType(UserType.Admin);
-                message.setMessage("Admin " + dados.id() + " logado com sucesso.");
-                return new ResponseEntity<>(message, HttpStatus.OK);
+                command = new AdminLoginCommand();
             } else if (userType == UserType.Professor) {
-                dadosLogin.setUserType(UserType.Professor);
-                dadosLogin = logInProfessorService.login(dados);
-            } else if (userType == UserType.Aluno) {
-                dadosLogin.setUserType(UserType.Aluno);
-                dadosLogin = logInAlunoService.login(dados);
+                command = new ProfessorLoginCommand(logInProfessorService);
+            } else {
+                command = new AlunoLoginCommand(logInAlunoService);
             }
 
-            return new ResponseEntity<>(dadosLogin, HttpStatus.OK);
+            return command.execute(dados);
 
 
         }

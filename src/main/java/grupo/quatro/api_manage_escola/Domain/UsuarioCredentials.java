@@ -20,17 +20,15 @@ public class UsuarioCredentials {
     private String senha;
 
     private UserType userType;
-
-    public UsuarioCredentials(DadosCadastroUsuarioCredentials dados) {
-        this.id = dados.id();
-        this.senha = dados.senha();
-        this.userType = dados.userType();
-    }
-
     public UsuarioCredentials(String id, String senha, UserType userType) {
         this.id = id;
         this.senha = senha;
         this.userType = userType;
     }
+
+    public UsuarioCredentials(DadosCadastroUsuarioCredentials dados) {
+        this(dados.id(), dados.senha(), dados.userType());
+    }
+
 
 }

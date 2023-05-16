@@ -15,10 +15,13 @@ public class Responsavel {
     private String telefoneResponsavel;
     private String cpfResponsavel;
 
+    public Responsavel(String nome, String telefoneResponsavel, String cpfResponsavel) {
+        this.nomeResponsavel = nome;
+        this.telefoneResponsavel = telefoneResponsavel;
+        this.cpfResponsavel = cpfResponsavel;
+    }
     public Responsavel(DadosResponsavel dados) {
-        this.nomeResponsavel = dados.nome();
-        this.telefoneResponsavel = dados.telefone();
-        this.cpfResponsavel = dados.cpf();
+        this(dados.nome(), dados.telefone(), dados.cpf());
     }
 
     public void updateInfo(DadosResponsavel dados) {
