@@ -35,20 +35,26 @@ public class UsuarioCredentialsService {
 //    }
 
     public UsuarioCredentials atualizar(DadosAtualizarUsuarioCredentials dados) throws Exception {
-        try {
-            UsuarioCredentials credentials = repository.getReferenceById(dados.usuario_id());
 
-            if (dados.tentativaSenha().equals(credentials.getSenha())) {
-                credentials.changeSenha(dados.novaSenha());
+            Optional<UsuarioCredentials> credentialsOptional = repository.findById(dados.usuario_id());
 
-                return credentials;
+            if (credentialsOptional.isPresent()) {
+                UsuarioCredentials credentials = credentialsOptional.get();
+                if (dados.tentativaSenha().equals(credentials.getSenha())) {
+                    credentials.changeSenha(dados.novaSenha());
+
+                    return credentials;
+                } else {
+                    throw new Exception("A senha não está correta.");
+                }
             } else {
-                throw new Exception("A senha não está correta.");
+
+                throw new Exception("Não existe credencial para esse usuário.");
             }
 
-        } catch (Exception e) {
-            throw new Exception("Não existe credencial para esse usuário.");
-        }
+
+
+
 
     }
 

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,6 +33,7 @@ public class UsuarioCredentialsController {
 //    }
 
     @PutMapping("/me")
+    @Transactional
     public ResponseEntity atualizarSenha(@RequestBody @Valid DadosAtualizarUsuarioCredentials dados) {
         try {
             UsuarioCredentials credentials = credentialsService.atualizar(dados);
