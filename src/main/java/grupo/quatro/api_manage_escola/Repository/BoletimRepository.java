@@ -13,12 +13,6 @@ import java.util.Optional;
 public interface BoletimRepository extends JpaRepository<Boletim, BigInteger> {
 
     // Resgata todas as notas de um aluno
-
-//    @Query(value = """
-//        SELECT b FROM boletim b
-//        WHERE b.bimestre = :bimestre AND b.aluno_id = :aluno_id
-//        AND
-//    """, nativeQuery = true)
     Optional<Boletim> findByBimestreAndAluno_Id(Bimestre bimestre, BigInteger aluno_id);
     List<Boletim> findAllByAluno_Id(BigInteger aluno_id);
 
