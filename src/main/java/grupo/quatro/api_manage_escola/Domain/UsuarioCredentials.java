@@ -30,5 +30,8 @@ public class UsuarioCredentials {
         this(dados.id(), dados.senha(), dados.userType());
     }
 
+    public void changeSenha(String senha) {
+        this.senha = senha;
+    }
 
 }

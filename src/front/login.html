@@ -70,12 +70,12 @@
                             if (user.userType == "Professor") {
 
                                 localStorage.setItem("materia_id", user.materia_id);
-                                localStorage.setItem("professor_id", user.id);
+                                localStorage.setItem("usuario_id", user.id);
                                 window.location.href = "Professor/prof_function.html";
 
                             } else if (user.userType == "Aluno") {
 
-                                localStorage.setItem("aluno_id", user.id);
+                                localStorage.setItem("usuario_id", user.id);
                                 window.location.href = "Aluno/aluno_function.html";
 
                             } else if (user.message.split(" ")[0] == "Admin") {

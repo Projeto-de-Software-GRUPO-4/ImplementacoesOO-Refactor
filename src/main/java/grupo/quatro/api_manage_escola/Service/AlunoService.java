@@ -107,17 +107,16 @@ public class AlunoService extends UsuarioService {
     public void linkarATurma(DadosLinkarUsuarioTurma dados) throws Exception {
         try {
             Aluno aluno = alunoRepository.getReferenceById(dados.id_usuario());
-            Turma turma = turmaRepository.findById(dados.id_turma()).orElse(null);
+            Turma turma = turmaRepository.getReferenceById(dados.id_turma());
 
             if (aluno.getTurma() == turma) {
-                throw new Exception(String.format("O aluno %d e a turma de ID %d já têm vínculo.", dados.id_usuario(), dados.id_turma()));
+                throw new Exception(String.format("O aluno %d e a turma de %s já têm vínculo.", dados.id_usuario(), turma.getAnoEscolar() + turma.getLetra()));
             }
 
+            aluno.setAnoEscolar(turma.getAnoEscolar());
             aluno.setTurma(turma);
-        } catch (AlunoNotFoundException e) {
+        } catch (Exception e) {
             throw new Exception(String.format("Não foi possível localizar o aluno de ID %d", dados.id_usuario()));
-        } catch (TurmaNotFoundException e) {
-            throw new Exception(String.format("Não foi possível localizar a turma de ID %d", dados.id_turma()));
         }
     }
 

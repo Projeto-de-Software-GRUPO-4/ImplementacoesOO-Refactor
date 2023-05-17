@@ -163,7 +163,7 @@
 
     <script>
 
-        const aluno_id = localStorage.getItem("aluno_id");
+        const usuario_id = localStorage.getItem("usuario_id");
         aoCarregar()
 
         function home_home() {
@@ -204,7 +204,7 @@
                 })
                 .then(() => {
 
-                    BoletimService.resgatarAllAlunoAno(aluno_id, new Date().getFullYear())
+                    BoletimService.resgatarAllAlunoAno(usuario_id, new Date().getFullYear())
                         .then((res) => {
                             const notas = res.json;
                             console.log(notas)

@@ -96,7 +96,7 @@
         </fieldset>
         <fieldset id="nascimento">
             <legend>Data de nascimento: </legend>
-            <input type="date" name="nasc" id="nasc" value="${DateHelper.stringToInternationalString(aluno.dataDeNascimento)}">
+            <input disabled="true" type="date" name="nasc" id="nasc" value="${DateHelper.stringToInternationalString(aluno.dataDeNascimento)}">
         </fieldset>
         <fieldset id="responsavelNome">
             <legend>Nome do(a) responsavel: </legend>
@@ -109,10 +109,6 @@
         <fieldset id="responsavelNumero">
             <legend>Telefone do(a) responsavel: </legend>
             <input type="number" name="responsavelNumero" value="${aluno.responsavel?.telefoneResponsavel}" id="responsavelNumero" placeholder="Numero do(a) responsavel pelo(a) aluno(a)">
-        </fieldset>
-        <fieldset id="_serie">
-            <legend>Serie: </legend>
-            <input type="number" name="serie" id="serie" value="${aluno.anoEscolar}">
         </fieldset>
         <fieldset id="_mensalidade">
             <legend>Mensalidade: </legend>

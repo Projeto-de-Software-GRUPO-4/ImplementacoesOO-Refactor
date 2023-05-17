@@ -112,10 +112,10 @@ public class AlunoController {
 
     @DeleteMapping("/expulsar/{id}")
     @Transactional
-    public ResponseEntity expulsar(@PathVariable BigInteger id) {
+    public ResponseEntity expulsar_readmitir(@PathVariable BigInteger id) {
         try {
             alunoService.expulsar(id);
-            Message message = new Message("Aluno expulso com sucesso.");
+            Message message = new Message("Status de expulsão do aluno mudado com sucesso.");
             return new ResponseEntity<>(message, HttpStatus.OK);
         } catch (Exception e) {
             Message message = new Message(e.getMessage());

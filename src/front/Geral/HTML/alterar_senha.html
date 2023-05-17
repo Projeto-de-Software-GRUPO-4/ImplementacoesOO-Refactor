@@ -57,5 +57,32 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="../../controllers/CredenciaisController.js" type=""></script>
+    <script src="../../services/CredenciaisService.js"></script>
+    <script>
+        const buttonSalvar = document.getElementById("salvar");
+        const userType = localStorage.getItem("user_type");
+
+        buttonSalvar.onclick = () => {
+            CredenciaisService.mudarSenha()
+            .then((res) => {
+                console.log(res)
+                if (res.status == 200) {
+                    alert("Senha alterada com sucesso!")
+
+                    if (userType == "professor") {
+                        location.href = "../../Aluno/aluno_function.html";
+                    } else if (userType == "aluno") {
+                        location.href = "../../Professor/prof_function.html";
+                    }
+
+
+                } else {
+                    console.log(res.json.message)
+                }
+            })
+            
+        }
+    </script>
 </body>
 </html>

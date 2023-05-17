@@ -1,5 +1,5 @@
 var qm_chamou = localStorage.getItem("qm_chamou");
-alert("quem chamou foi " + qm_chamou + ", logo, precisamos buscar a senha no db dele e alterar la");
+// alert("quem chamou foi " + qm_chamou + ", logo, precisamos buscar a senha no db dele e alterar la");
 
 function ok(){
     if(qm_chamou === "admin"){

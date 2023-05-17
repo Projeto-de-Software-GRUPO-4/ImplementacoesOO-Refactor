@@ -18,6 +18,4 @@ public class DadosAtualizacaoAluno extends DadosAtualizacaoUsuario {
 
         protected double mensalidade;
 
-        protected int anoEscolar;
-
 }

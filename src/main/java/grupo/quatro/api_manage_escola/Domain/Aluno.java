@@ -54,10 +54,9 @@ public class Aluno extends Usuario {
     private Set<Ocorrencia> ocorrencias;
 
     public Aluno(String nome, BigInteger cpf, String dataDeNascimento, int diaDePagamento,
-                 Responsavel responsavel, int anoEscolar, double mensalidade) {
+                 Responsavel responsavel, double mensalidade) {
         super(nome, cpf, dataDeNascimento, diaDePagamento);
         this.responsavel = responsavel;
-        this.anoEscolar = anoEscolar;
         this.mensalidade = mensalidade;
         this.id = cpf;
         this.status_aprovacao = false;
@@ -66,12 +65,12 @@ public class Aluno extends Usuario {
 
     public Aluno(DadosCadastroAluno dados) {
         this(dados.getNome(), new BigInteger(dados.getCpf()), dados.getDataDeNascimento(), dados.getDiaDePagamento(),
-                new Responsavel(dados.getResponsavel()), dados.getAnoEscolar(), dados.getMensalidade());
+                new Responsavel(dados.getResponsavel()), dados.getMensalidade());
     }
 
     public Aluno(DadosListagemAluno dados) {
         this(dados.getNome(), dados.getCpf(), dados.getDataDeNascimento(), dados.getDiaDePagamento(),
-                dados.getResponsavel(), dados.getAnoEscolar(), dados.getMensalidade());
+                dados.getResponsavel(), dados.getMensalidade());
     }
 
     public void updateInfo(DadosAtualizacaoAluno dados) {
@@ -97,6 +96,8 @@ public class Aluno extends Usuario {
     public void excluir() {
         super.excluir();
         this.expelled = true;
+        this.turma = null;
+        this.anoEscolar = 0;
     }
 
     public void setState(AlunoAprovacaoState state) {

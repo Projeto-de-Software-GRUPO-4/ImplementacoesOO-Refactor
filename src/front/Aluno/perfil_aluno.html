@@ -20,27 +20,27 @@
     <main>
         <div class="container" id="main">
             <h1>Insira os dados do aluno</h1>
-            <fieldset id="name">
-                <legend>Nome: </legend>
-                <input type="text" name="nome" id="nome" placeholder="Nome do(a) aluno(a)">
-            </fieldset>
+            <!-- <fieldset id="_cpf">
+                <legend>CPF: </legend>
+                <input type="text" name="cpf" id="cpf" placeholder="Cpf do(a) aluno(a)">
+            </fieldset> -->
             <fieldset id="password">
                 <legend>Senha: </legend>
-                <div class="xx">
+                <!-- <div class="xx">
                     <input type="password" name="senha" id="senha" placeholder="Senha atual">
                     <button type="button" id="mostrar" onclick="mostrarSenha()">&#x1F441</button>
-                </div>
+                </div> -->
                 <a id="alterar" href="" onclick="alterar()">Alterar senha</a>
             </fieldset>
             
             <div class="error"><p id="error"></p></div>
-            <input type="button" value="Salvar" id="enviar" onclick="enviar()">
+            <!-- <input type="button" value="Salvar" id="enviar" onclick="enviar()"> -->
         </div>
     </main>
 
     <script src="../Geral/Scripts/script.js"></script>
     <script>
-        document.getElementById("nome").value = "Nome do aluno"
+        // document.getElementById("cpf").value = localStorage.getItem("usuario_id");
 
         function alterar(){
             var alterar = document.getElementById("alterar");
@@ -82,9 +82,9 @@
                     }
                 }
 
-                alert("Falta implementar o back para saber se a senha atual e igual a do DB");
-                alert("Dados alterados com sucesso!")
-                window.location.href = "aluno_function.html";
+                // alert("Falta implementar o back para saber se a senha atual e igual a do DB");
+                // alert("Dados alterados com sucesso!")
+                // window.location.href = "aluno_function.html";
             }
         }
     </script>

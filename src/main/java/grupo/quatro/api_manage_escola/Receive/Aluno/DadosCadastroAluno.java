@@ -17,6 +17,4 @@ public class DadosCadastroAluno extends DadosCadastroUsuario {
 
         protected double mensalidade;
 
-        @NotNull
-        protected int anoEscolar;
 }
