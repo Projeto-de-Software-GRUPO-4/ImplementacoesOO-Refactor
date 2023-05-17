@@ -18,20 +18,6 @@ public class UsuarioCredentialsController {
     @Autowired
     UsuarioCredentialsService credentialsService;
 
-//    @PostMapping("/me")
-//    public ResponseEntity checarSenha(@Valid @RequestBody DadosChecagemUsuarioCredentials dados) {
-//        try {
-//            boolean isEqual = credentialsService.verificarSenha(dados);
-//
-//            return new ResponseEntity<>(isEqual, HttpStatus.OK);
-//
-//
-//        } catch (Exception e) {
-//            Message message = new Message(e.getMessage());
-//            return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
-//        }
-//    }
-
     @PutMapping("/me")
     @Transactional
     public ResponseEntity atualizarSenha(@RequestBody @Valid DadosAtualizarUsuarioCredentials dados) {

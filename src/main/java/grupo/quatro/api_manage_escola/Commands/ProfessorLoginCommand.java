@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Commands;
 
+import grupo.quatro.api_manage_escola.Domain.UserType;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosListagemAlunoLogin;
 import grupo.quatro.api_manage_escola.Receive.Professor.DadosListagemProfessorLogin;
@@ -13,6 +14,11 @@ public class ProfessorLoginCommand implements LoginCommand {
 
     public ProfessorLoginCommand(LogInProfessorService logInProfessorService) {
         this.logInProfessorService = logInProfessorService;
+    }
+
+    @Override
+    public UserType getUserType() {
+        return UserType.Professor;
     }
 
     @Override

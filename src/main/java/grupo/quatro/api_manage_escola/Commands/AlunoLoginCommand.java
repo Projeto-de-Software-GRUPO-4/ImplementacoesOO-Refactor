@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Commands;
 
+import grupo.quatro.api_manage_escola.Domain.UserType;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Receive.Aluno.DadosListagemAlunoLogin;
 import grupo.quatro.api_manage_escola.Service.LogInAlunoService;
@@ -14,6 +15,10 @@ public class AlunoLoginCommand implements LoginCommand {
         this.logInAlunoService = logInAlunoService;
     }
 
+    @Override
+    public UserType getUserType() {
+        return UserType.Aluno;
+    }
     @Override
     public ResponseEntity execute(DadosLogin dados) {
         DadosListagemAlunoLogin dadosLogin = logInAlunoService.login(dados);

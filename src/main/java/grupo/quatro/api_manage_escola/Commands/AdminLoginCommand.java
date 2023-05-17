@@ -1,5 +1,6 @@
 package grupo.quatro.api_manage_escola.Commands;
 
+import grupo.quatro.api_manage_escola.Domain.UserType;
 import grupo.quatro.api_manage_escola.LogIn.DadosLogin;
 import grupo.quatro.api_manage_escola.Respond.Message;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,10 @@ public class AdminLoginCommand implements LoginCommand {
 
     public AdminLoginCommand() {};
 
-
+    @Override
+    public UserType getUserType() {
+        return UserType.Admin;
+    }
     @Override
     public ResponseEntity execute(DadosLogin dados) {
         Message message = new Message();

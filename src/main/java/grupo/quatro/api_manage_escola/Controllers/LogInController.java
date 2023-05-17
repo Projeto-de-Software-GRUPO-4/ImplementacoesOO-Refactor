@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,6 +31,8 @@ public class LogInController {
     @Autowired
     LogInAlunoService logInAlunoService;
 
+    @Autowired
+    private List<LoginCommand> loginCommands;
 
     @Autowired
     LogInProfessorService logInProfessorService;
@@ -60,15 +63,11 @@ public class LogInController {
             }
 
             UserType userType = usuario.getUserType();
-            LoginCommand command;
+            LoginCommand command = loginCommands.stream()
+                    .filter(c -> c.getUserType() == userType)
+                    .findFirst()
+                    .orElseThrow(() -> new UnsupportedOperationException("Tipo de usuário não suportado."));
 
-            if (userType == UserType.Admin) {
-                command = new AdminLoginCommand();
-            } else if (userType == UserType.Professor) {
-                command = new ProfessorLoginCommand(logInProfessorService);
-            } else {
-                command = new AlunoLoginCommand(logInAlunoService);
-            }
 
             return command.execute(dados);
 
